@@ -8,7 +8,7 @@ function App() {
       <header className="App-header">
         <img src={'./alkemy_logo.svg'} className="App-logo" alt="logo" />
         <p className='text-black'>
-          Alkemy Gato
+          Alkemy Marco grupo 6
           <Banner />
         </p>
       </header>
