@@ -21,7 +21,7 @@ function App() {
           <Route path="/gastos" element={<Gastos />} />
           <Route path="/balance" element={<Balance />} />
           <Route path="/movimiento" element={<Movimiento />} />
-          <Route path="/movimiento" element={<EnvioDinero />} />
+          <Route path="/envio-de-dinero" element={<EnvioDinero />} />
           <Route path="*" component={<NotFound/>}/>
         </Switch>
       </Routes>
