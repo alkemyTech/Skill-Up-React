@@ -1,0 +1,18 @@
+{
+	"extends": ["plugin:react/recommended", "plugin:import/recommended", "eslint-config-prettier"],
+	"settings": {
+		"react": {
+			"version": "detect"
+		},
+		"import/resolver": {
+			"node": {
+				"paths": ["."],
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		}
+	},
+	"rules": {
+		// Add your own rules here to override ones from the extended configs.
+		"react/prop-types": "off"
+	}
+}
