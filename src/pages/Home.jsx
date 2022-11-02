@@ -1,3 +1,4 @@
+import Movimientos from '../components/Movimientos'
 import logo from '../images/alkemy_logo.svg'
 
 function Home() {
@@ -7,6 +8,7 @@ function Home() {
         <p className='text-black'>
         Alkemy
         </p>
+        <Movimientos />
     </header>
   )
 }
