@@ -6,8 +6,8 @@ import { Text } from "./components/Text";
 function App() {
   return (
     <div className="App">
-      <header className="App-header bg-ct-primary-400">
-        <img src={"./alkemy_logo.svg"} className="App-logo" alt="logo" />
+      <header className="App-header bg-ct-primary-400">    
+          <img src={"./alkemy_logo.svg"} className="App-logo" alt="logo" />
         <Heading as="h2">Bienvenido a AlkyBank</Heading>
 
         <Text as="a" variant="lead">
