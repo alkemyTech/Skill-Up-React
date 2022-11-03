@@ -1,5 +1,5 @@
 {
-	"extends": ["plugin:react/recommended", "plugin:import/recommended", "eslint-config-prettier"],
+	"extends": ["eslint:recommended", "plugin:react/recommended", "plugin:import/recommended", "eslint-config-prettier"],
 	"settings": {
 		"react": {
 			"version": "detect"
@@ -15,6 +15,13 @@
 	"rules": {
 		// Add your own rules here to override ones from the extended configs.
 		"react/prop-types": "off",
-		"react/react-in-jsx-scope": "off"
+		"react/react-in-jsx-scope": "off",
+		"no-unused-vars": "warn"
+	},
+	"env": {
+		"browser": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 2020
 	}
 }
