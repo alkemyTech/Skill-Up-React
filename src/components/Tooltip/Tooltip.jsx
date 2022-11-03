@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./Tooltip.css";
 
-const Tooltip = (props) => {
+const Tooltip = ({content, direction, delay, status, children}) => {
   let timeout;
   const [active, setActive] = useState(false);
-  const [status, setStatus] = useState("");
+  const [color, setColor] = useState("");
 
   const showTip = () => {
     timeout = setTimeout(() => {
       setActive(true);
-    }, props.delay || 200);
+    }, delay || 200);
   };
 
   const hideTip = () => {
@@ -18,10 +18,10 @@ const Tooltip = (props) => {
   };
 
   useEffect(() => {
-    props.status === "success"
-      ? setStatus("bg-green-500")
-      : setStatus("bg-red-500");
-  }, [props.status]);
+    status === "success"
+      ? setColor("bg-green-500")
+      : setColor("bg-red-500");
+  }, [status]);
 
   return (
     <div
@@ -31,11 +31,11 @@ const Tooltip = (props) => {
       onMouseLeave={hideTip}
     >
       {/* Wrapping */}
-      {props.children}
+      {children}
       {active && (
-        <div className={`Tooltip-Tip ${props.direction || "top"} ${status}`}>
+        <div className={`Tooltip-Tip ${direction || "top"} ${color} text-sm w-11/12 sm:w-max`}>
           {/* Content */}
-          {props.content}
+          {content}
         </div>
       )}
     </div>
