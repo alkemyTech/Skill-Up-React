@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import logo from 'src/assets/alkemy_logo.svg';
 import hamburger from 'src/assets/menu.svg';
+import { Button } from '../Button';
 
 const Navbar = () => {
 	const [isLogged, setIsLogged] = useState(false);
@@ -36,7 +37,7 @@ const Navbar = () => {
 						</button>
 					</>
 				) : (
-					<button className="text-ct-neutral-ligth-base border px-2 py-1 rounded-lg">Login</button>
+					<Button variant="secondary">Login</Button>
 				)}
 			</nav>
 		</header>
