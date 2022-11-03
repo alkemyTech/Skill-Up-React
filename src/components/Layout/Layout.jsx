@@ -1,11 +1,11 @@
-import { Footer } from '../Footer';
-import { Navbar } from '../Nav';
-import '../../App.css';
+import { Footer } from 'src/components/Footer';
+import { Navbar } from 'src/components/Nav';
+import styles from './Layout.module.css';
 
 const Layout = ({ children }) => {
 	return (
-		<div className='page-container'>
-			<div className='content-wrap'>
+		<div className={styles.page_container}>
+			<div className={styles.content_wrap}>
 				<Navbar />
 				{children}
 			</div>
