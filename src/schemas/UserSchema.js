@@ -18,5 +18,5 @@ export const UsersPOSTEndpointSchema = z.object({
   last_name: z.string(),
   password: z.string(),
   points: z.number().default(0),
-  roleId: z.number().default(1),
+  roleId: z.number().default(2),
 });
