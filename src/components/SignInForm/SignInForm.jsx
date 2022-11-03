@@ -48,7 +48,6 @@ export const SignInForm = ({ className }) => {
 			className={`${className} border p-4 flex flex-col gap-5 max-w-md border-ct-primary-100 rounded bg-ct-primary-100/10 mx-auto`}
 		>
 			<Heading className="m-auto text-ct-primary-600">Signin</Heading>
-
 			<Input
 				autoFocus
 				label="First name"
@@ -61,7 +60,6 @@ export const SignInForm = ({ className }) => {
 				onChange={onChange}
 				required
 			/>
-
 			<Input
 				label="Last name"
 				name={fieldNames.last_name}
@@ -73,7 +71,6 @@ export const SignInForm = ({ className }) => {
 				onChange={onChange}
 				required
 			/>
-
 			<Input
 				label="Email"
 				name={fieldNames.email}
@@ -85,7 +82,6 @@ export const SignInForm = ({ className }) => {
 				onChange={onChange}
 				required
 			/>
-
 			<div className="relative">
 				<Input
 					label="Password"
@@ -107,7 +103,6 @@ export const SignInForm = ({ className }) => {
 					Tip: 8 caracters beetwen uppercase, lowercase and numbers.
 				</ErrorMessage>
 			</div>
-
 			<div className="relative">
 				<Input
 					label="Confirm password"
@@ -130,7 +125,6 @@ export const SignInForm = ({ className }) => {
 					Tip: Password should match.
 				</ErrorMessage>
 			</div>
-
 			<button type="submit" className="border mt-6 p-2 bg-ct-primary-300 rounded text-ct-primary-50 font-bold">
 				Signin
 			</button>
