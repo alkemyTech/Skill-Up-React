@@ -1,5 +1,7 @@
 import React from 'react';
+import { Button } from 'src/components/Button';
 import { Heading } from 'src/components/Heading';
+import { Title } from 'src/components/Title';
 
 export const HomePage = () => {
 	return (
