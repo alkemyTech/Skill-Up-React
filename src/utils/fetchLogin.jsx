@@ -1,4 +1,3 @@
-
 export const getLogin = async (loginUser) => {
     // body structure should look like these
     // '{\n  "email": "messi@messi.com",\n  "password": "messi"\n}'
@@ -12,7 +11,7 @@ export const getLogin = async (loginUser) => {
             method: "POST"
         })
         const data = await response.json()
-        console.log(data)
+        return data
     } catch (error) {
         console.log(error)
     }

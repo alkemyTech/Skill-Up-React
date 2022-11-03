@@ -11,7 +11,6 @@ function usePagination( arrayLength, currentPage ) {
     const range = (start, end) => {
         let length = end - start + 1;
 
-        console.log(Array.from({length}, (_, idx) => idx + start))
         return Array.from({length}, (_, idx) => idx + start)
     }
 
