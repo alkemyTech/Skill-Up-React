@@ -1,7 +1,6 @@
 import React from 'react';
 import { Heading } from 'src/components/Heading';
 
-
 export const HomePage = () => {
 	return (
 		<div className="w-full h-screen bg-ct-primary-400 flex place-content-center flex-col px-4">
