@@ -1,114 +1,139 @@
-import React from "react";
-import { UsersPOSTEndpointSchema } from "../../schemas/UserSchema";
-import { HTTPVerbs } from "../../utils/HTTPVerbs";
+import React from 'react';
+import { Heading } from 'src/components/Heading';
+import { Input } from 'src/components/SignInForm/Input';
+import { UserRepository } from 'src/services/user.repository';
+import { ErrorMessage } from './ErrorMessage';
 
 const regexValidator = {
-  first_name: /[a-zA-Z]/,
-  last_name: /[a-zA-Z]/,
-  email: /[a-zA-Z]/,
-  password: /[a-zA-Z]/,
+	first_name: /[a-zA-Z]/,
+	last_name: /[a-zA-Z]/,
+	email: /^[a-zA-Z]+[a-zA-Z0-9_.]+@[a-zA-Z.]+[a-zA-Z]$/,
+	password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
 };
 
-const first = async ({ userPostEndPoint, signal }) => {
-  const body = UsersPOSTEndpointSchema.parse(userPostEndPoint);
-  const response = await fetch(
-    "http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/users",
-    {
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      signal,
-      method: HTTPVerbs.POST,
-      body: JSON.stringify(body),
-    }
-  );
-
-  const result = await response.json();
-
-  console.log(result);
+const fieldNames = {
+	first_name: 'first_name',
+	last_name: 'last_name',
+	email: 'email',
+	password: 'password',
+	confirmPassword: 'confirmPassword',
 };
+const booleanFields = Object.fromEntries(Object.entries(fieldNames).map(([key]) => [key, false]));
+const emptyFields = Object.fromEntries(Object.entries(fieldNames).map(([key]) => [key, '']));
 
-/**
- * @typedef {Object} CustomProps
- * @property {string} [label]
- * @param {React.ComponentProps<"input"> & CustomProps} props
- */
-export const Input = React.forwardRef(
-  ({ label, className, onError, onChange, pattern, ...props }, ref) => {
-    const id = React.useId();
-    return (
-      <div>
-        {label && <label htmlFor={id}>{label}: </label>}
-        <input
-          {...props}
-          ref={ref}
-          onChange={(e) => {
-            onChange(e);
-            onError(pattern.test(e.target.value));
-          }}
-          id={id}
-          className={`${className} border border-ct-neutral-ligth-400`}
-        />
-      </div>
-    );
-  }
-);
+export const SignInForm = ({ className }) => {
+	const [formValues, setFormValues] = React.useState(emptyFields);
+	const [touchedFields, setTouchedFields] = React.useState({ ...booleanFields });
+	const [errorFields, setErrorFields] = React.useState({ ...booleanFields });
 
-export const SignInForm = () => {
-  const formValue = {
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-  };
-  const [firstName, setFirstName] = React.useState("");
+	const isPasswordMatch = formValues.password === formValues.confirmPassword;
 
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        // first({ userPostEndPoint: formValue });
-      }}
-      className={`border p-8 flex flex-col gap-4 max-w-md border-ct-neutral-medium-300 rounded bg-ct-neutral-medium-200/10 mx-auto`}
-    >
-      <h1>Crear cuenta</h1>
+	function onChange(e) {
+		const { value = '', name = '' } = e.target;
+		setFormValues((s) => ({ ...s, [name]: value }));
+	}
+	function onTouch(name, value) {
+		setTouchedFields((s) => ({ ...s, [name]: value }));
+	}
+	function onError(name, value) {
+		setErrorFields((s) => ({ ...s, [name]: value }));
+	}
 
-      <Input
-        label="First name"
-        name="first_name"
-        pattern={regexValidator.first_name}
-        onError={(e) => {
-          console.log(e);
-        }}
-        onChange={(e) => setFirstName(e.target.value)}
-        value={firstName}
-      />
+	return (
+		<form
+			onSubmit={(e) => {
+				e.preventDefault();
+				UserRepository().registerUser(formValues);
+			}}
+			className={`${className} border p-4 flex flex-col gap-5 max-w-md border-ct-primary-100 rounded bg-ct-primary-100/10 mx-auto`}
+		>
+			<Heading className="m-auto text-ct-primary-600">Signin</Heading>
 
-      <Input
-        label="Last name"
-        name="last_name"
-        pattern="[a-zA-Z]"
-        onChange={() => {}}
-        value={formValue.last_name}
-      />
+			<Input
+				autoFocus
+				label="First name"
+				name={fieldNames.first_name}
+				value={formValues.first_name}
+				error={errorFields[fieldNames.first_name]}
+				pattern={regexValidator.first_name}
+				onTouch={onTouch}
+				onError={onError}
+				onChange={onChange}
+				required
+			/>
 
-      <Input
-        label="Email"
-        name="email"
-        onChange={() => {}}
-        value={formValue.email}
-      />
-      <Input
-        label="Password"
-        type="password"
-        name="password"
-        onChange={() => {}}
-        value={formValue.password}
-      />
-      <button type="submit" className="border">
-        submit
-      </button>
-    </form>
-  );
+			<Input
+				label="Last name"
+				name={fieldNames.last_name}
+				value={formValues.last_name}
+				error={errorFields[fieldNames.last_name]}
+				pattern={regexValidator.last_name}
+				onTouch={onTouch}
+				onError={onError}
+				onChange={onChange}
+				required
+			/>
+
+			<Input
+				label="Email"
+				name={fieldNames.email}
+				value={formValues.email}
+				error={errorFields[fieldNames.email]}
+				pattern={regexValidator.email}
+				onTouch={onTouch}
+				onError={onError}
+				onChange={onChange}
+				required
+			/>
+
+			<div className="relative">
+				<Input
+					label="Password"
+					type="password"
+					name={fieldNames.password}
+					error={errorFields[fieldNames.password]}
+					pattern={regexValidator.password}
+					onTouch={onTouch}
+					onError={onError}
+					onChange={onChange}
+					value={formValues.password}
+					required
+				/>
+
+				<ErrorMessage
+					className={`absolute inset-0-0 w-full h-full`}
+					error={touchedFields.password && errorFields.password}
+				>
+					Tip: 8 caracters beetwen uppercase, lowercase and numbers.
+				</ErrorMessage>
+			</div>
+
+			<div className="relative">
+				<Input
+					label="Confirm password"
+					type="password"
+					name={fieldNames.confirmPassword}
+					error={errorFields[fieldNames.confirmPassword] || (touchedFields.confirmPassword && !isPasswordMatch)}
+					onTouch={onTouch}
+					onError={onError}
+					onChange={onChange}
+					value={formValues.confirmPassword}
+					required
+				/>
+				<ErrorMessage
+					className={`absolute inset-0-0 w-full h-full`}
+					error={
+						(touchedFields.confirmPassword && errorFields.confirmPassword) ||
+						(touchedFields.confirmPassword && !isPasswordMatch)
+					}
+				>
+					Tip: Password should match.
+				</ErrorMessage>
+			</div>
+
+			<button type="submit" className="border mt-6 p-2 bg-ct-primary-300 rounded text-ct-primary-50 font-bold">
+				Signin
+			</button>
+		</form>
+	);
 };
