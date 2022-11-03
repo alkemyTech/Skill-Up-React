@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Movimiento from "./pages/Movimiento";
 import NotFound from "./pages/NotFound";
 import NavBar from "./components/NavBar";
+
 function App() {
 	return (
 		<div className="App bg-stone-200">
@@ -24,7 +25,6 @@ function App() {
 				<Route path="/envio-de-dinero" element={<EnvioDinero />} />
 				<Route path="*" component={<NotFound />} />
 			</Routes>
-
 			<Footer />
 		</div>
 	);
