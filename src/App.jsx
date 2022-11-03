@@ -23,7 +23,7 @@ function App() {
 				<Route path="/balance" element={<Balance />} />
 				<Route path="/movimientos" element={<Movimiento />} />
 				<Route path="/envio-de-dinero" element={<EnvioDinero />} />
-				<Route path="*" component={<NotFound />} />
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 			<Footer />
 		</div>
