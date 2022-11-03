@@ -1,4 +1,4 @@
-import { Route, Routes, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Balance from './pages/Balance';
 import CargaSaldo from './pages/CargaSaldo';
@@ -14,7 +14,6 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Switch>
           <Route exact path='/' render={() => <Login/>}/>
           <Route path="/home" element={<Home />} />
           <Route path="/carga-saldo" element={<CargaSaldo />} />
@@ -23,7 +22,6 @@ function App() {
           <Route path="/movimiento" element={<Movimiento />} />
           <Route path="/envio-de-dinero" element={<EnvioDinero />} />
           <Route path="*" component={<NotFound/>}/>
-        </Switch>
       </Routes>
     </div>
   );
