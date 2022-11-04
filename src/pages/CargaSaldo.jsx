@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CargaDeSaldoForm from "../components/CargaDeSaldoForm";
 import UltimasCargas from "../components/UltimasCargas";
 const CargaSaldo = () => {

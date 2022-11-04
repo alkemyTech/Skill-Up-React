@@ -33,7 +33,7 @@ const CargaDeSaldoForm = () => {
 					</div>
 					<div className="flex flex-col gap-3">
 						<span className="text-stone-200 text-left">
-							Monto a cargar:
+							Moneda a utilizar:
 						</span>
 						<input
 							type="text"
