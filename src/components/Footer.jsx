@@ -8,37 +8,37 @@ const Footer = () => {
 				<ul className="max-w-screen-md mx-auto font-normal flex flex-wrap justify-between">
 					<li className="my-2">
 						<a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 "
-						   href="https://www.linkedin.com/in/marco-allegri/">
+						   href="https://www.linkedin.com/in/marco-allegri/" target="_blank">
 							Marco Allegri
 						</a>
 					</li>
 					<li className="my-2">
 						<a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 "
-						   href="https://www.linkedin.com/in/tadeo-maddonni-899836236/">
+						   href="https://www.linkedin.com/in/tadeo-maddonni-899836236/" target="_blank">
 							Tadeo Maddonni
 						</a>
 					</li>
 					<li className="my-2">
 						<a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 "
-						   href="#">
+						   href="#" target="_blank">
 							Tomás Sanchez
 						</a>
 					</li>
 					<li className="my-2">
 						<a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 "
-						   href="#">
+						   href="#" target="_blank">
 							Angel Landloker
 						</a>
 					</li>
 					<li className="my-2">
 						<a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 "
-						   href="#">
+						   href="#" target="_blank">
 							Juan Horisberg
 						</a>
 					</li>
 					<li className="my-2">
 						<a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 "
-						   href="https://www.linkedin.com/in/lucasdepalma/">
+						   href="https://www.linkedin.com/in/lucasdepalma/" target="_blank">
 							Lucas De Palma
 						</a>
 					</li>
