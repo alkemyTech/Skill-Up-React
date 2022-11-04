@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { useState } from 'react';
 import logo from '../../assets/alkemy_logo.svg';
 import hamburger from '../../assets/menu.svg';
@@ -57,9 +59,11 @@ const Navbar = () => {
 						</div>
 					</>
 				) : (
-					<Button variant="primary" onClick={handlerLogin}>
-						Login
-					</Button>
+					<Link to="/login">
+						<Button variant="primary" onClick={handlerLogin}>
+							Login
+						</Button>
+					</Link>
 				)}
 			</nav>
 		</header>

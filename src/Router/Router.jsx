@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from 'src/components/Layout';
+
 import { SignInForm } from 'src/components/SignInForm';
+import { LoginForm } from 'src/components/LoginForm';
 import { HomePage } from 'src/pages/HomePage';
 
 export const Router = () => {
@@ -10,6 +12,13 @@ export const Router = () => {
 				<Routes>
 					<Route path="/" element={<HomePage />} />
 					<Route path="/signin" element={<SignInForm />} />
+					<Route path="/login" element={<LoginForm />} />
+					<Route path="/balance" element={<LoginForm />} />
+					<Route path="/bills" element={<LoginForm />} />
+					<Route path="/transactions" element={<LoginForm />} />
+					<Route path="/transfer" element={<LoginForm />} />
+					<Route path="/deposit" element={<LoginForm />} />
+					<Route path="/404" element={<LoginForm />} />
 				</Routes>
 			</Layout>
 		</BrowserRouter>
