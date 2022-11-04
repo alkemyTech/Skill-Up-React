@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../Button"
 import { Heading } from "../Heading"
 import { Text } from "../Text"
@@ -56,27 +56,20 @@ export const LoginForm = () => {
 
     const handleEmail = (event) => {
         setEmail(event.target.value)
-
-        if(event.key === "Enter"){
-            event.preventDefault()
-        }
     }
 
     const handlePassword = (event) => {
         setPassword(event.target.value)
-
-        console.log(event)
     }
 
     const handleShowPassword = () => {
         setShowPassword(previous => !previous)
-        console.log(event)
     }
 
     return (
         <div className="flex items-center justify-center min-h-screen">
-            <form onSubmit={handleForm} className="flex flex-col items-center gap-8 p-8 bg-white rounded-md min-w-[350px] max-w-[450px] w-full">
-                <Heading as="h2">Login</Heading>
+            <form onSubmit={handleForm} className="flex flex-col items-center gap-8 p-8 bg-white rounded-md min-w-[250px] max-w-[450px] w-full">
+                <Heading as="h2">Log In</Heading>
                 <div className="flex flex-col gap-4  w-full">
                     <div className="flex flex-col items-start w-full gap-1">
                         <Text as="label" variant="standard">Email</Text>
@@ -95,8 +88,16 @@ export const LoginForm = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col gap-2 w-full">
-                    <Button type="submit" variant="primary" disabled={email?.length && password?.length ? false : true}>Login</Button>
+                <div className="flex flex-col items-center gap-2 w-full">
+                    <Button type="submit" variant="primary" style="w-full" disabled={email?.length && password?.length ? false : true}>Log In</Button>
+                    <div className="flex items-center justify-center gap-2 w-full">
+                        <div className="h-[1px] bg-gray-200 flex-1"></div>
+                        <span className="text-gray-300">or</span>
+                        <div className="h-[1px] bg-gray-200 flex-1"></div>
+                    </div>
+                    <Link to="/signin" style={{width: "100%"}}>
+                        <Button type="button" variant="tertiary" style="w-full">Sign Up</Button>
+                    </Link>
                     {
                         invalidUser ? <Text as="span" className="text-sm text-red-500">Invalid email or password.</Text> : ""
                     }
