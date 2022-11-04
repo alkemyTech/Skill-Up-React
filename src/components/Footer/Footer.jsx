@@ -35,3 +35,4 @@ const Footer = () => {
 	);
 };
 export { Footer };
+
