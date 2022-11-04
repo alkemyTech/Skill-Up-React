@@ -3,6 +3,9 @@ module.exports = {
 	content: ['src/**/*.{js,jsx,ts,tsx}'],
 	theme: {
 		extend: {
+			backgroundColor: {
+				'black-transparent': 'rgba(0, 0, 0, 0.7)',
+			},
 			colors: {
 				'ct-neutral-ligth': {
 					base: '#faf8f3',
@@ -80,3 +83,4 @@ module.exports = {
 	},
 	plugins: [],
 };
+
