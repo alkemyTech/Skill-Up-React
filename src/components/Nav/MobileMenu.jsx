@@ -1,4 +1,6 @@
-const MobileMenu = ({ setShowMenu, showMenu }) => {
+import { Button } from '../Button';
+
+const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 	let positionPanel = showMenu ? 'right-0' : 'right-[-20rem]';
 	let opacityBlackout = showMenu ? 'opacity-1' : 'opacity-0';
 	let positionBlackout = showMenu ? 'left-0' : 'right-[-90rem]';
@@ -26,8 +28,10 @@ const MobileMenu = ({ setShowMenu, showMenu }) => {
 				<li>
 					<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Envio de dinero</a>
 				</li>
-				<li>
-					<a className="text-ct-neutral-ligth-base mx-4 px-2 py-1 border rounded-lg">Logout</a>
+				<li className="px-2 mx-4">
+					<Button variant="secondary" onClick={handlerLogin}>
+						Logout
+					</Button>
 				</li>
 			</ul>
 		</div>

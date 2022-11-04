@@ -21,19 +21,29 @@ const Navbar = () => {
 					<>
 						<ul className="hidden lg:flex ">
 							<li className="flex justify-center items-center">
-								<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Carga de saldo</a>
+								<a className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+									Carga de saldo
+								</a>
 							</li>
 							<li className="flex justify-center items-center">
-								<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Gastos</a>
+								<a className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+									Gastos
+								</a>
 							</li>
 							<li className="flex justify-center items-center">
-								<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Balance</a>
+								<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+									Balance
+								</a>
 							</li>
 							<li className="flex justify-center items-center">
-								<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Movimientos</a>
+								<a className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+									Movimientos
+								</a>
 							</li>
 							<li className="flex justify-center items-center">
-								<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Envio de dinero</a>
+								<a className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+									Envio de dinero
+								</a>
 							</li>
 							<li className="flex justify-center">
 								<Button variant="secondary" onClick={handlerLogin}>
@@ -41,7 +51,7 @@ const Navbar = () => {
 								</Button>
 							</li>
 						</ul>
-						{<MobileMenu setShowMenu={setShowMenu} showMenu={showMenu} />}
+						{<MobileMenu setShowMenu={setShowMenu} showMenu={showMenu} handlerLogin={handlerLogin} />}
 						<div className="w-7 lg:hidden align-middle" onClick={handlerShowMenu}>
 							<img src={hamburger} alt="menu" />
 						</div>

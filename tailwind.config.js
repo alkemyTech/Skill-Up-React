@@ -21,7 +21,7 @@ module.exports = {
 					900: '#120f07',
 				},
 				'ct-neutral-medium': {
-					base: '#faf8f3',
+					base: '#f3ecc8',
 					50: '#fbf8e5',
 					100: '#f1e9c0',
 					200: '#e8db99',
