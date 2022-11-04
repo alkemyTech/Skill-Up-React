@@ -1,5 +1,5 @@
 import Movimientos from '../components/Movimientos'
-import logo from '../images/alkemy_logo.svg'
+import logo from "../assets/img/favi.jfif";
 
 function Home() {
   return (
