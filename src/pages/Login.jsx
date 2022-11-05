@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../images/alkemy_logo.svg";
+import logo from "../assets/img/favi.jfif";
 
 function Login() {
 	return (
