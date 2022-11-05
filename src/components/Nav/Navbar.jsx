@@ -1,43 +1,86 @@
+import { Link } from 'react-router-dom';
+
 import { useState } from 'react';
-import logo from 'src/assets/alkemy_logo.svg';
-import hamburger from 'src/assets/menu.svg';
+import logo from '../../assets/alkemy_logo.svg';
+import hamburger from '../../assets/menu.svg';
+import { MobileMenu } from './MobileMenu';
 import { Button } from '../Button';
 
 const Navbar = () => {
-	const [isLogged, setIsLogged] = useState(false);
+	const [isLogged, setIsLogged] = useState(true);
+	const [showMenu, setShowMenu] = useState(false);
+
+	const handlerShowMenu = () => setShowMenu(!showMenu);
+	const handlerLogin = () => {
+		setIsLogged(!isLogged);
+	};
 
 	return (
 		<header className="flex justify-between items-center bg-ct-primary-base p-4">
-			<img src={logo} alt="logo" tabIndex="0" />
+			<Link to="/">
+				<img src={logo} alt="logo" tabIndex="0" />
+			</Link>
 			<nav>
 				{isLogged ? (
 					<>
-						<ul className="hidden lg:flex">
-							<li>
-								<button className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Carga de saldo</button>
+						<ul className="hidden lg:flex ">
+							<li className="flex justify-center items-center">
+								<Link
+									to="/deposit"
+									className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
+									Carga de saldo
+								</Link>
 							</li>
-							<li>
-								<button className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Gastos</button>
+							<li className="flex justify-center items-center">
+								<Link
+									to="/bills"
+									className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
+									Gastos
+								</Link>
 							</li>
-							<li>
-								<button className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Balance</button>
+							<li className="flex justify-center items-center">
+								<Link
+									to="/balance"
+									className="text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
+									Balance
+								</Link>
 							</li>
-							<li>
-								<button className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Movimientos</button>
+							<li className="flex justify-center items-center">
+								<Link
+									to="/transactions"
+									className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
+									Movimientos
+								</Link>
 							</li>
-							<li>
-								<button className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Envio de dinero</button>
+							<li className="flex justify-center items-center">
+								<Link
+									to="/transfer"
+									className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
+									Envio de dinero
+								</Link>
 							</li>
-							<li>
-								<button className="text-ct-neutral-ligth-base mx-4 px-2 py-1 border rounded-lg">Logout</button>
+							<li className="flex justify-center">
+								<Button variant="secondary" onClick={handlerLogin}>
+									Logout
+								</Button>
 							</li>
 						</ul>
-						<button className="w-7 lg:hidden align-middle">
+						{<MobileMenu setShowMenu={setShowMenu} showMenu={showMenu} handlerLogin={handlerLogin} />}
+						<div className="w-7 lg:hidden align-middle" onClick={handlerShowMenu}>
 							<img src={hamburger} alt="menu" />
-						</button>
+						</div>
 					</>
 				) : (
-					<Button variant="secondary">Login</Button>
+					<Link to="/login">
+						<Button variant="primary" onClick={handlerLogin}>
+							Login
+						</Button>
+					</Link>
 				)}
 			</nav>
 		</header>
