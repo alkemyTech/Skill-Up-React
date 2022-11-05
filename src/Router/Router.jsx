@@ -4,6 +4,7 @@ import { Layout } from 'src/components/Layout';
 import { SignInForm } from 'src/components/SignInForm';
 import { LoginForm } from 'src/components/LoginForm';
 import { HomePage } from 'src/pages/HomePage';
+import NotFound from 'src/pages/NotFound/NotFound';
 
 export const Router = () => {
 	return (
@@ -18,7 +19,7 @@ export const Router = () => {
 					<Route path="/transactions" element={<LoginForm />} />
 					<Route path="/transfer" element={<LoginForm />} />
 					<Route path="/deposit" element={<LoginForm />} />
-					<Route path="/404" element={<LoginForm />} />
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</Layout>
 		</BrowserRouter>

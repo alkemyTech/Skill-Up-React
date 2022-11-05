@@ -45,9 +45,9 @@ export const SignInForm = ({ className }) => {
 				e.preventDefault();
 				UserRepository().registerUser(formValues);
 			}}
-			className={`${className} border p-4 flex flex-col gap-5 max-w-md border-ct-primary-100 rounded bg-ct-primary-100/10 mx-auto`}
+			className={`${className} border p-4 mt-4 sm:mt-8 flex flex-col gap-5 max-w-md border-ct-primary-100 rounded bg-ct-primary-100/10 mx-auto`}
 		>
-			<Heading className="m-auto text-ct-primary-600">Signin</Heading>
+			<Heading className="m-auto text-ct-primary-600">Sign-in</Heading>
 			<Input
 				autoFocus
 				label="First name"
@@ -126,7 +126,7 @@ export const SignInForm = ({ className }) => {
 				</ErrorMessage>
 			</div>
 			<button type="submit" className="border mt-6 p-2 bg-ct-primary-300 rounded text-ct-primary-50 font-bold">
-				Signin
+				Sign in
 			</button>
 		</form>
 	);

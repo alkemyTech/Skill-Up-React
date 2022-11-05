@@ -17,35 +17,52 @@ const Navbar = () => {
 
 	return (
 		<header className="flex justify-between items-center bg-ct-primary-base p-4">
-			<img src={logo} alt="logo" tabIndex="0" />
+			<Link to="/">
+				<img src={logo} alt="logo" tabIndex="0" />
+			</Link>
 			<nav>
 				{isLogged ? (
 					<>
 						<ul className="hidden lg:flex ">
 							<li className="flex justify-center items-center">
-								<a className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+								<Link
+									to="/deposit"
+									className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
 									Carga de saldo
-								</a>
+								</Link>
 							</li>
 							<li className="flex justify-center items-center">
-								<a className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+								<Link
+									to="/bills"
+									className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
 									Gastos
-								</a>
+								</Link>
 							</li>
 							<li className="flex justify-center items-center">
-								<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+								<Link
+									to="/balance"
+									className="text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
 									Balance
-								</a>
+								</Link>
 							</li>
 							<li className="flex justify-center items-center">
-								<a className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+								<Link
+									to="/transactions"
+									className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
 									Movimientos
-								</a>
+								</Link>
 							</li>
 							<li className="flex justify-center items-center">
-								<a className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200">
+								<Link
+									to="/transfer"
+									className="transition-all ease-in-out duration-200 text-ct-neutral-ligth-base px-2 py-1 mx-4 cursor-pointer hover:text-ct-neutral-medium-200"
+								>
 									Envio de dinero
-								</a>
+								</Link>
 							</li>
 							<li className="flex justify-center">
 								<Button variant="secondary" onClick={handlerLogin}>
@@ -71,4 +88,3 @@ const Navbar = () => {
 };
 
 export { Navbar };
-
