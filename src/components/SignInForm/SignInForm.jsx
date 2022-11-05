@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heading } from 'src/components/Heading';
 import { Input } from 'src/components/SignInForm/Input';
-import { UserRepository } from 'src/services/user.repository';
+import { UsersRepository } from 'src/repositories/users.repository';
 import { ErrorMessage } from './ErrorMessage';
 
 const regexValidator = {
@@ -43,9 +43,9 @@ export const SignInForm = ({ className }) => {
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				UserRepository().registerUser(formValues);
+				UsersRepository().register(formValues);
 			}}
-			className={`${className} border p-4 flex flex-col gap-5 max-w-md border-ct-primary-100 rounded bg-ct-primary-100/10 mx-auto`}
+			className={`${className} mx-auto flex max-w-md flex-col gap-5 rounded border border-ct-primary-100 bg-ct-primary-100/10 p-4`}
 		>
 			<Heading className="m-auto text-ct-primary-600">Signin</Heading>
 			<Input
@@ -97,7 +97,7 @@ export const SignInForm = ({ className }) => {
 				/>
 
 				<ErrorMessage
-					className={`absolute inset-0-0 w-full h-full`}
+					className={`inset-0-0 absolute h-full w-full`}
 					error={touchedFields.password && errorFields.password}
 				>
 					Tip: 8 caracters beetwen uppercase, lowercase and numbers.
@@ -116,7 +116,7 @@ export const SignInForm = ({ className }) => {
 					required
 				/>
 				<ErrorMessage
-					className={`absolute inset-0-0 w-full h-full`}
+					className={`inset-0-0 absolute h-full w-full`}
 					error={
 						(touchedFields.confirmPassword && errorFields.confirmPassword) ||
 						(touchedFields.confirmPassword && !isPasswordMatch)
@@ -125,7 +125,7 @@ export const SignInForm = ({ className }) => {
 					Tip: Password should match.
 				</ErrorMessage>
 			</div>
-			<button type="submit" className="border mt-6 p-2 bg-ct-primary-300 rounded text-ct-primary-50 font-bold">
+			<button type="submit" className="mt-6 rounded border bg-ct-primary-300 p-2 font-bold text-ct-primary-50">
 				Signin
 			</button>
 		</form>
