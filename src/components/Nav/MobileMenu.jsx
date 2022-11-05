@@ -1,4 +1,6 @@
 import { Button } from '../Button';
+import close from '../../assets/close.svg';
+import { ButtonLogout } from '../ButtonLogout';
 
 const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 	let positionPanel = showMenu ? 'right-0' : 'right-[-20rem]';
@@ -8,11 +10,18 @@ const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 	return (
 		<div
 			className={`transition-all ease-in-out duration-1000 bg-black-transparent fixed ${opacityBlackout} ${positionBlackout} top-0 w-full h-full lg:hidden`}
-			onClick={() => setShowMenu(false)}
 		>
 			<ul
 				className={`transition-all ease-in-out duration-1000 fixed bg-ct-primary-base top-0 ${positionPanel} w-60 h-full flex flex-col justify-evenly`}
 			>
+				<li>
+					<img
+						src={close}
+						alt="close button"
+						className="absolute w-6 top-4 left-4 text-ct-neutral-ligth-base"
+						onClick={() => setShowMenu(false)}
+					/>
+				</li>
 				<li>
 					<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Carga de saldo</a>
 				</li>
@@ -29,9 +38,9 @@ const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 					<a className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Envio de dinero</a>
 				</li>
 				<li className="px-2 mx-4">
-					<Button variant="secondary" onClick={handlerLogin}>
+					<ButtonLogout variant="secondary" handlerLogin={handlerLogin}>
 						Logout
-					</Button>
+					</ButtonLogout>
 				</li>
 			</ul>
 		</div>

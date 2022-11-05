@@ -1,21 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    creditsAvailable: 10
-}
+	creditsAvailable: 10,
+};
 
-export const todoSlice = createSlice({
-    name: 'todos',
-    initialState,
-    reducers: {
-        addCredit: (state, action) => {
-            state.creditsAvailable += action.payload
-        }
-    }
+export const creditSlice = createSlice({
+	name: 'credit',
+	initialState,
+	reducers: {
+		addCredit: (state, action) => {
+			state.creditsAvailable += action.payload;
+		},
+		clearCredit: (state) => {
+			state.creditsAvailable = initialState.creditsAvailable;
+		},
+	},
 });
 
-// this is for dispatch
-export const { addCredit } = todoSlice.actions;
+export const { addCredit, clearCredit } = creditSlice.actions;
 
-// this is for configureStore
-export default todoSlice.reducer;
+export default creditSlice.reducer;
+
