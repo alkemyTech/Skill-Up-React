@@ -5,7 +5,7 @@ function filterTransactions({array, coin, setCurrentPage, input, amount}) {
 
     let debounceInput = useDebounce(input, 1500)
     let debouncedAmount = useDebounce(amount, 1500)
-    console.log(debounceInput)
+
     const newTransactions = array.sort((a,b) => new Date(b.date) - new Date(a.date))
 
     const filterByCoin = () => {

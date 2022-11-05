@@ -1,7 +1,26 @@
 import ChevronLeft from './Icons/ChevronLeft'
 import ChevronRight from './Icons/ChevronRight'
 
-function Paginate({handleNextPage, handlePrevPage, handleSelectPage, currentPage, numberOfPages, maxPages}) {
+function Paginate({setCurrentPage, currentPage, numberOfPages, maxPages}) {
+
+    const handleNextPage = () => {
+      if (currentPage === maxPages) {
+          return
+      }
+      setCurrentPage(prevPage => prevPage + 1)
+    }
+
+    const handleSelectPage = (page) => {
+      if (page === "...") return 
+      setCurrentPage(page)
+    }
+
+    const handlePrevPage = () => {
+      if (currentPage === 1) {
+          return
+      }
+      setCurrentPage(prevPage => prevPage -  1)
+    }
 
     return (
       <div className="flex mt-auto items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">

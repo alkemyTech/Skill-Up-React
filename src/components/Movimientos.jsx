@@ -61,32 +61,13 @@ function Movimientos() {
 
   const arrayLength = filteredArray.length
 
-  const {paginationRange, TOTAL_PAGES, MIN_PAGES} = usePagination(arrayLength, currentPage)
+  const {paginationRange, TOTAL_PAGES} = usePagination(arrayLength, currentPage)
 
   const paginationDataDisplay = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PAGE_SIZE; 
     const lastPageIndex = firstPageIndex + PAGE_SIZE;
     return filteredArray.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, filteredArray])
-
-  const handleNextPage = () => {
-    if (currentPage === TOTAL_PAGES) {
-        return
-    }
-    setCurrentPage(prevPage => prevPage + 1)
-  }
-
-  const handleSelectPage = (page) => {
-    if (page === "...") return 
-    setCurrentPage(page)
-  }
-
-  const handlePrevPage = () => {
-    if (currentPage === MIN_PAGES) {
-        return
-    }
-    setCurrentPage(prevPage => prevPage -  1)
-  }
 
   return (
     <div>
@@ -113,9 +94,7 @@ function Movimientos() {
           })
         }  
         <Paginate 
-          handleNextPage={handleNextPage} 
-          handlePrevPage={handlePrevPage} 
-          handleSelectPage={handleSelectPage} 
+          setCurrentPage={setCurrentPage}
           currentPage={currentPage} 
           numberOfPages={paginationRange} 
           maxPages={TOTAL_PAGES}
