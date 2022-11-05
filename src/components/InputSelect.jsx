@@ -1,11 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 
-function InputSelect() {
+function InputSelect({setCoin, coin}) {
+    
     const coinOptions = [{id: 1, name: "ARS"}, {id:2, name:"USD"}]
     
-    const [select, setSelect] = useState(false)
-    const [coin, setCoin] = useState("ARS")
+    const [select, setSelect] = useState(true)
 
     const selectCoin = (coin) => {
         setCoin(coin)
@@ -15,8 +15,8 @@ function InputSelect() {
     return (
         <div className='mb-6'>
             <label id="listbox-label" className="block text-left text-sm font-medium text-gray-700">Moneda</label>
-            <div className="relative flex mt-[2px]">
-                <button onClick={() => setSelect(!select)} type="button" className="relative w-full cursor-pointer rounded-md border border-indigo-300 bg-white py-[6px] pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
+            <div className="relative flex mt-[3px]">
+                <button onClick={() => setSelect(!select)} type="button" className="relative w-full cursor-pointer rounded-md border border-indigo-300 bg-white py-[5.5px] pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                     <span className="flex items-center">
                         <span className="block truncate">{coin}</span>
                     </span>
@@ -26,22 +26,7 @@ function InputSelect() {
                         </svg>
                     </span>
                 </button>
-                {/* <!--
-                Select popover, show/hide based on select state.
-
-                Entering: ""
-                    From: ""
-                    To: ""
-                Leaving: "transition ease-in duration-100"
-                    From: "opacity-100"
-                    To: "opacity-0"
-                --> */}
-                <ul className={`${select && "hidden"} absolute top-9 z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`} tabIndex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
-                {/* <!--
-                    Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
-
-                    Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
-                --> */}
+                <ul className={`${select ? "opacity-0 hidden" : "opacity-100"} absolute transition ease-in duration-100 top-9 z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`} tabIndex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
                     {
                         coinOptions.map(coinOption => {
                             return(

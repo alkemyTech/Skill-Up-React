@@ -1,6 +1,11 @@
 import Search from "./Icons/Search"
 
-function Input() {
+function Input({setConcept}) {
+
+    const handleConcept = (e) => {
+      setConcept(e.target.value)
+    }
+
     return (
       <div className="mb-6">
         <label htmlFor="concepto" className="block text-left text-sm font-medium text-gray-700">
@@ -8,6 +13,7 @@ function Input() {
         </label>
         <div className="relative mt-1 rounded-md shadow-sm">
           <input
+            onChange={handleConcept}
             type="text"
             name="concepto"
             id="concepto"
