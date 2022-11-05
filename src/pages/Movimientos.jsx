@@ -2,9 +2,11 @@ import { useMemo, useState } from 'react'
 import usePagination from '../hooks/usePagination'
 import filterTransactions from '../utils/filterTransactions'
 import formatDate from '../utils/formatDate'
-import Filters from './Filters'
-import House from './Icons/House'
-import Paginate from './Paginate'
+import Filters from '../components/Filters'
+import House from '../components/Icons/House'
+import Paginate from '../components/Paginate'
+import ErrorMessage from '../components/ErrorMessage'
+import Loading from '../components/Loading'
 
 const transactions = [{amount: 1500, coin: "ARS", concept: "Fulbo", date: "2022-11-01T19:57:44.965Z"}, {amount: 1300, coin: "ARS", concept: "Fulbo", date: "2022-12-03T19:57:44.965Z"}, 
 {amount: 1500, coin: "ARS", concept: "Hogar", date: "2022-11-02T19:57:44.965Z"}, {amount: 200, coin: "ARS", concept: "Hogar", date: "2022-11-05T19:57:44.965Z"}, 
@@ -51,7 +53,10 @@ function Movimientos() {
   
   const [currentPage, setCurrentPage] = useState(1)
   // const {fetchedData, loading, error} = useFetchData({method: "get", url: "/transactions", headers: {Accept: "application/json", Authorization: authToken}})
-  
+
+  let loading = false
+  let error = false
+
   // Filters
   const [coin, setCoin] = useState("ARS")
   const [input, setConcept] = useState("")
@@ -70,7 +75,14 @@ function Movimientos() {
   }, [currentPage, filteredArray])
 
   return (
-    <div>
+    <div className='max-w-lg mx-auto my-5'>
+      { loading && 
+        <Loading />
+      }
+      {
+        error && 
+        <ErrorMessage />
+      }
       <Filters
         coin={coin}
         setCoin={setCoin} 
