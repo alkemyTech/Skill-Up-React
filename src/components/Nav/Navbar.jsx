@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
-
 import { useState } from 'react';
 import logo from '../../assets/alkemy_logo.svg';
-import hamburger from '../../assets/menu.svg';
 import { MobileMenu } from './MobileMenu';
 import { Button } from '../Button';
+import avatar from '../../assets/avatar.svg';
+import { Heading } from '../Heading';
+import { Text } from '../Text';
+import { ButtonLogout } from '../ButtonLogout';
 
-const Navbar = () => {
+const Navbar = ({ isVisible, setIsVisible }) => {
 	const [isLogged, setIsLogged] = useState(true);
 	const [showMenu, setShowMenu] = useState(false);
 
@@ -64,16 +66,28 @@ const Navbar = () => {
 									Envio de dinero
 								</Link>
 							</li>
-							<li className="flex justify-center">
-								<Button variant="secondary" onClick={handlerLogin}>
-									Logout
-								</Button>
+							<li className="flex justify-center ml-8">
+								<img src={avatar} alt="avatar" className="w-10 cursor-pointer" onClick={() => setIsVisible(true)} />
+								{isVisible && (
+									<div
+										data-close={true}
+										className={`w-auto  flex-col items-center absolute right-0 top-[72px] bg-ct-secondary-600 p-4  rounded-bl-lg shadow-xl `}
+									>
+										<Text as="p" className="mb-3" data-close={true}>
+											Lucía Cárdenas
+										</Text>
+										<ButtonLogout variant="mini" handlerLogin={handlerLogin} close={true} />
+									</div>
+								)}
 							</li>
 						</ul>
-						{<MobileMenu setShowMenu={setShowMenu} showMenu={showMenu} handlerLogin={handlerLogin} />}
-						<div className="w-7 lg:hidden align-middle" onClick={handlerShowMenu}>
-							<img src={hamburger} alt="menu" />
+						<div className="flex items-center gap-4 lg:hidden" onClick={handlerShowMenu}>
+							<img src={avatar} alt="menu" className="w-10" />
+							<Heading as="h3" className="text-ct-neutral-ligth-base ">
+								Lucía Cárdenas
+							</Heading>
 						</div>
+						{<MobileMenu showMenu={showMenu} setShowMenu={setShowMenu} handlerLogin={handlerLogin} />}
 					</>
 				) : (
 					<Link to="/login">
@@ -88,3 +102,4 @@ const Navbar = () => {
 };
 
 export { Navbar };
+

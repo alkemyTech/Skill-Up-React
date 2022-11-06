@@ -1,4 +1,5 @@
-import { Button } from '../Button';
+import close from '../../assets/close.svg';
+import { ButtonLogout } from '../ButtonLogout';
 import { Link } from 'react-router-dom';
 
 const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
@@ -15,24 +16,42 @@ const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 				className={`transition-all ease-in-out duration-1000 fixed bg-ct-primary-base top-0 ${positionPanel} w-60 h-full flex flex-col justify-evenly`}
 			>
 				<li>
-					<Link to="/deposit" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Carga de saldo</Link>
+					<img
+						src={close}
+						alt="close button"
+						className="absolute w-6 top-4 left-4 text-ct-neutral-ligth-base"
+						onClick={() => setShowMenu(false)}
+					/>
 				</li>
 				<li>
-					<Link to="/bills" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Gastos</Link>
+					<Link to="/deposit" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+						Carga de saldo
+					</Link>
 				</li>
 				<li>
-					<Link to="/balance" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Balance</Link>
+					<Link to="/bills" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+						Gastos
+					</Link>
 				</li>
 				<li>
-					<Link to="/transactions" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Movimientos</Link>
+					<Link to="/balance" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+						Balance
+					</Link>
 				</li>
 				<li>
-					<Link to ="/transfer" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">Envio de dinero</Link>
+					<Link to="/transactions" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+						Movimientos
+					</Link>
+				</li>
+				<li>
+					<Link to="/transfer" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+						Envio de dinero
+					</Link>
 				</li>
 				<li className="px-2 mx-4">
-					<Button variant="secondary" onClick={handlerLogin}>
+					<ButtonLogout variant="secondary" handlerLogin={handlerLogin}>
 						Logout
-					</Button>
+					</ButtonLogout>
 				</li>
 			</ul>
 		</div>

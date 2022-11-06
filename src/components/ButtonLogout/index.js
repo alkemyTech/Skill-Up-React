@@ -1,0 +1,2 @@
+export { ButtonLogout } from './ButtonLogout';
+
