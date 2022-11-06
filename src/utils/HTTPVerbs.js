@@ -1,4 +1,5 @@
 export const HTTPVerbs = /** @type {const} */ ({
-  POST: "POST",
-  GET: "GET",
+	POST: 'POST',
+	GET: 'GET',
+	PUT: 'PUT',
 });
