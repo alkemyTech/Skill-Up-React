@@ -1,3 +1,4 @@
+import { UserEndpointToModel } from 'src/adapters/UserEndpointToModel';
 import { AuthLoginPOSTEndpointSchema } from 'src/schemas/authLoginPOSTEndpoint.schema';
 import { CredendialsSchema } from 'src/schemas/credendials.schema';
 import { UserEndpointSchema } from 'src/schemas/userEndpoint.schema';
@@ -5,6 +6,7 @@ import { constants } from 'src/utils/constants';
 import { findAccessToken } from 'src/utils/findAccessToken';
 import { formatAccessToken } from 'src/utils/formatAccessToken';
 import { HTTPVerbs } from 'src/utils/HTTPVerbs';
+import { LSKeys } from 'src/utils/localStorageKeys';
 
 export const AuthRepository = (signal) => {
 	const baseUrl = constants.API_URL + 'auth';
@@ -27,6 +29,7 @@ export const AuthRepository = (signal) => {
 			}
 
 			const validatedResult = AuthLoginPOSTEndpointSchema.parse(result);
+			window.localStorage.setItem(LSKeys.accessToken, validatedResult.accessToken);
 			return validatedResult;
 		},
 
@@ -46,7 +49,7 @@ export const AuthRepository = (signal) => {
 			}
 
 			const validatedResult = UserEndpointSchema.parse(result);
-			return validatedResult;
+			return UserEndpointToModel(validatedResult);
 		},
 	};
 };

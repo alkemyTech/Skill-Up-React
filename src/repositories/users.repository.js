@@ -1,17 +1,10 @@
+import { UserEndpointToModel } from 'src/adapters/UserEndpointToModel';
 import { IdSchema } from 'src/schemas/id.schema';
 import { UsersCreateSchema } from 'src/schemas/userCreate.schema';
+import { userEditSchema } from 'src/schemas/userEdit.schema';
 import { UserEndpointSchema } from 'src/schemas/userEndpoint.schema';
 import { constants } from 'src/utils/constants';
 import { HTTPVerbs } from 'src/utils/HTTPVerbs';
-import { z } from 'zod';
-
-const userEditSchema = z.object({
-	first_name: z.string(),
-	last_name: z.string(),
-	email: z.string(),
-	password: z.string(),
-	roleId: IdSchema,
-});
 
 export const UsersRepository = (signal) => {
 	const baseUrl = constants.API_URL + 'users';
@@ -37,17 +30,14 @@ export const UsersRepository = (signal) => {
 
 			const validatedResult = UserEndpointSchema.parse(result);
 
-			return {
-				...validatedResult,
-				createdAt: new Date(validatedResult.createdAt),
-				updatedAt: new Date(validatedResult.updatedAt),
-			};
+			return UserEndpointToModel(validatedResult);
 		},
 
-		edit: async (editUser) => {
+		edit: async ({ userId, editUser }) => {
+			const _userId = IdSchema.parse(userId);
 			const body = userEditSchema.parse(editUser);
 
-			const response = await fetch(baseUrl, {
+			const response = await fetch(`${baseUrl}/${_userId}`, {
 				headers: {
 					'Content-Type': 'application/json',
 					accept: 'application/json',
@@ -62,7 +52,7 @@ export const UsersRepository = (signal) => {
 			if (!response.ok) {
 				throw new Error(result.error);
 			}
-			// Thsi user iformation is not updated
+			// Thsi user information is not updated
 			const validatedResult = UserEndpointSchema.parse(result);
 			return validatedResult;
 		},
