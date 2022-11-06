@@ -1,14 +1,14 @@
 import React from "react";
 
-const Button = ({ onClick, Color,Text, Height, Width }) => {
+const Button = ({ Action, Variant,Text, Height, Width }) => {
     return (
         <button
             style={{
-                colors: Color,
+                color: Variant,
                 width: Width,
                 height: Height
             }}
-            onClick={onClick}
+            onClick={Action}
         >{Text}
         </button>
     );
