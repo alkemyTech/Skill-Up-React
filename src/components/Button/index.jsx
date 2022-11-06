@@ -25,6 +25,13 @@ export const Button = ({ variant, children, disabled, style, ...props }) => {
 				>
 					{children}
 				</button>
+			) : variant === 'mini' ? (
+				<button
+					{...props}
+					className="transition-color max-w-fit cursor-default rounded-md border border-white bg-transparent py-2 px-4 text-[12px] text-white duration-300 hover:bg-white hover:bg-opacity-5 lg:cursor-pointer"
+				>
+					{children}
+				</button>
 			) : (
 				<button {...props} />
 			)}

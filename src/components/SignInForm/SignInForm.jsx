@@ -152,7 +152,7 @@ export const SignInForm = ({ accounstRepository, authRepository, usersRepository
 					required
 				/>
 
-				<ErrorMessage className={`inset-0-0 absolute h-full w-full`} error={isConfirmPasswordErrorMessageVisible}>
+				<ErrorMessage className="inset-0-0 absolute h-full w-full" error={isConfirmPasswordErrorMessageVisible}>
 					Tip: Password should match.
 				</ErrorMessage>
 			</div>
