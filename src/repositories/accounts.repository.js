@@ -16,12 +16,15 @@ export const AccounstRepository = (signal) => {
 			const body = AccountsCreateSchema.parse(accountCreate);
 			const accessToken = findAccessToken();
 
-			const response = fetch(baseUrl, {
+			const response = await fetch(baseUrl, {
 				method: HTTPVerbs.POST,
-				headers: { 'Content-Type': 'application/json', accept: 'application/json' },
-				Authorization: formatAccessToken(accessToken),
+				headers: {
+					'Content-Type': 'application/json',
+					accept: 'application/json',
+					Authorization: formatAccessToken(accessToken),
+				},
 				signal,
-				body,
+				body: JSON.stringify(body),
 			});
 
 			const result = await response.json();

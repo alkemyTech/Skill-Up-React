@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import creditReducer from '../features/credit/creditSlice';
-import userReducer from './../features/users/userSlice';
+import creditReducer from 'src/features/credit/creditSlice';
+import userReducer from 'src/features/users/userSlice';
 
 export default configureStore({
 	reducer: {
@@ -8,4 +8,3 @@ export default configureStore({
 		user: userReducer,
 	},
 });
-

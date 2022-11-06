@@ -7,7 +7,7 @@ export const Input = React.forwardRef(
 	 * @property {string} [label]
 	 * @param {React.ComponentProps<"input"> & CustomProps} props
 	 */
-	function Input({ label, className, error, onError, onChange, onTouch, pattern, ...props }, ref) {
+	function Input({ label, className = '', error, onError, onChange, onTouch, pattern, ...props }, ref) {
 		const id = React.useId();
 		const [touched, setTouched] = React.useState(false);
 
@@ -39,8 +39,8 @@ export const Input = React.forwardRef(
 					onChange={_onChange}
 					id={id}
 					className={`${className} ${
-						error ? 'border-red-500' : ''
-					} border border-ct-primary-100 rounded px-2 py-1 outline-ct-secondary-200`}
+						error ? 'border-red-500' : 'border-ct-primary-100'
+					} rounded border px-2 py-1 outline-ct-secondary-200`}
 				/>
 			</div>
 		);
