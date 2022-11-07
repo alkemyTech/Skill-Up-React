@@ -7,9 +7,10 @@ import EnvioDinero from "./pages/EnvioDinero";
 import Gastos from "./pages/Gastos";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Movimiento from "./pages/Movimiento";
 import NotFound from "./pages/NotFound";
 import NavBar from "./components/NavBar";
+import Movimientos from "./pages/Movimientos";
+
 function App() {
 	return (
 		<div className="App bg-stone-200">
@@ -20,11 +21,10 @@ function App() {
 				<Route path="/carga-saldo" element={<CargaSaldo />} />
 				<Route path="/gastos" element={<Gastos />} />
 				<Route path="/balance" element={<Balance />} />
-				<Route path="/movimientos" element={<Movimiento />} />
+				<Route path="/movimientos" element={<Movimientos />} />
 				<Route path="/envio-de-dinero" element={<EnvioDinero />} />
-				<Route path="*" component={<NotFound />} />
+				<Route path="*" element={<NotFound />} />
 			</Routes>
-
 			<Footer />
 		</div>
 	);
