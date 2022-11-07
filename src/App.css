@@ -28,11 +28,7 @@ body {
 }
 
 select{
-	text-indent: 20px;
-	padding: px;
-	appearance: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
+	text-indent: 10px;
 }
 
 select:focus{

@@ -102,7 +102,7 @@ const CargaDeSaldoForm = () => {
 							Moneda a utilizar:
 						</span>
 						<select
-							className="pt-1.5 pb-1 rounded"
+							className="pt-2 pb-2 rounded"
 							name="moneda"
 							onChange={handleOnChange}
 						>
