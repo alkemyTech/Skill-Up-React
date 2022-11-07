@@ -1,14 +1,12 @@
 export class User {
 	constructor(props) {
-		this.separator = '?accountId=';
 		this.id = props.id;
 		this.last_name = props.last_name;
 		this.email = props.email;
-		this.password = props.password;
 		this.points = props.points;
 		this.roleId = props.roleId;
-		this.createdAt = new Date(props.createdAt);
-		this.updatedAt = new Date(props.updatedAt);
+		// this.createdAt = new Date(props.createdAt);
+		// this.updatedAt = new Date(props.updatedAt);
 
 		const { first_name_decoded, accountId, first_name } = this.parseFirstName(props.first_name);
 		this.first_name = first_name;
