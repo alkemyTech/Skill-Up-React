@@ -18,7 +18,6 @@ export function useAccessControl() {
     password: "",
   });
 
-  
   // SIGN-UP
   function signUp(e) {
     e.preventDefault();
@@ -99,7 +98,8 @@ export function useAccessControl() {
 
     axios
       .get(
-        "http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/auth/me"
+        "http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/auth/me",
+        headers
       )
       .then((res) => {
         console.log("LoginUserResualt: ", res);

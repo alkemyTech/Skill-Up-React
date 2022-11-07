@@ -12,7 +12,7 @@ function Login() {
   return (
     <>
       <main>
-        <section className="main flex flex-col justify-center items-center w-full h-auto py-10 bg-stone-200 text-violet-900">
+        <section className="main flex flex-col justify-center items-center w-full h-auto py-20 bg-stone-200 text-violet-900">
           <section className="py-12">
             <h2 className="mb-4 text-4xl font-bold">
               Bienvenido a Alkemy Bank
