@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 // import logo from "../assets/img/favi.jfif";
 
-
 function Login() {
   return (
     <>
@@ -32,9 +31,11 @@ function Login() {
               Inicia sesión
             </button>
           </form>
-          <span className="underline font-medium">
-            ¿Aún no tenés cuenta? Registrate acá
-          </span>
+          <Link className="mt-7" to={`/registrar`}>
+            <span className="underline font-medium">
+              ¿Aún no tenés cuenta? Registrate acá
+            </span>
+          </Link>
         </section>
       </main>
     </>
