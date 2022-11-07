@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
+import { useAccessControl } from "../hooks/useAccessControl";
 // import logo from "../assets/img/favi.jfif";
 
 function Login() {
+  const { setDataLogin, dataLogin, login } = useAccessControl();
+
+  const handleChangeValueLogin = (e) => {
+    setDataLogin({ ...dataLogin, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
       <main>
@@ -12,17 +19,24 @@ function Login() {
             </h2>
             <h4 className="mt-4 text-2xl font-semibold">Inicia sesión</h4>
           </section>
-          <form className="flex flex-col items-center">
+          <form
+            onSubmit={(e) => login(e)}
+            className="flex flex-col items-center"
+          >
             <label className="flex flex-col items-center">
               <input
                 className="w-96 p-2 mb-5 border-2 border-solid rounded-lg border-violet-900 placeholder:pl-3 placeholder:text-violet-900"
                 type="email"
+                onChange={(e) => handleChangeValueLogin(e)}
+                value={dataLogin.email}
                 placeholder="Ingresa tu email"
                 name="email"
               />
               <input
                 className="w-96 p-2 mt-3 border-2 border-solid rounded-lg border-violet-900 placeholder:pl-3 placeholder:text-violet-900"
                 type="password"
+                onChange={(e) => handleChangeValueLogin(e)}
+                value={dataLogin.password}
                 placeholder="Ingresa tu contraseña"
                 name="password"
               />

@@ -18,6 +18,7 @@ export function useAccessControl() {
     password: "",
   });
 
+  
   // SIGN-UP
   function signUp(e) {
     e.preventDefault();
