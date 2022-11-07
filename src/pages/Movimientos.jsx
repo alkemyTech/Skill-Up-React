@@ -8,6 +8,7 @@ import Paginate from '../components/Paginate'
 import ErrorMessage from '../components/ErrorMessage'
 import Loading from '../components/Loading'
 import Title from '../components/Title'
+import ListSkeleton from '../components/ListSkeleton'
 
 const transactions = [{amount: 1500, coin: "ARS", concept: "Fulbo", date: "2022-11-01T19:57:44.965Z"}, {amount: 1300, coin: "ARS", concept: "Fulbo", date: "2022-12-03T19:57:44.965Z"}, 
 {amount: 1500, coin: "ARS", concept: "Hogar", date: "2022-11-02T19:57:44.965Z"}, {amount: 200, coin: "ARS", concept: "Hogar", date: "2022-11-05T19:57:44.965Z"}, 
@@ -78,7 +79,7 @@ function Movimientos() {
   return (
     <div className='max-w-lg mx-auto my-5'>
       { loading && 
-        <Loading />
+        <ListSkeleton rows={10} />
       }
       {
         error && 
@@ -92,7 +93,6 @@ function Movimientos() {
         setAmount={setAmount}
       />
       <div className='min-h-[710px] flex flex-col'>
-        <Title type={"p"} className={"text-xl"} text={"Hola"} />
         {
           paginationDataDisplay.map((movimiento, index) => {
             return (
