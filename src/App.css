@@ -26,3 +26,20 @@ body {
 	font-size: calc(10px + 2vmin);
 	color: rgb(0, 0, 0);
 }
+
+select{
+	text-indent: 20px;
+	padding: px;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+select:focus{
+	outline: none;
+}
+
+select option{
+	padding-block: 5px;
+}
+
