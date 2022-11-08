@@ -5,8 +5,6 @@ import Select from "react-select";
 
 const CargaDeSaldoForm = () => {
 	const [valorDolar, setValorDolar] = useState(0);
-	const [valorIntercambio, setValorIntercambio] = useState(0);
-	console.log(valorIntercambio);
 
 	const [data, setData] = useState({
 		monto: "",
@@ -19,6 +17,7 @@ const CargaDeSaldoForm = () => {
 			.then((res) => res.json())
 			.then((res) => setValorDolar(parseInt(res[0].casa.compra)));
 	}, []);
+
 	const handleOnChange = (e) => {
 		const { value, name } = e.target;
 		setData((prevData) => {
@@ -68,8 +67,8 @@ const CargaDeSaldoForm = () => {
 			cargaDeSaldo();
 		}
 	};
+
 	const cargaDeSaldo = () => {
-		const monto = valorIntercambio > 0 ? valorIntercambio : data.monto;
 		console.log(monto);
 		fetch(
 			"http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/268",
@@ -77,7 +76,7 @@ const CargaDeSaldoForm = () => {
 				body: JSON.stringify({
 					type: "topup",
 					concept: data.concepto,
-					amount: parseInt(monto),
+					amount: data.monto,
 				}),
 				headers: {
 					Accept: "application/json",
