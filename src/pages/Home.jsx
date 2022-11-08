@@ -5,7 +5,7 @@ import { BsPeople, BsArrowDownSquare, BsGraphUp, BsCoin, BsCalendarCheck, BsCash
 function Home() {
   return (
     <div>
-      <section className="w-full min-h-screen bg-white ">
+      <section className="w-full min-h-screen bg-white">
         <div className="container relative flex flex-col px-6 py-20 mx-auto">
             <section className="flex items-center flex-1">
                 <div className="flex flex-col w-full ">
