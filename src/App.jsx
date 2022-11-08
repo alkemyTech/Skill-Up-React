@@ -12,64 +12,60 @@ import NotFound from "./pages/NotFound";
 import NavBar from "./components/NavBar";
 import Movimientos from "./pages/Movimientos";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
+import AuthContextProvider from "./context/loginContext";
 
 function App() {
+
+  console.log(JSON.parse(localStorage.getItem('user')).isLogin)
+
   return (
     <div className="App bg-stone-200">
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/registrar" element={<SignUp />} />
-        <Route
-          path="/home"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/carga-saldo"
-          element={
-            <ProtectedRoute>
-              <CargaSaldo />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/gastos"
-          element={
-            <ProtectedRoute>
-              <Gastos />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/balance"
-          element={
-            <ProtectedRoute>
-              <Balance />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/movimientos"
-          element={
-            <ProtectedRoute>
-              <Movimientos />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/envio-de-dinero"
-          element={
-            <ProtectedRoute>
-              <EnvioDinero />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+        <AuthContextProvider>
+          <Routes>
+              <Route element={<ProtectedRoute />}>
+                <Route
+                  path="/home"
+                  element={
+                    <Home />
+                  }
+                />
+                <Route
+                  path="/carga-saldo"
+                  element={
+                    <CargaSaldo />
+                  }
+                />
+                <Route
+                  path="/gastos"
+                  element={
+                    <Gastos />
+                  }
+                />
+                <Route
+                  path="/balance"
+                  element={
+                    <Balance />
+                  }
+                />
+                <Route
+                  path="/movimientos"
+                  element={
+                    <Movimientos />
+                  }
+                />
+                <Route
+                  path="/envio-de-dinero"
+                  element={
+                    <EnvioDinero />
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+              <Route path="/" element={<Login />} />
+              <Route path="/registrar" element={<SignUp />} />
+          </Routes>
+        </AuthContextProvider>
       <Footer />
     </div>
   );

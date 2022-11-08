@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import useFetchData from "./useFetchData";
 
 export function useAccessControl() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -75,7 +74,6 @@ export function useAccessControl() {
       setIsAuthenticated(false);
     }
   }
-  console.log(isAuthenticated)
   // GET LOGIN
   async function getLogin(token) {
     try {
