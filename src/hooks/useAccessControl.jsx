@@ -74,6 +74,7 @@ export function useAccessControl() {
 			const data = await response.json();
 			setDataLogin({ ...dataLogin, email: "", password: "" });
 			setIsAuthenticated(true);
+			console.log(data.accessToken)
 			getLogin(data.accessToken);
 		} catch (error) {
 			console.log("Error: ", error);

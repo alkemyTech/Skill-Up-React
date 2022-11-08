@@ -1,14 +1,24 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import Select from "react-select";
 
 const CargaDeSaldoForm = () => {
+	const [valorDolar, setValorDolar] = useState(0);
+	const [valorIntercambio, setValorIntercambio] = useState(0);
+	console.log(valorIntercambio);
+
 	const [data, setData] = useState({
 		monto: "",
 		moneda: "",
 		concepto: "",
 	});
-	console.log(data);
+
+	useEffect(() => {
+		fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
+			.then((res) => res.json())
+			.then((res) => setValorDolar(parseInt(res[0].casa.compra)));
+	}, []);
 	const handleOnChange = (e) => {
 		const { value, name } = e.target;
 		setData((prevData) => {
@@ -34,13 +44,15 @@ const CargaDeSaldoForm = () => {
 			console.log("Monto no valido");
 		}
 
-		if (
-			data.moneda === "ARS" ||
-			data.moneda === "USD" ||
-			data.moneda === "Euros"
-		) {
-			console.log("moneda valido");
-			monedaValida = true;
+		if (data.moneda === "ARS" || data.moneda === "USD") {
+			if (data.moneda === "USD") {
+				data.monto = data.monto * valorDolar;
+				data.concepto = data.concepto + " (Eran USD)";
+				monedaValida = true;
+			} else {
+				console.log("moneda valido");
+				monedaValida = true;
+			}
 		} else {
 			console.log("moneda no valido");
 		}
@@ -51,29 +63,33 @@ const CargaDeSaldoForm = () => {
 		} else {
 			console.log("Concepto no valido");
 		}
-
+		console.log("Moneda" + " : " + monedaValida);
 		if (monedaValida && conceptoValido && montoValido) {
 			cargaDeSaldo();
 		}
 	};
 	const cargaDeSaldo = () => {
+		const monto = valorIntercambio > 0 ? valorIntercambio : data.monto;
+		console.log(monto);
 		fetch(
-			"http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/60",
+			"http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/268",
 			{
 				body: JSON.stringify({
 					type: "topup",
 					concept: data.concepto,
-					amount: parseInt(data.monto),
+					amount: parseInt(monto),
 				}),
 				headers: {
 					Accept: "application/json",
 					Authorization:
-						"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6NDUzLCJyb2xlSWQiOjJ9LCJpYXQiOjE2Njc4MzQ5MzMsImV4cCI6MTY2NzkyMTMzM30.nNtKuWEs9WmNbtaCfXC08p0rKnPQeqTFa7RJU_Wq9hk",
+						"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTE4MSwicm9sZUlkIjoyfSwiaWF0IjoxNjY3OTMxMTEwLCJleHAiOjE2NjgwMTc1MTB9.XcqGfeGZl-WyJWuevCihYgMEdSKZVrhM82uQrQIFbn4",
 					"Content-Type": "application/json",
 				},
 				method: "POST",
 			}
-		).then((res) => console.log(res.json()));
+		)
+			.then((res) => res.json())
+			.then((data) => console.log(data));
 	};
 
 	return (
@@ -109,7 +125,6 @@ const CargaDeSaldoForm = () => {
 							<option value="">Elegí tu moneda</option>
 							<option value="ARS">ARS</option>
 							<option value="USD">USD</option>
-							<option value="Euros">Euros</option>
 						</select>
 					</div>
 				</div>
@@ -141,31 +156,9 @@ const CargaDeSaldoForm = () => {
 export default CargaDeSaldoForm;
 
 /* 
-
-User response
-{
-  "id": 329, // UserID
-  "first_name": "Nicolas",
-  "last_name": "Perez",
-  "email": "nicop@example.com",
-  "password": "$2b$10$i95jOhrGwWsNJrIVeaLPheL0BEn/g5pUu0mKTaXv4W1PCh8LBiWJu", // abc123
-  "points": 50,
-  "roleId": 2,
-  "updatedAt": "2022-11-03T14:57:56.096Z",
-  "createdAt": "2022-11-03T14:57:56.096Z"
-} 
-*/
-
-/* 
-Account response  // topup => Deposito => Carga y  payment => pago (xd)
-
-{
-  "id": 47, // AccounId
-  "creationDate": "2022-10-26T10:00:00.000Z",
-  "money": 200,
-  "isBlocked": false,
-  "userId": 329,
-  "updatedAt": "2022-11-03T15:33:37.709Z",
-  "createdAt": "2022-11-03T15:33:37.709Z"
-}
+	email: lgonzales@example.com
+	pass: lg12345
+	User Id: 1181
+	Account id: 268
+	Token 8/11: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTE4MSwicm9sZUlkIjoyfSwiaWF0IjoxNjY3OTMxMTEwLCJleHAiOjE2NjgwMTc1MTB9.XcqGfeGZl-WyJWuevCihYgMEdSKZVrhM82uQrQIFbn4
 */

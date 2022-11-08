@@ -10,8 +10,11 @@ function formatDate(date) {
     const hour = transformDate.getHours();
     const minutes = transformDate.getMinutes();
 
-    return `${month} ${day}, ${year}`
-    // return `${day} de ${month.slice(0,3)} de ${year} a las ${hour}:${minutes}`;
+    //return 
+    return {
+		tipo1: `${month} ${day}, ${year}`,
+        tipo2: `${day} ${month.slice(0, 3)}, ${year} a las ${hour}:${minutes}`
+	}
 }
 
 export default formatDate

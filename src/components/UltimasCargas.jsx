@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import formatDate from "../utils/formatDate";
 
 const UltimasCargas = () => {
 	const [cargas, setCargas] = useState([]);
@@ -10,7 +11,7 @@ const UltimasCargas = () => {
 				headers: {
 					Accept: "application/json",
 					Authorization:
-						"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6NDUzLCJyb2xlSWQiOjJ9LCJpYXQiOjE2Njc4MzQ5MzMsImV4cCI6MTY2NzkyMTMzM30.nNtKuWEs9WmNbtaCfXC08p0rKnPQeqTFa7RJU_Wq9hk",
+						"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTE4MSwicm9sZUlkIjoyfSwiaWF0IjoxNjY3OTMxMTEwLCJleHAiOjE2NjgwMTc1MTB9.XcqGfeGZl-WyJWuevCihYgMEdSKZVrhM82uQrQIFbn4",
 				},
 			}
 		);
@@ -21,15 +22,17 @@ const UltimasCargas = () => {
 	useEffect(() => {
 		const getData = async () => {
 			const ultimosMovimientos = await getCargas();
-			const ultimasCargas = ultimosMovimientos.filter(
-				(carga) => carga.type === "topup"
-			);
+			const ultimasCargas =
+				(await ultimosMovimientos.filter(
+					(carga) => carga.type === "topup"
+				)) || [];
 			setCargas(ultimasCargas);
 		};
 		getData();
 	}, []);
 
 	const cargasElements = cargas.map((carga) => {
+		const date = formatDate(carga.date).tipo2;
 		return (
 			<div
 				className="p-6 rounded bg-cyan-600 text-white  w-fit"
@@ -45,7 +48,7 @@ const UltimasCargas = () => {
 				</div>
 				<div className="flex gap-2">
 					<span>Fecha: </span>
-					<span>{carga.date}</span>
+					<span>{date}</span>
 				</div>
 			</div>
 		);
