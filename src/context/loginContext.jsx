@@ -11,7 +11,7 @@ function AuthContextProvider({ children }) {
 
   //*******************  States **************************** //
 
-  const [isAuthenticated, setIsAuthenticated] = useState(() => JSON.parse(localStorage.getItem('user')).isLogin || false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => JSON.parse(localStorage.getItem('user')) || false);
   const [resultLogin, setResultLogin] = useState(null);
   const [token, setToken] = useState(null);
   const [dataLogin, setDataLogin] = useState({
@@ -77,7 +77,7 @@ function AuthContextProvider({ children }) {
       setDataLogin({ ...dataLogin, email: "", password: "" });
       setIsAuthenticated(true);
       getLogin(data.accessToken);
-      navigate('/home')
+      navigate('/')
     } catch (error) {
       console.log("Error: ", error);
       setDataLogin({ ...dataLogin, email: "", password: "" });

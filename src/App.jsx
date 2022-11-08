@@ -12,17 +12,15 @@ import NotFound from "./pages/NotFound";
 import NavBar from "./components/NavBar";
 import Movimientos from "./pages/Movimientos";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
-import AuthContextProvider from "./context/loginContext";
 
 function App() {
   return (
     <div className="App bg-stone-200">
-      <AuthContextProvider>
         <NavBar />
           <Routes>
               <Route element={<ProtectedRoute />}>
                 <Route
-                  path="/home"
+                  path="/"
                   element={
                     <Home />
                   }
@@ -59,11 +57,10 @@ function App() {
                 />
                 <Route path="*" element={<NotFound />} />
               </Route>
-              <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/registrar" element={<SignUp />} />
           </Routes>
       <Footer />
-     </AuthContextProvider>
     </div>
   );
 }
