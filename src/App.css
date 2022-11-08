@@ -36,7 +36,19 @@ body {
 	color: rgb(0, 0, 0);
 }
 
-.icons{
+select {
+	text-indent: 10px;
+}
+
+select:focus {
+	outline: none;
+}
+
+select option {
+	padding-block: 5px;
+}
+
+.icons {
 	margin: 0 auto;
 	font-size: 80px;
 	padding: 10px;

@@ -2,55 +2,58 @@ import { useState } from "react";
 import axios from "axios";
 
 export function useAccessControl() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [resultLogin, setResultLogin] = useState();
-  const [token, setToken] = useState("");
-  const [dataLogin, setDataLogin] = useState({
-    email: "",
-    password: "",
-  });
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [resultLogin, setResultLogin] = useState();
+	const [token, setToken] = useState("");
+	const [dataLogin, setDataLogin] = useState({
+		email: "",
+		password: "",
+	});
 
-  const [dataSignUp, setDataSignUp] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-  });
+	const [dataSignUp, setDataSignUp] = useState({
+		first_name: "",
+		last_name: "",
+		email: "",
+		password: "",
+	});
 
-  // SIGN-UP
-  async function signUp(e) {
-    e.preventDefault();
-    try {
-      console.log("SIGN-UP-FORM: ", dataSignUp);
-      const response = await fetch("http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/users",{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(dataSignUp),
-      })
-      const data = await response.json()
-      console.log("SIGN-UP-RESPONSE: ", data)
-      setDataSignUp({
-        ...dataSignUp,
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-      });
-    } catch (error) {
-      console.log("Error: ", error);
-      setDataSignUp({
-        ...dataSignUp,
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-      });
-    }
-  }
-  //
+	// SIGN-UP
+	async function signUp(e) {
+		e.preventDefault();
+		try {
+			console.log("SIGN-UP-FORM: ", dataSignUp);
+			const response = await fetch(
+				"http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/users",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Accept: "application/json",
+					},
+					body: JSON.stringify(dataSignUp),
+				}
+			);
+			const data = await response.json();
+			console.log("SIGN-UP-RESPONSE: ", data);
+			setDataSignUp({
+				...dataSignUp,
+				first_name: "",
+				last_name: "",
+				email: "",
+				password: "",
+			});
+		} catch (error) {
+			console.log("Error: ", error);
+			setDataSignUp({
+				...dataSignUp,
+				first_name: "",
+				last_name: "",
+				email: "",
+				password: "",
+			});
+		}
+	}
+	//
 
   // LOGIN
   async function login(e) {
@@ -95,13 +98,13 @@ export function useAccessControl() {
     } 
   }
 
-  return {
-    setDataLogin,
-    setDataSignUp,
-    login,
-    signUp,
-    isAuthenticated,
-    dataSignUp,
-    dataLogin,
-  };
+	return {
+		setDataLogin,
+		setDataSignUp,
+		login,
+		signUp,
+		isAuthenticated,
+		dataSignUp,
+		dataLogin,
+	};
 }

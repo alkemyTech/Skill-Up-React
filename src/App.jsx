@@ -15,13 +15,10 @@ import { ProtectedRoute } from "./utils/ProtectedRoute";
 import AuthContextProvider from "./context/loginContext";
 
 function App() {
-
-  console.log(JSON.parse(localStorage.getItem('user')).isLogin)
-
   return (
     <div className="App bg-stone-200">
-      <NavBar />
-        <AuthContextProvider>
+      <AuthContextProvider>
+        <NavBar />
           <Routes>
               <Route element={<ProtectedRoute />}>
                 <Route
@@ -65,8 +62,8 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/registrar" element={<SignUp />} />
           </Routes>
-        </AuthContextProvider>
       <Footer />
+     </AuthContextProvider>
     </div>
   );
 }
