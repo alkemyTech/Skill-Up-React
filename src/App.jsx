@@ -7,9 +7,11 @@ import EnvioDinero from "./pages/EnvioDinero";
 import Gastos from "./pages/Gastos";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import { SignUp } from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 import NavBar from "./components/NavBar";
 import Movimientos from "./pages/Movimientos";
+import { ProtectedRoute } from "./utils/ProtectedRoute";
 
 function App() {
 	return (
@@ -17,6 +19,7 @@ function App() {
 			<NavBar />
 			<Routes>
 				<Route path="/" element={<Login />} />
+				<Route path="/registrar" element={<SignUp />} />
 				<Route path="/home" element={<Home />} />
 				<Route path="/carga-saldo" element={<CargaSaldo />} />
 				<Route path="/gastos" element={<Gastos />} />
