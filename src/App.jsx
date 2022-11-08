@@ -14,65 +14,23 @@ import Movimientos from "./pages/Movimientos";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 
 function App() {
-  return (
-    <div className="App bg-stone-200">
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/registrar" element={<SignUp />} />
-        <Route
-          path="/home"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/carga-saldo"
-          element={
-            <ProtectedRoute>
-              <CargaSaldo />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/gastos"
-          element={
-            <ProtectedRoute>
-              <Gastos />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/balance"
-          element={
-            <ProtectedRoute>
-              <Balance />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/movimientos"
-          element={
-            <ProtectedRoute>
-              <Movimientos />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/envio-de-dinero"
-          element={
-            <ProtectedRoute>
-              <EnvioDinero />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </div>
-  );
+	return (
+		<div className="App">
+			<NavBar />
+			<Routes>
+				<Route path="/" element={<Login />} />
+				<Route path="/registrar" element={<SignUp />} />
+				<Route path="/home" element={<Home />} />
+				<Route path="/carga-saldo" element={<CargaSaldo />} />
+				<Route path="/gastos" element={<Gastos />} />
+				<Route path="/balance" element={<Balance />} />
+				<Route path="/movimientos" element={<Movimientos />} />
+				<Route path="/envio-de-dinero" element={<EnvioDinero />} />
+				<Route path="*" element={<NotFound />} />
+			</Routes>
+			<Footer />
+		</div>
+	);
 }
 
 export default App;
