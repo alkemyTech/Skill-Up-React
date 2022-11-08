@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useAccessControl } from "../hooks/useAccessControl";
+import { AuthContext } from "../context/loginContext";
+// import { useAccessControl } from "../hooks/useAccessControl";
 
 export function SignUp() {
-  const { signUp, dataSignUp, setDataSignUp } = useAccessControl();
+  const { signUp, dataSignUp, setDataSignUp } = useContext(AuthContext);
 
   const handleChangeValueSignUp = (e) => {
     setDataSignUp({ ...dataSignUp, [e.target.name]: e.target.value });

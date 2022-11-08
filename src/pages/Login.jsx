@@ -1,9 +1,9 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useAccessControl } from "../hooks/useAccessControl";
-// import logo from "../assets/img/favi.jfif";
+import { AuthContext } from "../context/loginContext";
 
 function Login() {
-  const { setDataLogin, dataLogin, login } = useAccessControl();
+  const { setDataLogin, dataLogin, login } = useContext(AuthContext);
 
   const handleChangeValueLogin = (e) => {
     setDataLogin({ ...dataLogin, [e.target.name]: e.target.value });
