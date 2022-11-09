@@ -13,7 +13,6 @@ import { AuthContext } from "../context/loginContext";
 
 
 function Home() {
-
 	return (
 		<div>
 			<section className="w-full min-h-screen bg-white ">
