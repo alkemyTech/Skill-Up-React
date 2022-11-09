@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import Select from "react-select";
+import { AuthContext } from "../context/loginContext";
 
 const CargaDeSaldoForm = () => {
+	const { isAuthenticated } = useContext(AuthContext);
 	const [valorDolar, setValorDolar] = useState(0);
 
 	const [data, setData] = useState({
@@ -69,7 +70,6 @@ const CargaDeSaldoForm = () => {
 	};
 
 	const cargaDeSaldo = () => {
-		console.log(monto);
 		fetch(
 			"http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/268",
 			{
@@ -80,8 +80,7 @@ const CargaDeSaldoForm = () => {
 				}),
 				headers: {
 					Accept: "application/json",
-					Authorization:
-						"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTE4MSwicm9sZUlkIjoyfSwiaWF0IjoxNjY3OTMxMTEwLCJleHAiOjE2NjgwMTc1MTB9.XcqGfeGZl-WyJWuevCihYgMEdSKZVrhM82uQrQIFbn4",
+					Authorization: `Bearer ${isAuthenticated.token}`,
 					"Content-Type": "application/json",
 				},
 				method: "POST",

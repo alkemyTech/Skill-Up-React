@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useEffect } from "react";
+import { AuthContext } from "../context/loginContext";
 import formatDate from "../utils/formatDate";
 
 const UltimasCargas = () => {
 	const [cargas, setCargas] = useState([]);
+	const { isAuthenticated } = useContext(AuthContext);
+
 	const getCargas = async () => {
 		const response = await fetch(
 			"http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions",
 			{
 				headers: {
 					Accept: "application/json",
-					Authorization:
-						"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTE4MSwicm9sZUlkIjoyfSwiaWF0IjoxNjY3OTMxMTEwLCJleHAiOjE2NjgwMTc1MTB9.XcqGfeGZl-WyJWuevCihYgMEdSKZVrhM82uQrQIFbn4",
+					Authorization: `Bearer ${isAuthenticated.token}`,
 				},
 			}
 		);
