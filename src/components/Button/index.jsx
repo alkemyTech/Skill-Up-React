@@ -33,7 +33,7 @@ export const Button = ({ variant, children, disabled, style, ...props }) => {
 					{children}
 				</button>
 			) : (
-				<button {...props} />
+				<button {...props}> {children}</button>
 			)}
 		</>
 	);

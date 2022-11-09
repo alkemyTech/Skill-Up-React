@@ -5,12 +5,12 @@ import { UsersRepository } from 'src/repositories/users.repository';
 
 export default function SignInPage() {
 	return (
-		<>
+		<main>
 			<SignInForm
 				accounstRepository={AccounstRepository}
 				authRepository={AuthRepository}
 				usersRepository={UsersRepository}
 			/>
-		</>
+		</main>
 	);
 }

@@ -25,7 +25,7 @@ export const Input = React.forwardRef(
 		};
 
 		return (
-			<div className="flex flex-col">
+			<div className="grid">
 				{label && (
 					<Text as="label" htmlFor={id} className="font-medium text-ct-primary-600">
 						{label}

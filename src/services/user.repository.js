@@ -3,7 +3,7 @@ import { constants } from 'src/utils/constants';
 import { HTTPVerbs } from 'src/utils/HTTPVerbs';
 
 export const UserRepository = (signal) => {
-	const baseUrl = constants.API_URL + 'users';
+	const baseUrl = constants.API_URL + '/users';
 	return {
 		registerUser: async (userPostEndPoint) => {
 			try {
@@ -36,4 +36,3 @@ export const UserRepository = (signal) => {
 		},
 	};
 };
-

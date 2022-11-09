@@ -9,7 +9,7 @@ export const useAuthentication = (authRepository) => {
 	const user = useSelector((state) => state.auth.user);
 
 	const { data: _user, isLoading: isAuthenticating } = useQuery(
-		authQueryKeys.validateToken(!!user),
+		authQueryKeys.validateToken(),
 		async ({ signal }) => {
 			if (!user) dispatch(uiActions.showSpiner());
 
