@@ -11,7 +11,10 @@ import {
 import { useContext } from "react";
 import { AuthContext } from "../context/loginContext";
 
+
 function Home() {
+	const { user } = useUser()
+	const name = `${user.first_name} ${user.last_name}`
 	return (
 		<div>
 			<section className="w-full min-h-screen bg-white ">
