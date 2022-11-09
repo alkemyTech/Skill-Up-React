@@ -41,7 +41,7 @@ const ConfirmacionEnvioDinero = ({ state, setState }) => {
                 type: 'topup'
             })
         })
-        setState(0)
+        location.reload()
         return false
     }
     return (
