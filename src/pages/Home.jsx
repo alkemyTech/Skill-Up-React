@@ -8,8 +8,11 @@ import {
 	BsCalendarCheck,
 	BsCash,
 } from "react-icons/bs";
+import useUser from "../hooks/useUser";
 
 function Home() {
+	const { user } = useUser()
+	const name = `${user.first_name} ${user.last_name}`
 	return (
 		<div>
 			<section className="w-full min-h-screen bg-white ">
@@ -21,7 +24,7 @@ function Home() {
 									Bienvenido,
 								</span>
 								<span className="text-transparent bg-gradient-to-tr bg-clip-text from-secondary-color via-sky-500 to-primary-color">
-									nombre
+									{name}
 								</span>
 							</h1>
 
