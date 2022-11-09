@@ -13,12 +13,12 @@ export function SignUp() {
   return (
     <>
       <main>
-        <section className="main flex flex-col justify-center items-center w-full h-auto py-20 bg-stone-200 text-violet-900">
+        <section className="main flex flex-col justify-center items-center w-full h-auto py-20 bg-whit">
           <section className="py-12">
-            <h2 className="mb-4 text-4xl font-bold">
+            <h2 className="mb-4 text-4xl font-bold text-primary-color">
               Bienvenido a Alkemy Bank
             </h2>
-            <h4 className="mt-4 text-2xl font-semibold">Registrate</h4>
+            <h4 className="mt-4 text-2xl font-semibold text-sky-400">Registrate</h4>
           </section>
           <form
             onSubmit={(e) => signUp(e)}
@@ -26,7 +26,7 @@ export function SignUp() {
           >
             <label className="grid grid-cols-2 grid-rows-3 gap-3">
               <input
-                className="col-start-1 col-span-1 row-start-1 row-span-1 p-2 mb-5 border-2 border-solid rounded-lg border-violet-900 placeholder:pl-3 placeholder:text-violet-900"
+                className="col-start-1 col-span-1 row-start-1 row-span-1 p-2 mb-5 border-2 border-solid rounded-lg border-sky-600 placeholder:pl-3 placeholder:text-sky-900"
                 type="text"
                 placeholder="Ingresa tu nombre"
                 onChange={(e) => handleChangeValueSignUp(e)}
@@ -35,7 +35,7 @@ export function SignUp() {
                 required
               />
               <input
-                className="col-start-2 col-span-1 row-start-1 row-span-1 p-2 mb-5 border-2 border-solid rounded-lg border-violet-900 placeholder:pl-3 placeholder:text-violet-900"
+                className="col-start-2 col-span-1 row-start-1 row-span-1 p-2 mb-5 border-2 border-solid rounded-lg border-sky-600 placeholder:pl-3 placeholder:text-sky-900"
                 type="text"
                 placeholder="Ingresa tu apellido"
                 onChange={(e) => handleChangeValueSignUp(e)}
@@ -44,7 +44,7 @@ export function SignUp() {
                 required
               />
               <input
-                className="col-start-1 col-span-2 row-start-2 row-span-1 p-2 mb-5 border-2 border-solid rounded-lg border-violet-900 placeholder:pl-3 placeholder:text-violet-900"
+                className="col-start-1 col-span-2 row-start-2 row-span-1 p-2 mb-5 border-2 border-solid rounded-lg border-sky-600 placeholder:pl-3 placeholder:text-sky-900"
                 type="email"
                 placeholder="Ingresa tu email"
                 onChange={(e) => handleChangeValueSignUp(e)}
@@ -53,7 +53,7 @@ export function SignUp() {
                 required
               />
               <input
-                className="col-start-1 col-span-2 row-start-3 row-span-1 p-2 mb-5 border-2 border-solid rounded-lg border-violet-900 placeholder:pl-3 placeholder:text-violet-900"
+                className="col-start-1 col-span-2 row-start-3 row-span-1 p-2 mb-5 border-2 border-solid rounded-lg border-sky-600 placeholder:pl-3 placeholder:text-sky-900"
                 type="password"
                 placeholder="Ingresa tu contraseña"
                 onChange={(e) => handleChangeValueSignUp(e)}
@@ -62,12 +62,12 @@ export function SignUp() {
                 required
               />
             </label>
-            <button className="w-40 h-11 mt-10 p-2 rounded-lg text-stone-200 bg-violet-900">
+            <button className="w-40 h-11 mt-10 p-2 rounded-lg text-white bg-sky-600">
               Registrarse
             </button>
           </form>
           <Link className="mt-7" to={`/`}>
-            <span className="underline font-medium">
+            <span className="underline font-medium text-secondary-color">
               ¿Ya tenés cuenta? Iniciá sesión
             </span>
           </Link>
