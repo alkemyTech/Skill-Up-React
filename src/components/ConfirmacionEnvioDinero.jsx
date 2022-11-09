@@ -8,13 +8,14 @@ const ConfirmacionEnvioDinero = ({ state, setState }) => {
         emisor: "",
         receptor: ""
     })
+    const { token, user } = useUser()
+    const auth = `Bearer ${token}`
+    const headers = {
+        Authorization: auth,
+        'accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
     useEffect(() => {
-        const { token, user } = useUser()
-        const auth = `Bearer ${token}`
-        const headers = {
-            Authorization: auth,
-            'accept': 'application/json'
-        }
         const getNames = async () => {
             const toAccount = await (await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/${state.to_account_id}`, {
                 headers
@@ -31,7 +32,7 @@ const ConfirmacionEnvioDinero = ({ state, setState }) => {
     }, [])
     const onSubmit = async (e) => {
         e.preventDefault()
-        const res = await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`, {
+        await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`, {
             method: 'POST',
             headers,
             body: JSON.stringify({
