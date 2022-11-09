@@ -18,7 +18,7 @@ const Balance = () => {
                         </span>
                     </h1>
                     <p className="lg:text-2xl 1x2:text-3xl mx-auto mt-6 text-lg text-center text-gray-400">
-                      Si desea agregar saldo a su cuenta puede hacerlo dando click en <Link to="carga-saldo" className='underline'>Carga tu saldo</Link>
+                      Si desea agregar saldo a su cuenta puede hacerlo dando click en <Link to="/carga-saldo" className='underline'>Carga tu saldo</Link>
                     </p>
                 </div>
             </section>
