@@ -17,7 +17,7 @@ export default function NotFound()  {
                                   <div className=" inline-flex rounded-md shadow mt-5">
                                       <button type="button"
                                               className="py-4 px-6  bg-cyan-600 hover:bg-cyan-900 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                                          <Link to="/home">Volver al inicio</Link>
+                                          <Link to="/">Volver al inicio</Link>
                                       </button>
                                   </div>
                               </div>

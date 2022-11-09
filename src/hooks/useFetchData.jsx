@@ -1,10 +1,9 @@
-import axios from "axios"
 import { useEffect } from "react"
 import { useState } from "react"
 
 const API_URL = import.meta.env.VITE_API_URL
 
-function useFetchData({method, url, body = null, headers = null}) {
+function useFetchData({method, url, body = null, headers}) {
 
   // const {fetchedData, loading, error} = useFetchData
     // ({method: "post", url: "/auth/login", 
@@ -13,26 +12,31 @@ function useFetchData({method, url, body = null, headers = null}) {
     // password: "messi"} 
     // })
 
-    const [fetchedData, setFetchedData] = useState(null)
+    const [fetchedData, setFetchedData] = useState([])
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(true)
+    const ENDPOINT = API_URL + url
 
-    const fetchData = () => {
-        axios[method](API_URL+url, body, headers)
-            .then((res) => {
-                setFetchedData(res);
+    const fetchData = async() => {
+        try {
+            const response = await fetch(ENDPOINT, {
+                method, 
+                body, 
+                headers
             })
-            .catch((err) => {
-                setError(err);
-            })
-            .finally(() => {
-                setLoading(false)
-            })
+            const data = await response.json()
+            setFetchedData(data.data)
+        } catch (error) {
+            console.log(error)
+            setError(error);            
+        } finally{
+            setLoading(false)
+        }
     };
 
     useEffect(() => {
         fetchData();
-    }, [method, url, body, headers])
+    }, [method, url, body])
 
 
   return {fetchedData, loading, error}
