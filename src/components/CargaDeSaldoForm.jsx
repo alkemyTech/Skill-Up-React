@@ -4,9 +4,8 @@ import { useState } from "react";
 import { AuthContext } from "../context/loginContext";
 
 const CargaDeSaldoForm = () => {
-	const { isAuthenticated } = useContext(AuthContext);
+	const { getToken } = useContext(AuthContext);
 	const [valorDolar, setValorDolar] = useState(0);
-
 	const [data, setData] = useState({
 		monto: "",
 		moneda: "",
@@ -80,7 +79,7 @@ const CargaDeSaldoForm = () => {
 				}),
 				headers: {
 					Accept: "application/json",
-					Authorization: `Bearer ${isAuthenticated.token}`,
+					Authorization: `Bearer ${getToken()}`,
 					"Content-Type": "application/json",
 				},
 				method: "POST",

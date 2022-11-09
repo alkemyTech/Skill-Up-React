@@ -15,7 +15,7 @@ import { ProtectedRoute } from "./utils/ProtectedRoute";
 
 function App() {
   return (
-    <div className="App bg-stone-200">
+    <div className="App">
         <NavBar />
           <Routes>
               <Route element={<ProtectedRoute />}>
