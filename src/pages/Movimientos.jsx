@@ -23,7 +23,7 @@ function Movimientos() {
   
 
   const {fetchedData, loading, error} = useFetchData({method: "GET", url: "/transactions", headers: {Accept: "application/json", Authorization: `Bearer ${token}`}})
-
+  console.log(fetchedData)
   const filteredArray = filterTransactions({array: fetchedData, setCurrentPage, input, amount})
 
   const arrayLength = filteredArray.length

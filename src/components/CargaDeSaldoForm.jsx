@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext }  from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { AuthContext } from "../context/loginContext";
 
+
+
 const CargaDeSaldoForm = () => {
+	
+	const { getAccountID } = useContext(AuthContext)
+
 	const { getToken } = useContext(AuthContext);
 	const [valorDolar, setValorDolar] = useState(0);
 	const [data, setData] = useState({
@@ -70,12 +75,13 @@ const CargaDeSaldoForm = () => {
 
 	const cargaDeSaldo = () => {
 		fetch(
-			"http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/268",
+			`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/${getAccountID()}`,
 			{
 				body: JSON.stringify({
 					type: "topup",
 					concept: data.concepto,
 					amount: data.monto,
+					coin: data.moneda
 				}),
 				headers: {
 					Accept: "application/json",
