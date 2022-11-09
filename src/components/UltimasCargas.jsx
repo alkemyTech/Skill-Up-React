@@ -1,34 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useEffect } from "react";
+import { AuthContext } from "../context/loginContext";
 import formatDate from "../utils/formatDate";
 
 const UltimasCargas = () => {
 	const [cargas, setCargas] = useState([]);
-	const getCargas = async () => {
-		const response = await fetch(
+	const { getToken } = useContext(AuthContext);
+	const getCargas = (userToken) => {
+		fetch(
 			"http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions",
 			{
 				headers: {
 					Accept: "application/json",
-					Authorization:
-						"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTE4MSwicm9sZUlkIjoyfSwiaWF0IjoxNjY3OTMxMTEwLCJleHAiOjE2NjgwMTc1MTB9.XcqGfeGZl-WyJWuevCihYgMEdSKZVrhM82uQrQIFbn4",
+					Authorization: `Bearer ${userToken}`,
 				},
 			}
-		);
-		const data = await response.json();
-		const ultimasCargas = data.data;
-		return ultimasCargas;
+		)
+			.then((res) => res.json())
+			.then((res) => setCargas(res.data));
 	};
+
 	useEffect(() => {
-		const getData = async () => {
-			const ultimosMovimientos = await getCargas();
-			const ultimasCargas =
-				(await ultimosMovimientos.filter(
-					(carga) => carga.type === "topup"
-				)) || [];
-			setCargas(ultimasCargas);
-		};
-		getData();
+		const token = getToken();
+		getCargas(token);
 	}, []);
 
 	const cargasElements = cargas.map((carga) => {
@@ -55,7 +49,7 @@ const UltimasCargas = () => {
 	});
 	return (
 		<div className="pt-8 pb-8flex items-center justify-center pb-12 ">
-			{cargas ? (
+			{cargas != [] ? (
 				<div className="flex gap-6 justify-center flex-wrap">
 					{cargasElements}
 				</div>
