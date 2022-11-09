@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import useFetchData from "../hooks/useFetchData";
 
 export const AuthContext = createContext()
 
@@ -12,8 +13,12 @@ function AuthContextProvider({ children }) {
   //*******************  States **************************** //
 
   const [isAuthenticated, setIsAuthenticated] = useState(() => JSON.parse(localStorage.getItem('user')) || false);
+
   const [resultLogin, setResultLogin] = useState(null);
+
   const [token, setToken] = useState(null);
+
+  const [registerData, setRegisterData] = useState(null);
   const [dataLogin, setDataLogin] = useState({
     email: "",
     password: "",
@@ -26,11 +31,32 @@ function AuthContextProvider({ children }) {
     password: "",
   });
 
+  const createAccount = async(id) => {
+    const date = new Date().toISOString().replace('T', ' ').replace('Z', '');
+
+    const body = {creationDate: date, money: 25000, isBlocked: false, userId: id}
+
+    try {
+        const response = await fetch('http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts', {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          method: "POST",
+          body: JSON.stringify(body),
+        })
+        const data = await response.json()
+        console.log(data)
+        setRegisterData(data)
+    } catch (error) {
+        console.log(error)
+    }
+  };
+
   // SIGN-UP
   async function signUp(e) {
     e.preventDefault();
     try {
-      console.log("SIGN-UP-FORM: ", dataSignUp);
       const response = await fetch("http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/users", {
         method: "POST",
         headers: {
@@ -40,8 +66,8 @@ function AuthContextProvider({ children }) {
         body: JSON.stringify(dataSignUp),
       })
       const data = await response.json()
-      console.log("SIGN-UP-RESPONSE: ", data)
-      setDataSignUp({
+      // setRegisterData(id)
+      setDataSignUp({ 
         ...dataSignUp,
         first_name: "",
         last_name: "",
@@ -59,7 +85,6 @@ function AuthContextProvider({ children }) {
       });
     }
   }
-  //
 
   // LOGIN
   async function login(e) {
@@ -99,6 +124,7 @@ function AuthContextProvider({ children }) {
       })
       const data = await response.json()
       setResultLogin(data);
+      // createAccount(data.id)
     } catch (error) {
       console.log(error)
     }
