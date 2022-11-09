@@ -8,7 +8,7 @@ const EnvioDinero = () => {
   const [state, setState] = useState(0)
   return (
     <div className="pt-16 bg-stone-200">
-      <h1 className="text-left pl-5 text-4xl font-bold text-indigo-900">
+      <h1 className="text-left pl-5 text-4xl font-bold text-sky-600">
         Envia Dinero
       </h1>
 
@@ -18,7 +18,7 @@ const EnvioDinero = () => {
           : <ConfirmacionEnvioDinero state={state} setState={setState} />
         }
       </div>
-      <h2 className="text-left mt-14 pl-5 text-4xl font-bold text-indigo-900">
+      <h2 className="text-left mt-14 pl-5 text-4xl font-bold text-sky-600">
         Últimos Envios
       </h2>
       <UltimosEnvios />

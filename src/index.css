@@ -32,3 +32,23 @@ code {
   --light-sky-blue: #c9f7ff;
   --background-color: #ffffff;
 }
+
+* {
+  scrollbar-width: none;
+  scrollbar-color: #1dadaf #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #1dadaf;
+  border-radius: 50px;
+  border: 3px solid #ffffff;
+}
