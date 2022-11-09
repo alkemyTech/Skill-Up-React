@@ -1,12 +1,12 @@
-import { Navigate } from "react-router-dom";
-import { useAccessControl } from "../hooks/useAccessControl";
+import { useContext } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from "../context/loginContext";
+// import { useAccessControl } from "../hooks/useAccessControl";
 
-export function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAccessControl();
-  console.log(isAuthenticated)
-  if (!isAuthenticated) {
-    return <Navigate to="/" />;
-  }
+export function ProtectedRoute() {
+  const { isAuthenticated } = useContext(AuthContext);
 
-  return children;
+  return(
+    isAuthenticated ? <Outlet /> : <Navigate to="/login"/>
+  )
 }
