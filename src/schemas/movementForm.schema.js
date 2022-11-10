@@ -3,8 +3,8 @@ import z from 'zod';
 
 export const MovementFormSchema = z.object({
 	type: z.nativeEnum(MovementType),
-	concept: z.string(),
-	currencyCode: z.string(),
+	concept: z.string().min(1),
+	currencyCode: z.string().min(1),
 	isTransference: z.boolean(),
 	amount: z.number().min(1),
 });

@@ -6,7 +6,8 @@ export const Input = React.forwardRef(
 	/**
 	 * @typedef {Object} CustomProps
 	 * @property {string} [label]
-	 @property {"primary" | "secondary" | "tertiary" } [props.colorScheme]
+	 * @property {"top" | "left"} [labelPosition]
+	 * @property {"primary" | "secondary" | "tertiary" } [props.colorScheme]
 	 * @param {React.ComponentProps<"input"> & CustomProps} props
 	 */
 	function Input(
@@ -19,11 +20,15 @@ export const Input = React.forwardRef(
 			onChange,
 			onTouch,
 			pattern,
+			labelPosition,
+			id,
 			...props
 		},
 		ref,
 	) {
-		const id = React.useId();
+		const reactId = React.useId();
+		const _id = id || reactId;
+
 		const [touched, setTouched] = React.useState(false);
 
 		const _onChange = (e) => {
@@ -40,9 +45,9 @@ export const Input = React.forwardRef(
 		};
 
 		return (
-			<div className="grid">
+			<div className={`${labelPosition === 'left' ? 'grid grid-cols-[auto_1fr] gap-2' : 'grid'}`}>
 				{label && (
-					<Text as="label" htmlFor={id} className="font-semibold text-ct-neutral-medium-700">
+					<Text as="label" htmlFor={_id} className="font-semibold text-ct-neutral-medium-700">
 						{label}
 					</Text>
 				)}
@@ -51,7 +56,7 @@ export const Input = React.forwardRef(
 					{...props}
 					ref={ref}
 					onChange={_onChange}
-					id={id}
+					id={_id}
 					className={`${className} ${
 						error
 							? 'border-ct-danger-500'

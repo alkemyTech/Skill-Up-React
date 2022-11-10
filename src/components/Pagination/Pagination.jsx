@@ -21,7 +21,11 @@ export const Pagination = ({
 			/>
 
 			<div className="grid grid-cols-[1fr_auto] gap-3">
-				<Select colorScheme="tertiary" value={currentPage} onChange={(e) => onChangePage(parseInt(e.target.value, 10))}>
+				<Select
+					colorScheme="secondary"
+					value={currentPage}
+					onChange={(e) => onChangePage(parseInt(e.target.value, 10))}
+				>
 					{range(totalPages, 1).map((page) => (
 						<option key={page} value={page} className="text-ct-neutral-light-800 outline-ct-special1-500">
 							Page {page} of {totalPages}
@@ -29,7 +33,7 @@ export const Pagination = ({
 					))}
 				</Select>
 
-				<Select colorScheme="tertiary" value={itemsPerPag} onChange={changeItemsPerPage}>
+				<Select colorScheme="secondary" value={itemsPerPag} onChange={changeItemsPerPage}>
 					{[5, 10].map((v) => (
 						<option key={v} value={v} className="text-ct-neutral-light-800 outline-ct-special1-500">
 							Per page {v}
