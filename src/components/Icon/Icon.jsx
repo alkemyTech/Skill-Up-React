@@ -19,7 +19,7 @@ export const Icon = React.forwardRef(
 	 */
 	function Icon({ className = '', as: Icon, variant = 'base' }, ref) {
 		return (
-			<i className={`inline-block leading-[0] ${className}`} ref={ref}>
+			<i className={`${className} inline-block leading-[0]`} ref={ref}>
 				<Icon
 					className={`inline-block text-inherit ${
 						variant === IconVariant.XS

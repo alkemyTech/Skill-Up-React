@@ -1,11 +1,9 @@
 import { motion } from 'framer-motion';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
+
 import React from 'react';
-import { GiPayMoney, GiReceiveMoney } from 'react-icons/gi';
-import { IoIosSend } from 'react-icons/io';
 import { Button } from 'src/components/Button';
 import { Heading } from 'src/components/Heading';
+import { MovementCard } from 'src/components/MovementCard';
 import { Pagination } from 'src/components/Pagination';
 import { Select } from 'src/components/Select';
 import { Input } from 'src/components/SignInForm/Input';
@@ -13,9 +11,6 @@ import { Text } from 'src/components/Text';
 import { MovementType } from 'src/models/movementType.model';
 import { useMovementsFilters } from './useMovementsFilters';
 import { useTransactionsFindAllQuery } from './useTransactionsFindAllQuery';
-
-TimeAgo.addDefaultLocale(en);
-const timeAgo = new TimeAgo('en-US');
 
 export default function TransactionsPage() {
 	const { data: transactionPageList, hasNextPage, fetchNextPage } = useTransactionsFindAllQuery();
@@ -47,7 +42,7 @@ export default function TransactionsPage() {
 		<main className="mx-auto w-full max-w-screen-xl px-4 py-8 xl:px-0">
 			<Heading className="mb-8 text-ct-neutral-dark-700">Movements</Heading>
 
-			<fieldset className="my-8 grid gap-4 rounded border border-ct-neutral-dark-200 p-4 md:grid-cols-[repeat(4,1fr)]">
+			<fieldset className="grid gap-4 rounded border border-ct-neutral-dark-100 px-4 pb-4 shadow-md md:grid-cols-[repeat(4,1fr)]">
 				<Text as="legend" className="px-2 font-bold tracking-wider">
 					Filters
 				</Text>
@@ -94,13 +89,13 @@ export default function TransactionsPage() {
 					onChange={onFilterFieldChange}
 				/>
 
-				<Button onClick={clearFilters} colorScheme="tertiary" className="md:mt-[inherit]">
+				<Button onClick={clearFilters} colorScheme="tertiary">
 					Clear filters
 				</Button>
 			</fieldset>
 
 			<Pagination
-				className="mx-auto my-4 max-w-md sm:mr-0"
+				className="mx-auto mt-8 max-w-md sm:mr-0"
 				totalPages={totalPages}
 				currentPage={currentPage}
 				onChangePage={changePage}
@@ -108,7 +103,7 @@ export default function TransactionsPage() {
 				itemsPerPag={itemsPerPage}
 			/>
 
-			<ol className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))] gap-4">
+			<ol className="my-10 grid grid-cols-[repeat(auto-fill,minmax(min(100%,20rem),1fr))] gap-4">
 				{transactionListPaginated?.map((movement) => (
 					<motion.li
 						key={movement.id}
@@ -117,39 +112,7 @@ export default function TransactionsPage() {
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.5 }}
 					>
-						<article
-							className={`${
-								movement.type === MovementType.topup
-									? 'border-ct-success-500'
-									: movement.type === MovementType.payment
-									? 'border-ct-danger-100'
-									: 'border-ct-neutral-dark-800'
-							} grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded border p-2`}
-						>
-							<i className="overflow-hidden rounded-full border text-5xl">
-								{movement.type === MovementType.topup ? (
-									<GiReceiveMoney className="text-ct-secondary-500" />
-								) : movement.type === MovementType.payment ? (
-									<GiPayMoney className="text-ct-danger-200" />
-								) : (
-									movement.isTransference && <IoIosSend className="text-ct-neutral-dark-800" />
-								)}
-							</i>
-
-							<Text as="p">{movement.conceptDecoded}</Text>
-							<div>
-								<Text as="p" className="text-right">
-									{movement.amount} {movement.currencyCode}
-								</Text>
-								<Text
-									title={`${new Date(movement.date).toLocaleDateString()} ${new Date(
-										movement.date,
-									).toLocaleTimeString()}`}
-								>
-									{timeAgo.format(new Date(movement.date))}
-								</Text>
-							</div>
-						</article>
+						<MovementCard {...movement} />
 					</motion.li>
 				))}
 			</ol>
