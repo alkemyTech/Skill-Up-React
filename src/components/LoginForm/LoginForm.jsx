@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { LSKeys } from 'src/utils/localStorageKeys';
+import { toast } from 'react-toastify';
+import { authActions } from 'src/features/auth/authSlice';
+import { AuthRepository } from 'src/repositories/auth.repository';
 import { webRoutes } from 'src/utils/web.routes';
 import { Button } from '../Button';
 import { Heading } from '../Heading';
@@ -11,7 +14,7 @@ export const LoginForm = () => {
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [invalidUser, setInvalidUser] = useState(false);
-
+	const dispatch = useDispatch();
 	const navigateTo = useNavigate();
 
 	const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gi;
@@ -20,38 +23,15 @@ export const LoginForm = () => {
 		event.preventDefault();
 
 		try {
-			const response = await fetch('http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/auth/login', {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ email: email, password: password }),
-			});
-			const data = await response.json();
+			const { login, userInfo } = AuthRepository();
+			await login({ email, password });
+			const user = await userInfo();
 
-			const getUser = await fetch('http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/auth/me', {
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${data.accessToken}`,
-				},
-			});
-
-			const userData = await getUser.json();
-
-			if (response.ok) {
-				localStorage.setItem(LSKeys.accessToken, data.accessToken);
-				localStorage.setItem('userData', JSON.stringify(userData));
-				setInvalidUser(false);
-
-				alert(`Welcome back ${userData.first_name} ${userData.last_name}`);
-
-				navigateTo(webRoutes.home);
-			} else if (!response.ok) {
-				setInvalidUser(true);
-			}
+			dispatch(authActions.login({ ...user }));
+			navigateTo(webRoutes.home);
+			toast.success(`Welcome back ${user.first_name_decoded} ${user.last_name}`);
 		} catch (error) {
-			console.log(error);
+			setInvalidUser(true);
 		}
 	};
 

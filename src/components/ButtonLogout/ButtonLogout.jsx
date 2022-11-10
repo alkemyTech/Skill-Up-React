@@ -1,14 +1,14 @@
 import { useDispatch } from 'react-redux';
-import { clearUserList } from 'src/features/users/userSlice';
-import { clearCredit } from 'src/features/credit/creditSlice';
 import { Button } from 'src/components/Button';
+import { authActions } from 'src/features/auth/authSlice';
+import { clearCredit } from 'src/features/credit/creditSlice';
 
 const ButtonLogout = ({ handlerLogin, colorScheme, close }) => {
 	const dispatch = useDispatch();
 
 	const handlerLogout = () => {
 		localStorage.clear();
-		dispatch(clearUserList());
+		dispatch(authActions.logout());
 		dispatch(clearCredit());
 		handlerLogin();
 	};
