@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
-import useUser from '../hooks/useUser'
-import isValid from '../utils/isValid'
+import useLocalStorage from '../hooks/useLocalStorage'
+import useUser from '../hooks/useLocalStorage'
 
 const EnvioDineroForm = ({ state, setState }) => {
     const amountRef = useRef()
@@ -12,11 +12,11 @@ const EnvioDineroForm = ({ state, setState }) => {
         const userId = useUser('id')
         const body = {
             amount: amountRef.current.value,
+            accountId: useLocalStorage('account').id,
             to_account_id: toAccountIdRef.current.value,
             concept: conceptRef.current.value,
             userId
         }
-
         setState(body)
         amountRef.current.value = ''
         toAccountIdRef.current.value = ''

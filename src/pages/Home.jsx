@@ -8,13 +8,10 @@ import {
 	BsCalendarCheck,
 	BsCash,
 } from "react-icons/bs";
-import { useContext } from "react";
-import { AuthContext } from "../context/loginContext";
 
-
+import useLocalStorage from "../hooks/useLocalStorage";
 function Home() {
-	const { user } = useUser()
-	const name = `${user.first_name} ${user.last_name}`
+	const { user } = useLocalStorage('user')
 	return (
 		<div>
 			<section className="w-full min-h-screen bg-white ">
@@ -26,7 +23,7 @@ function Home() {
 									Bienvenido,
 								</span>
 								<span className="text-transparent bg-gradient-to-tr bg-clip-text from-secondary-color via-sky-500 to-primary-color">
-									Nombre
+									{user ? `${user.first_name} ${user.last_name}` : ''}
 								</span>
 							</h1>
 

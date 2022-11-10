@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import useUser from "../hooks/useUser"
+import useLocalStorage from "../hooks/useLocalStorage"
 
 
 const ConfirmacionEnvioDinero = ({ state, setState }) => {
@@ -8,7 +8,7 @@ const ConfirmacionEnvioDinero = ({ state, setState }) => {
         emisor: "",
         receptor: ""
     })
-    const { token, user } = useUser()
+    const { token, user } = useLocalStorage('user')
     const auth = `Bearer ${token}`
     const headers = {
         Authorization: auth,
@@ -38,7 +38,7 @@ const ConfirmacionEnvioDinero = ({ state, setState }) => {
             body: JSON.stringify({
                 ...state,
                 date: new Date(),
-                type: 'topup'
+                type: 'payment'
             })
         })
         location.reload()

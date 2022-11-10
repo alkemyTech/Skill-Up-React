@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import useUser from "../hooks/useUser";
+import useLocalStorage from "../hooks/useLocalStorage";
 import formatDate from "../utils/formatDate";
 
 const UltimosEnvios = () => {
     const [envios, setEnvios] = useState([])
-    const { token, user } = useUser()
+    const { token, user } = useLocalStorage('user')
     const auth = `Bearer ${token}`
 
     useEffect(() => {
