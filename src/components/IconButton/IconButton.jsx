@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'src/components/Button';
 import { Icon } from 'src/components/Icon/Icon';
 
 /**
@@ -8,11 +9,8 @@ import { Icon } from 'src/components/Icon/Icon';
  */
 export function IconButton({ className = '', icon, ...props }) {
 	return (
-		<button
-			className={`rounded-md p-2 leading-[0] outline-ct-special1-500 disabled:border-gray-400 disabled:opacity-60 ${className}`}
-			{...props}
-		>
+		<Button {...props} className={`leading-[0] ${className}`}>
 			<Icon as={icon} />
-		</button>
+		</Button>
 	);
 }

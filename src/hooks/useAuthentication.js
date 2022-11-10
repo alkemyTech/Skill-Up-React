@@ -11,7 +11,7 @@ export const useAuthentication = (authRepository) => {
 	const { isLoading: isAuthenticating } = useQuery(
 		authQueryKeys.validateToken(),
 		async ({ signal }) => {
-			if (!user) dispatch(uiActions.showSpiner());
+			dispatch(uiActions.showSpiner());
 
 			const userInfo = await authRepository(signal).userInfo();
 			dispatch(authActions.login({ ...userInfo }));

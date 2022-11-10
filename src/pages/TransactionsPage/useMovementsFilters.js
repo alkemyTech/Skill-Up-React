@@ -8,7 +8,7 @@ const initialState = {
 	conceptFilter: '',
 };
 
-export function useMovementsFilters(transactionList = [], itemsPerPage = 5) {
+export function useMovementsFilters(transactionList = [], itemsPerPage = 10) {
 	const [filterFields, setFilterFields] = React.useState(initialState);
 	const [_itemsPerPage, setItemsPerPage] = React.useState(itemsPerPage);
 	const [currentPage, setCurrentPage] = React.useState(initialPage);
