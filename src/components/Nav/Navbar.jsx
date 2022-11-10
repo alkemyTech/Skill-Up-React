@@ -2,16 +2,18 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from 'src/assets/alkemy_logo.svg';
 import avatar from 'src/assets/avatar.svg';
-import { Button } from 'src/components/Button';
 import { ButtonLogout } from 'src/components/ButtonLogout';
 import { Heading } from 'src/components/Heading';
 import { MobileMenu } from 'src/components/Nav/MobileMenu';
 import { Text } from 'src/components/Text';
 import { webRoutes } from 'src/utils/web.routes';
+import { useSelector } from 'react-redux';
+import { Spinner } from '../Spinner';
 
 const Navbar = ({ isVisible, setIsVisible }) => {
 	const [isLogged, setIsLogged] = useState(true);
 	const [showMenu, setShowMenu] = useState(false);
+	const { user } = useSelector((state) => state.auth);
 
 	const handlerShowMenu = () => setShowMenu(!showMenu);
 	const handlerLogin = () => {
@@ -25,7 +27,7 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 					<img src={logo} alt="logo" tabIndex="0" />
 				</Link>
 				<nav>
-					{isLogged ? (
+					{user && (
 						<>
 							<ul className="hidden lg:flex ">
 								{[
@@ -52,8 +54,8 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 											data-close={true}
 											className="absolute right-0 top-[72px] w-auto flex-col items-center rounded-bl-lg bg-ct-secondary-600 p-4 shadow-xl"
 										>
-											<Text as="p" className="mb-3" data-close={true}>
-												Lucía Cárdenas
+											<Text as="p" className="mb-3 text-center font-bold" data-close={true}>
+												{user ? `${user.first_name}  ${user.last_name}` : <Spinner />}
 											</Text>
 											<ButtonLogout variant="mini" handlerLogin={handlerLogin} close={true} />
 										</div>
@@ -64,17 +66,11 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 								<img src={avatar} alt="menu" className="w-10" />
 
 								<Heading as="h3" size="headline4" className="text-ct-secondary-200 ">
-									Lucía Cárdenas
+									{user ? `${user.first_name}  ${user.last_name}` : <Spinner />}
 								</Heading>
 							</div>
 							{<MobileMenu showMenu={showMenu} setShowMenu={setShowMenu} handlerLogin={handlerLogin} />}
 						</>
-					) : (
-						<Link to="/login">
-							<Button variant="primary" onClick={handlerLogin}>
-								Login
-							</Button>
-						</Link>
 					)}
 				</nav>
 			</header>
@@ -83,3 +79,4 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 };
 
 export { Navbar };
+
