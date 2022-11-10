@@ -17,7 +17,7 @@ export const PrivateRoute = ({ children }) => {
 	}, [isAuthenticated, isAuthenticating]);
 
 	if (!isAuthenticated || isAuthenticating) {
-		return <></>;
+		return <div />;
 	}
 
 	return <>{children}</>;
