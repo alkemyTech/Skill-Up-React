@@ -21,9 +21,9 @@ export const Text = React.forwardRef(
 				ref={ref}
 				className={`${className} ${
 					variant === textVariant.standard
-						? 'text-base leading-[30px] md:text-lg'
+						? 'text-base leading-[150%] md:text-lg'
 						: variant === textVariant.lead
-						? 'text-xl leading-[30px] md:text-2xl'
+						? 'text-xl leading-[150%] md:text-2xl'
 						: ''
 				} font-roboto tracking-[0] decoration-[none]`}
 			>

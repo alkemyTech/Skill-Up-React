@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Button } from 'src/components/Button';
 import { Heading } from 'src/components/Heading';
 import { MovementCard } from 'src/components/MovementCard';
@@ -10,13 +10,12 @@ import { Input } from 'src/components/SignInForm/Input';
 import { Text } from 'src/components/Text';
 import { MovementType } from 'src/models/movementType.model';
 import { useMovementsFilters } from './useMovementsFilters';
-import { useTransactionsFindAllQuery } from './useTransactionsFindAllQuery';
 
 export default function TransactionsPage() {
-	const { data: transactionPageList, hasNextPage, fetchNextPage } = useTransactionsFindAllQuery();
-	const hasOtherPageParam = !!transactionPageList?.pageParams.at(-1);
-	const transactionListMerged = transactionPageList?.pages.map((page) => page.data).flat();
-	const currencyCodes = Array.from(new Set(transactionPageList?.pages.map((page) => page.currencyCode).flat()));
+	const movementList = useSelector((state) => state.movements.movementList);
+	const currencyList = useSelector((state) => state.movements.currencyList);
+	const isLoadedMovementsInfo = useSelector((state) => state.movements.isInfoLoaded);
+
 	const {
 		result: transactionListPaginated,
 		filterFields,
@@ -28,14 +27,11 @@ export default function TransactionsPage() {
 		onItemsPerPageChange,
 		changePage,
 		clearFilters,
-	} = useMovementsFilters(transactionListMerged);
+	} = useMovementsFilters(movementList);
+	const [showConcept, setShowConcept] = React.useState(false);
 
-	React.useEffect(() => {
-		if (hasNextPage || (hasNextPage && hasOtherPageParam)) fetchNextPage();
-	}, [hasNextPage, hasOtherPageParam]);
-
-	if (!transactionPageList) {
-		return <main></main>;
+	if (!isLoadedMovementsInfo) {
+		return <main>skeleton</main>;
 	}
 
 	return (
@@ -56,7 +52,7 @@ export default function TransactionsPage() {
 					className=""
 					onChange={onFilterFieldChange}
 				>
-					{currencyCodes.map((c) => (
+					{currencyList.map((c) => (
 						<option key={c} value={c}>
 							{c}
 						</option>
@@ -94,14 +90,29 @@ export default function TransactionsPage() {
 				</Button>
 			</fieldset>
 
-			<Pagination
-				className="mx-auto mt-8 max-w-md sm:mr-0"
-				totalPages={totalPages}
-				currentPage={currentPage}
-				onChangePage={changePage}
-				changeItemsPerPage={onItemsPerPageChange}
-				itemsPerPag={itemsPerPage}
-			/>
+			<div className="mx-auto mt-8 grid gap-2 sm:mr-0 sm:grid-cols-[auto_1fr] ">
+				<div className="my-2 ml-auto flex items-center sm:ml-0">
+					<Input
+						label="Show concepts"
+						labelPosition="left"
+						colorScheme="secondary"
+						type="checkbox"
+						id="Show all concepts"
+						name="Show all concepts"
+						value={showConcept}
+						onChange={() => setShowConcept((s) => !s)}
+					/>
+				</div>
+
+				<Pagination
+					className="ml-auto w-full sm:max-w-md"
+					totalPages={totalPages}
+					currentPage={currentPage}
+					onChangePage={changePage}
+					changeItemsPerPage={onItemsPerPageChange}
+					itemsPerPag={itemsPerPage}
+				/>
+			</div>
 
 			<ol className="my-10 grid grid-cols-[repeat(auto-fill,minmax(min(100%,20rem),1fr))] gap-4">
 				{transactionListPaginated?.map((movement) => (
@@ -112,7 +123,7 @@ export default function TransactionsPage() {
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.5 }}
 					>
-						<MovementCard {...movement} />
+						<MovementCard {...movement} showConcept={showConcept} />
 					</motion.li>
 				))}
 			</ol>

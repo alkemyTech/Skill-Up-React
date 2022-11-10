@@ -1,25 +1,34 @@
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import React from 'react';
-import { GiPayMoney, GiReceiveMoney } from 'react-icons/gi';
-import { IoIosSend } from 'react-icons/io';
 import { Heading } from 'src/components/Heading';
 import { Text } from 'src/components/Text';
 import { MovementType } from 'src/models/movementType.model';
-import { Transaction } from 'src/models/transaction.model';
 
-TimeAgo.addDefaultLocale(en);
+TimeAgo.setDefaultLocale(en.locale);
+TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-US');
 
-/**
- * @param { typeof Transaction[keyof Transaction]} props
- */
-
 export const MovementCard = (props) => {
-	const { id, accountId, userId, to_account_id, date, currencyCode, type, isTransference, conceptDecoded, amount } =
-		props;
+	const {
+		id,
+		// accountId,
+		// userId,
+		to_account_id,
+		date,
+		currencyCode,
+		showConcept,
+		type,
+		isTransference,
+		conceptDecoded,
+		amount,
+	} = props;
 
-	const [toggle, setToggle] = React.useState(false);
+	const [toggle, setToggle] = React.useState(true);
+
+	React.useEffect(() => {
+		setToggle(showConcept);
+	}, [showConcept]);
 
 	return (
 		<button
@@ -30,29 +39,10 @@ export const MovementCard = (props) => {
 					: type === MovementType.payment && !isTransference
 					? 'border-ct-danger-100 bg-ct-danger-50/30'
 					: 'border-ct-danger-100 bg-ct-danger-50/30'
-			} relative w-full items-center gap-2 overflow-hidden rounded border p-4 shadow-md backdrop-blur-md`}
+			} w-full items-center gap-2 overflow-hidden rounded border p-4 shadow-md outline-ct-special1-500 backdrop-blur-md transition-all duration-200`}
 		>
-			<Text
-				as="p"
-				className={`${
-					toggle ? 'visible' : 'opacity-0'
-				} absolute inset-0 bg-white p-2 text-left leading-5 backdrop-blur-xl transition-all duration-150`}
-			>
-				{conceptDecoded.slice(0, 150)}
-			</Text>
-
-			{/* <i className="overflow-hidden rounded-full text-5xl">
-				{type === MovementType.topup ? (
-					<GiReceiveMoney className="text-ct-secondary-500" />
-				) : type === MovementType.payment ? (
-					<GiPayMoney className="text-ct-danger-200" />
-				) : (
-					isTransference && <IoIosSend className="text-ct-neutral-dark-800" />
-				)}
-			</i> */}
-
 			<header className="flex justify-between">
-				<Heading as="h2" size="headline6" className="font-semibold !leading-5 tracking-wide">
+				<Heading as="h2" size="headline6" className="font-semibold  tracking-wide">
 					Transaction: {id}
 				</Heading>
 
@@ -67,16 +57,23 @@ export const MovementCard = (props) => {
 
 			<div className="grid grid-cols-[1fr_auto] text-left text-ct-neutral-light-800">
 				<div>
-					<Text as="p">
-						{type === MovementType.topup
-							? 'Charge'
-							: type === MovementType.payment && !isTransference
-							? 'Payment'
-							: 'Tranference'}{' '}
-					</Text>
+					{type === MovementType.topup ? (
+						<Text as="p" className="text-ct-success-600">
+							Charge
+						</Text>
+					) : type === MovementType.payment && !isTransference ? (
+						<Text as="p" className="text-ct-danger-600">
+							Payment
+						</Text>
+					) : (
+						<Text as="p" className="text-ct-neutral-light-300">
+							Tranference
+						</Text>
+					)}
 
 					<Text className={`${isTransference ? 'visible' : 'invisible'}`}>To account: {to_account_id}</Text>
 				</div>
+
 				<Text
 					as="p"
 					className={`${
@@ -88,6 +85,13 @@ export const MovementCard = (props) => {
 					} place-self-end text-right font-medium tracking-wider`}
 				>
 					{isTransference || type === MovementType.payment ? '-' : '+'} {currencyCode} {amount}
+				</Text>
+			</div>
+
+			<div className={`${toggle ? 'visible h-auto' : 'h-0 scale-y-0 opacity-0'} transition-all duration-200`}>
+				<hr className="my-2" />
+				<Text as="p" className="min-h-[5rem] text-left">
+					{conceptDecoded.slice(0, 150)}
 				</Text>
 			</div>
 		</button>
