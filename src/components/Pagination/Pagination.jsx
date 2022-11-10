@@ -12,53 +12,26 @@ export const Pagination = ({
 	itemsPerPag,
 }) => {
 	return (
-		<div
-			data-testid="pagination"
-			className={`${className} grid grid-cols-[auto_1fr_auto] gap-2 rounded-md border border-ct-neutral-dark-400 p-2`}
-		>
+		<div data-testid="pagination" className={`${className} grid grid-cols-[auto_1fr_auto] gap-2 rounded-md `}>
 			<IconButton
-				className=" bg-ct-neutral-medium-700 text-ct-neutral-ligth-300"
+				className=" bg-ct-special1-600 text-ct-neutral-light-800"
 				disabled={!(currentPage > 1)}
 				onClick={() => onChangePage(currentPage - 1)}
 				icon={MdNavigateBefore}
 			/>
 
 			<div className="grid grid-cols-[1fr_auto] gap-3">
-				<Select
-					value={currentPage}
-					onChange={(e) => onChangePage(parseInt(e.target.value, 10))}
-					className="text-ct-primary-400 outline-ct-neutral-ligth-400"
-				>
+				<Select colorScheme="tertiary" value={currentPage} onChange={(e) => onChangePage(parseInt(e.target.value, 10))}>
 					{range(totalPages, 1).map((page) => (
-						<option
-							key={page}
-							value={page}
-							className={`outline-ct-neutral-ligth-400 ${
-								currentPage === page
-									? 'bg-gradient-to-l from-ct-primary-400 to-ct-secondary-400 bg-clip-text text-transparent'
-									: 'text-ct-neutral-medium-100'
-							}`}
-						>
+						<option key={page} value={page} className="text-ct-neutral-light-800 outline-ct-special1-500">
 							Page {page} of {totalPages}
 						</option>
 					))}
 				</Select>
 
-				<Select
-					value={itemsPerPag}
-					onChange={changeItemsPerPage}
-					className="text-ct-primary-400 outline-ct-neutral-ligth-400"
-				>
+				<Select colorScheme="tertiary" value={itemsPerPag} onChange={changeItemsPerPage}>
 					{[5, 10].map((v) => (
-						<option
-							key={v}
-							value={v}
-							className={`outline-ct-neutral-ligth-400 ${
-								itemsPerPag === v
-									? 'bg-gradient-to-l from-ct-primary-400 to-ct-secondary-400 bg-clip-text text-transparent'
-									: 'text-ct-neutral-medium-100'
-							}`}
-						>
+						<option key={v} value={v} className="text-ct-neutral-light-800 outline-ct-special1-500">
 							Per page {v}
 						</option>
 					))}
@@ -66,7 +39,7 @@ export const Pagination = ({
 			</div>
 
 			<IconButton
-				className="bg-ct-neutral-medium-700 text-ct-neutral-ligth-300"
+				className=" bg-ct-special1-600 text-ct-neutral-light-800"
 				disabled={currentPage >= totalPages}
 				onClick={() => onChangePage(currentPage + 1)}
 				icon={MdNavigateNext}

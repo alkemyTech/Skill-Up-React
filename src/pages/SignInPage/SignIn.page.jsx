@@ -5,7 +5,7 @@ import { UsersRepository } from 'src/repositories/users.repository';
 
 export default function SignInPage() {
 	return (
-		<main>
+		<main className="my-auto">
 			<SignInForm
 				accounstRepository={AccounstRepository}
 				authRepository={AuthRepository}

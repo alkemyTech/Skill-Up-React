@@ -5,6 +5,7 @@ import React from 'react';
 import { GiPayMoney, GiReceiveMoney } from 'react-icons/gi';
 import { IoIosSend } from 'react-icons/io';
 import { Button } from 'src/components/Button';
+import { Heading } from 'src/components/Heading';
 import { Pagination } from 'src/components/Pagination';
 import { Select } from 'src/components/Select';
 import { Input } from 'src/components/SignInForm/Input';
@@ -39,19 +40,20 @@ export default function TransactionsPage() {
 	}, [hasNextPage, hasOtherPageParam]);
 
 	if (!transactionPageList) {
-		return <></>;
+		return <main></main>;
 	}
 
 	return (
-		<main className="mx-auto max-w-screen-xl px-4 py-8">
-			<h1 className="mb-8">Movements</h1>
+		<main className="mx-auto w-full max-w-screen-xl px-4 py-8 xl:px-0">
+			<Heading className="mb-8 text-ct-neutral-dark-700">Movements</Heading>
 
-			<fieldset className="my-8 grid gap-4 rounded border p-4 md:grid-cols-[repeat(4,1fr)]">
-				<Text as="legend" className="px-2">
+			<fieldset className="my-8 grid gap-4 rounded border border-ct-neutral-dark-200 p-4 md:grid-cols-[repeat(4,1fr)]">
+				<Text as="legend" className="px-2 font-bold tracking-wider">
 					Filters
 				</Text>
 
 				<Select
+					colorScheme="tertiary"
 					label="Currency"
 					name={filterFieldsNames.currency}
 					id=""
@@ -67,6 +69,7 @@ export default function TransactionsPage() {
 				</Select>
 
 				<Select
+					colorScheme="tertiary"
 					label="Operation"
 					name={filterFieldsNames.movementType}
 					id=""
@@ -83,6 +86,7 @@ export default function TransactionsPage() {
 				</Select>
 
 				<Input
+					colorScheme="tertiary"
 					label="Concept"
 					type="text"
 					name={filterFieldsNames.conceptFilter}
@@ -90,7 +94,9 @@ export default function TransactionsPage() {
 					onChange={onFilterFieldChange}
 				/>
 
-				<Button onClick={clearFilters}>Clear filters</Button>
+				<Button onClick={clearFilters} colorScheme="tertiary" className="md:mt-[inherit]">
+					Clear filters
+				</Button>
 			</fieldset>
 
 			<Pagination
@@ -103,9 +109,9 @@ export default function TransactionsPage() {
 			/>
 
 			<ol className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))] gap-4">
-				{transactionListPaginated?.map((v) => (
+				{transactionListPaginated?.map((movement) => (
 					<motion.li
-						key={v.id}
+						key={movement.id}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
@@ -113,30 +119,34 @@ export default function TransactionsPage() {
 					>
 						<article
 							className={`${
-								v.type === MovementType.topup
-									? 'border-ct-primary-400'
-									: v.type === MovementType.payment
-									? 'border-ct-secondary-400'
+								movement.type === MovementType.topup
+									? 'border-ct-success-500'
+									: movement.type === MovementType.payment
+									? 'border-ct-danger-100'
 									: 'border-ct-neutral-dark-800'
 							} grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded border p-2`}
 						>
 							<i className="overflow-hidden rounded-full border text-5xl">
-								{v.isTransference ? (
-									<IoIosSend className="text-ct-neutral-dark-800" />
-								) : v.type === MovementType.payment ? (
-									<GiPayMoney className="text-ct-secondary-400" />
+								{movement.type === MovementType.topup ? (
+									<GiReceiveMoney className="text-ct-secondary-500" />
+								) : movement.type === MovementType.payment ? (
+									<GiPayMoney className="text-ct-danger-200" />
 								) : (
-									v.type === MovementType.topup && <GiReceiveMoney className="text-ct-primary-500" />
+									movement.isTransference && <IoIosSend className="text-ct-neutral-dark-800" />
 								)}
 							</i>
 
-							<Text as="p">{v.conceptDecoded}</Text>
+							<Text as="p">{movement.conceptDecoded}</Text>
 							<div>
 								<Text as="p" className="text-right">
-									{v.amount} {v.currencyCode}
+									{movement.amount} {movement.currencyCode}
 								</Text>
-								<Text title={`${new Date(v.date).toLocaleDateString()} ${new Date(v.date).toLocaleTimeString()}`}>
-									{timeAgo.format(new Date(v.date))}
+								<Text
+									title={`${new Date(movement.date).toLocaleDateString()} ${new Date(
+										movement.date,
+									).toLocaleTimeString()}`}
+								>
+									{timeAgo.format(new Date(movement.date))}
 								</Text>
 							</div>
 						</article>

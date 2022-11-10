@@ -14,7 +14,7 @@ export const PublicRoute = ({ children }) => {
 	}, [isAuthenticated, isAuthenticating]);
 
 	if (isAuthenticated || isAuthenticating) {
-		return <></>;
+		return <div />;
 	}
 
 	return <>{children}</>;

@@ -21,11 +21,11 @@ export const Text = React.forwardRef(
 				ref={ref}
 				className={`${className} ${
 					variant === textVariant.standard
-						? 'text-lg font-normal leading-[30px]'
+						? 'text-base font-normal leading-[30px] md:text-lg'
 						: variant === textVariant.lead
-						? 'font-roboto text-2xl font-normal leading-[30px]'
+						? 'font-roboto text-xl font-normal leading-[30px] md:text-2xl'
 						: ''
-				} tracking-[0] decoration-[none]`}
+				} tracking-[0] text-ct-neutral-light-700 decoration-[none]`}
 			>
 				{children}
 			</Tag>

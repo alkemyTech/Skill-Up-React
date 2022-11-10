@@ -1,9 +1,9 @@
-import { Button } from '../Button';
 import { useDispatch } from 'react-redux';
 import { clearUserList } from 'src/features/users/userSlice';
 import { clearCredit } from 'src/features/credit/creditSlice';
+import { Button } from 'src/components/Button';
 
-const ButtonLogout = ({ handlerLogin, variant, close }) => {
+const ButtonLogout = ({ handlerLogin, colorScheme, close }) => {
 	const dispatch = useDispatch();
 
 	const handlerLogout = () => {
@@ -13,13 +13,10 @@ const ButtonLogout = ({ handlerLogin, variant, close }) => {
 		handlerLogin();
 	};
 	return (
-		<>
-			<Button variant={variant} onClick={handlerLogout} data-close={close}>
-				Logout
-			</Button>
-		</>
+		<Button colorScheme={colorScheme} onClick={handlerLogout} data-close={close}>
+			Logout
+		</Button>
 	);
 };
 
 export { ButtonLogout };
-
