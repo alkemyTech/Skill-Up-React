@@ -22,8 +22,9 @@ export class Transaction {
 	}
 
 	parseConcept(conceptEncoded) {
-		const { concept, currencyCode, isTransference } = JSON.parse(conceptEncoded);
+		const { concept, currencyCode, isTransference } = conceptEncoded;
 
 		return { conceptDecoded: concept, currencyCode, isTransference };
 	}
 }
+

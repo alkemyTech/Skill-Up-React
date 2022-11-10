@@ -1,6 +1,15 @@
 import { Heading } from 'src/components/Heading';
+import { useEffect } from 'react';
+import { TransactionsRepository } from 'src/repositories/transactions.repository';
 
 export default function HomePage() {
+	useEffect(() => {
+		const { findAllPaginated } = TransactionsRepository();
+		findAllPaginated({ page: 1 })
+			.then((response) => console.log(response))
+			.catch((error) => console.log(error));
+	}, []);
+
 	return (
 		<div className="flex  w-full flex-col place-content-center px-4 py-40">
 			<header className="contents">
@@ -12,3 +21,4 @@ export default function HomePage() {
 		</div>
 	);
 }
+

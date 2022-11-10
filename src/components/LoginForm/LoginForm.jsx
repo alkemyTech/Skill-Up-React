@@ -14,7 +14,7 @@ export const LoginForm = () => {
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [invalidUser, setInvalidUser] = useState(false);
-	const dispatch = useDispatch();
+
 	const navigateTo = useNavigate();
 
 	const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gi;
@@ -26,11 +26,10 @@ export const LoginForm = () => {
 			const { login, userInfo } = AuthRepository();
 			await login({ email, password });
 			const user = await userInfo();
-
-			dispatch(authActions.login({ ...user }));
 			navigateTo(webRoutes.home);
 			toast.success(`Welcome back ${user.first_name_decoded} ${user.last_name}`);
 		} catch (error) {
+			toast.error(error);
 			setInvalidUser(true);
 		}
 	};
@@ -48,7 +47,7 @@ export const LoginForm = () => {
 	};
 
 	return (
-		<div className="mx-auto max-w-md">
+		<div className="mx-auto max-w-md p-10">
 			<form
 				onSubmit={handleForm}
 				className="flex w-full min-w-[250px] max-w-[450px] flex-col items-center gap-8 rounded-md border border-ct-neutral-dark-800/20 bg-white p-8"
@@ -129,3 +128,4 @@ export const LoginForm = () => {
 		</div>
 	);
 };
+

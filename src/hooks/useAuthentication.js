@@ -11,8 +11,7 @@ export const useAuthentication = (authRepository) => {
 	const { isLoading: isAuthenticating } = useQuery(
 		authQueryKeys.validateToken(),
 		async ({ signal }) => {
-			dispatch(uiActions.showSpiner());
-
+			if (!user) dispatch(uiActions.showSpiner());
 			const userInfo = await authRepository(signal).userInfo();
 			dispatch(authActions.login({ ...userInfo }));
 			return userInfo;
@@ -32,3 +31,4 @@ export const useAuthentication = (authRepository) => {
 
 	return { isAuthenticated: !!user, isAuthenticating: isAuthenticating };
 };
+
