@@ -96,59 +96,72 @@ const Gastos = () => {
 
   return (
     <>
-      <form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        <div className="flex justify-start gap-5 ">
-          <div className="flex flex-col gap-3 w-1/2">
-            <span className="text-stone-200 text-left">Monto a cargar:</span>
-            <input
-              min={0}
-              type="number"
-              name="monto"
-              className="pt-1.5 pb-1 pr-3  bg-white text indent-1.5 text-black outline-stone-200 rounded placeholder:text-black"
-              onChange={handleOnChange}
-              placeholder="Ingrese el monto a cargar"
-              required
-            />
-          </div>
-          <div className="flex flex-col gap-3 w-1/2">
-            <span className="text-stone-200 text-left">Moneda a utilizar:</span>
-            <select
-              className="pt-2 pb-2 rounded"
-              name="moneda"
-              onChange={handleOnChange}
+      <section className="gastos w-full h-screen my-10">
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          <section className="flex flex-col items-center justify-center w-3/6 h-auto mt-16 mb-10 mx-auto px-8 py-12 rounded-lg bg-sky-500">
+            <label>
+              <section className="sectionLabel flex flex-col items-center justify-center p-3 my-4">
+                <span className="text-stone-200 text-left mb-3">
+                  Monto a cargar:
+                </span>
+                <input
+                  min={0}
+                  type="number"
+                  name="monto"
+                  className="w-60 pt-1.5 pb-1 pr-3  bg-white text indent-1.5 text-black outline-stone-200 rounded placeholder:text-black"
+                  onChange={handleOnChange}
+                  placeholder="Ingrese el monto a cargar"
+                  required
+                />
+              </section>
+            </label>
+
+            <label>
+              <section className="sectionLabel flex flex-col items-center justify-center p-3 my-4">
+                <span className="text-stone-200 text-left mb-3">
+                  Moneda a utilizar:
+                </span>
+                <select
+                  className="w-60 pt-2 pb-2 rounded"
+                  name="moneda"
+                  onChange={handleOnChange}
+                >
+                  <option value="">Elegí tu moneda</option>
+                  <option value="ARS">ARS</option>
+                  <option value="USD">USD</option>
+                </select>
+              </section>
+            </label>
+
+            <label>
+              <section className="sectionLabel flex flex-col items-center justify-center p-3 my-4">
+                <span className="text-stone-200 text-left mb-3">
+                  Concepto de la carga:
+                </span>
+                <input
+                  name="concepto"
+                  type="text"
+                  className="w-72 pt-1 pb-1 pr-3 bg-white text indent-1.5 text-black outline-stone-200 rounded placeholder:text-black"
+                  onChange={handleOnChange}
+                  placeholder="Ingrese el concepto de la carga"
+                  required
+                />
+              </section>
+            </label>
+
+            <button
+              type="submit"
+              className="bg-white font-bold text-cyan-600 pt-1 pb-1 pl-3 pr-3 flex rounded  items-center justify-center text-center "
             >
-              <option value="">Elegí tu moneda</option>
-              <option value="ARS">ARS</option>
-              <option value="USD">USD</option>
-            </select>
-          </div>
-        </div>
-        <div className="mt-4 flex flex-col gap-3">
-          <span className="text-stone-200 text-left">
-            Concepto de la carga:
-          </span>
-          <input
-            name="concepto"
-            type="text"
-            className=" pt-1 pb-1 pr-3 bg-white text indent-1.5 text-black outline-stone-200 rounded placeholder:text-black"
-            onChange={handleOnChange}
-            placeholder="Ingrese el concepto de la carga"
-            required
-          />
-        </div>
-        <div className="mt-5">
-          <button
-            type="submit"
-            className="bg-white font-bold text-cyan-600 pt-1 pb-1 pl-3 pr-3 flex rounded  items-center justify-center text-center "
-          >
-            Cargar
-          </button>
-        </div>
-      </form>
+              Cargar
+            </button>
+          </section>
+        </form>
+      </section>
     </>
   );
 };
