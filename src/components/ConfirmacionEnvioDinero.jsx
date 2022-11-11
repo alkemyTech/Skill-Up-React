@@ -45,47 +45,45 @@ const ConfirmacionEnvioDinero = ({ state, setState }) => {
         return false
     }
     return (
-        <div className="w-2/5 p-7 bg-cyan-500 rounded">
-            <form action="" onSubmit={onSubmit}>
+		<div className="bg-cyan-500 rounded mt-[40px] md:w-[60%] w-[80%] lg:w-2/5 lg:p-10 p-[40px]">
+			<form action="" onSubmit={onSubmit}>
+				<div className="mt-3 flex flex-col gap-4">
+					<span className="text-white font-bold text-left">
+						Emisor: {names.emisor}
+					</span>
+				</div>
 
-                <div className="mt-3 flex flex-col gap-4">
-                    <span className="text-stone-200 font-bold text-left">
-                        Emisor: {names.emisor}
-                    </span>
-                </div>
-
-                <div className="mt-3 flex flex-col gap-3">
-                    <span className="text-stone-200 font-bold text-left">
-                        Receptor: {names.receptor}
-                    </span>
-                </div>
-                <div className="mt-4 flex flex-col gap-3">
-                    <span className="text-stone-200 font-bold text-left">
-                        Cuenta de destino: {state.to_account_id}
-                    </span>
-                </div>
-                <div className="mt-4 flex flex-col gap-3">
-                    <span className="text-stone-200 font-bold text-left">
-                        Concepto: {state.concept}
-                    </span>
-                </div>
-                <div className="mt-4 flex flex-col gap-3">
-                    <span className="text-stone-200 font-bold text-left">
-                        Suma: {state.amount}
-                    </span>
-                </div>
-                <div className="mt-5">
-                    <button
-                        type="submit"
-
-                        className="bg-stone-200 font-bold text-cyan-500 pt-1 pb-1 pl-3 pr-3 flex rounded  items-center justify-center text-center "
-                    >
-                        Confirmar
-                    </button>
-                </div>
-            </form>
-        </div>
-    )
+				<div className="mt-3 flex flex-col gap-3">
+					<span className="text-white font-bold text-left">
+						Receptor: {names.receptor}
+					</span>
+				</div>
+				<div className="mt-4 flex flex-col gap-3">
+					<span className="text-white font-bold text-left">
+						Cuenta de destino: {state.to_account_id}
+					</span>
+				</div>
+				<div className="mt-4 flex flex-col gap-3">
+					<span className="text-white font-bold text-left">
+						Concepto: {state.concept}
+					</span>
+				</div>
+				<div className="mt-4 flex flex-col gap-3">
+					<span className="text-white font-bold text-left">
+						Suma: {state.amount}
+					</span>
+				</div>
+				<div className="mt-5">
+					<button
+						type="submit"
+						className="bg-white font-bold text-cyan-500 pt-1 pb-1 pl-3 pr-3 flex rounded  items-center justify-center text-center "
+					>
+						Confirmar
+					</button>
+				</div>
+			</form>
+		</div>
+	);
 }
 
 export default ConfirmacionEnvioDinero
