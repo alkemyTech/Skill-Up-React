@@ -14,24 +14,21 @@ export default function DepositPage() {
 	
 	const accessToken = localStorage.getItem("ACCESS_TOKEN")
 	const notify = (text, type) => toast(text, { autoClose: 3000, type: type, theme: "light"})
-
-	const movementWithCurrency = {
-		type: "topup",
-		concept: message,
-		currencyCode: currency,
-		isTransference: false,
-		amount: amount
-	}
-
-	const endpointBody = MovementFormToCreate(movementWithCurrency)
-
-	console.log(endpointBody)
 	
 	const handleForm = (event) => {
 		event.preventDefault()
 
 		if(currency && amount && message){
-			createDeposit(319, message, amount)
+			const movementWithCurrency = {
+				type: "topup",
+				concept: message,
+				currencyCode: currency,
+				isTransference: false,
+				amount: amount
+			}
+
+			const endPointBody = MovementFormToCreate(movementWithCurrency)
+			createDeposit(319, endPointBody)
 		}else{
 			notify("Please fill all fields out", "error")
 		}
@@ -67,7 +64,7 @@ export default function DepositPage() {
 		}
 	}
 
-	const createDeposit = async (id, concept, amount) => {
+	const createDeposit = async (id, object) => {
 		try{
 			const response = await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/${id}`, {
 				method: "POST",
@@ -76,12 +73,7 @@ export default function DepositPage() {
 					"Accept": "application/json",
 					"Content-Type": "application/json"
 				},
-				body: JSON.stringify({
-					type: "topup",
-					concept: concept,
-					amount: amount,
-					  
-				})
+				body: JSON.stringify(object)
 			})
 	
 			const data = await response.json()
@@ -92,6 +84,7 @@ export default function DepositPage() {
 				setOtherAmount(null)
 				setMessage("")
 
+				console.log(data)
 				notify("Deposit made successfully", "success")
 			}else{
 				notify("Something went wrong", "error")
