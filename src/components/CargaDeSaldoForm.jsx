@@ -1,13 +1,10 @@
-import React, { useContext }  from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { AuthContext } from "../context/loginContext";
 
-
-
-const CargaDeSaldoForm = () => {
-	
-	const { getAccountID } = useContext(AuthContext)
+const CargaDeSaldoForm = ({ setLastTransactions }) => {
+	const { getAccountID } = useContext(AuthContext);
 
 	const { getToken } = useContext(AuthContext);
 	const [valorDolar, setValorDolar] = useState(0);
@@ -81,7 +78,7 @@ const CargaDeSaldoForm = () => {
 					type: "topup",
 					concept: data.concepto,
 					amount: data.monto,
-					coin: data.moneda
+					coin: data.moneda,
 				}),
 				headers: {
 					Accept: "application/json",
@@ -92,47 +89,49 @@ const CargaDeSaldoForm = () => {
 			}
 		)
 			.then((res) => res.json())
-			.then((data) => console.log(data));
+			.then((data) => setLastTransactions(data));
 	};
 
 	return (
-		<div className="w-2/5 p-7 bg-cyan-600 rounded">
+		<div className="bg-cyan-500 rounded mt-[40px] md:w-[60%] w-[80%] lg:w-2/5 lg:p-10 p-[40px]">
 			<form
 				action=""
 				onSubmit={(e) => {
 					handleSubmit(e);
 				}}
 			>
-				<div className="flex justify-start gap-5 ">
-					<div className="flex flex-col gap-3 w-1/2">
-						<span className="text-stone-200 text-left">
+				<div className="flex flex-col md:flex-row justify-start gap-5">
+					<div className="flex flex-col gap-3 w-full md:w-1/2">
+						<span className="text-white text-left lg:font-bold lg:text-[20px]">
 							Monto a cargar:
 						</span>
 						<input
 							type="text"
 							name="monto"
-							className="pt-1.5 pb-1 pr-3  bg-white text indent-1.5 text-black outline-stone-200 rounded placeholder:text-black"
+							className="pt-1.5 pb-1 pr-3  bg-white text indent-1.5 text-black  outline-cyan-500 rounded placeholder:text-black"
 							onChange={handleOnChange}
 							placeholder="Ingrese el monto a cargar"
 						/>
 					</div>
-					<div className="flex flex-col gap-3 w-1/2">
-						<span className="text-stone-200 text-left">
+					<div className="flex flex-col gap-3 w-full md:w-1/2">
+						<span className=" text-left text-white lg:font-bold lg:text-[20px]">
 							Moneda a utilizar:
 						</span>
 						<select
-							className="pt-2 pb-2 rounded"
+							className="pt-2 pb-2 rounded text-left"
 							name="moneda"
 							onChange={handleOnChange}
 						>
-							<option value="">Elegí tu moneda</option>
+							<option className="text-left" value="">
+								Elegí tu moneda
+							</option>
 							<option value="ARS">ARS</option>
 							<option value="USD">USD</option>
 						</select>
 					</div>
 				</div>
 				<div className="mt-4 flex flex-col gap-3">
-					<span className="text-stone-200 text-left">
+					<span className=" text-white text-left lg:font-bold lg:text-[20px] ">
 						Concepto de la carga:
 					</span>
 					<input
@@ -140,10 +139,10 @@ const CargaDeSaldoForm = () => {
 						type="text"
 						className=" pt-1 pb-1 pr-3 bg-white text indent-1.5 text-black outline-stone-200 rounded placeholder:text-black"
 						onChange={handleOnChange}
-						placeholder="Ingrese el concepto de la carga"
+						placeholder="Ingrese el concepto"
 					/>
 				</div>
-				<div className="mt-5">
+				<div className="mt-5 md:mt-[30px]">
 					<button
 						type="submit"
 						className="bg-white font-bold text-cyan-600 pt-1 pb-1 pl-3 pr-3 flex rounded  items-center justify-center text-center "
