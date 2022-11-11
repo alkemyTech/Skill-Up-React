@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import useUser from "../hooks/useUser";
+import useLocalStorage from "../hooks/useLocalStorage";
 import formatDate from "../utils/formatDate";
 
 const UltimosEnvios = () => {
   const [envios, setEnvios] = useState([]);
-  const { token, user } = useUser();
+  const { token, user } = useLocalStorage("user");
   const auth = `Bearer ${token}`;
 
   useEffect(() => {
@@ -24,7 +24,12 @@ const UltimosEnvios = () => {
       ).json();
       setEnvios(
         transactionList.data
-          .filter((envio) => envio.userId == user.id)
+          .filter(
+            (envio) =>
+              envio.userId == user.id &&
+              envio.type == "payment" &&
+              envio.to_account_id != user.id
+          )
           .slice(0, 4)
       );
     };
@@ -34,7 +39,10 @@ const UltimosEnvios = () => {
   const enviosElements = envios.map((envio) => {
     const date = formatDate(envio.date).tipo2;
     return (
-      <div className="p-6 rounded bg-cyan-500 text-white w-fit" key={envio.id}>
+      <div
+        className="p-6 rounded bg-cyan-500 text-white  w-[300px]"
+        key={envio.id}
+      >
         <div className="flex gap-2">
           <span>Monto:</span>
           <span className="bold">${envio.amount}</span>
@@ -57,9 +65,9 @@ const UltimosEnvios = () => {
     );
   });
   return (
-    <div className="pt-8 mb-5 pb-8flex items-center justify-center">
+    <div className="pt-8 items-center justify-center pb-12 flex ">
       {envios.length > 0 ? (
-        <div className="flex gap-6 justify-center flex-wrap">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
           {enviosElements}
         </div>
       ) : (

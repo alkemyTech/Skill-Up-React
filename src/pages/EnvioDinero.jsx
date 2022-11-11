@@ -7,23 +7,27 @@ import UltimosEnvios from '../components/UltimosEnvios'
 const EnvioDinero = () => {
   const [state, setState] = useState(0)
   return (
-    <div className="pt-16 bg-stone-200">
-      <h1 className="text-left pl-5 text-4xl font-bold text-sky-600">
-        Envia Dinero
-      </h1>
+		<div className="pt-16">
+			<h1 className="text-center text-4xl mt-6 lg:text-left lg:mt-14 lg:pl-5 lg:text-5xl font-bold text-cyan-500">
+				Envia Dinero
+			</h1>
 
-      <div className="flex justify-center items-center">
-        {state == 0 ?
-          <EnvioDineroForm state={state} setState={setState} />
-          : <ConfirmacionEnvioDinero state={state} setState={setState} />
-        }
-      </div>
-      <h2 className="text-left mt-14 pl-5 text-4xl font-bold text-sky-600">
-        Últimos Envios
-      </h2>
-      <UltimosEnvios />
-    </div>
-  )
+			<div className="flex justify-center items-center mt-[50px]">
+				{state == 0 ? (
+					<EnvioDineroForm state={state} setState={setState} />
+				) : (
+					<ConfirmacionEnvioDinero
+						state={state}
+						setState={setState}
+					/>
+				)}
+			</div>
+			<h2 className=" mt-[50px] text-center text-4xl lg:text-left lg:mt-14 lg:pl-5 lg:text-5xl font-bold text-cyan-500">
+				Últimos Envios
+			</h2>
+			<UltimosEnvios />
+		</div>
+  );
 }
 
 export default EnvioDinero
