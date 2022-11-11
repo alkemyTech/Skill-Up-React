@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import useUser from "../hooks/useUser";
+import useLocalStorage from "../hooks/useLocalStorage";
 import formatDate from "../utils/formatDate";
 
 const UltimosEnvios = () => {
     const [envios, setEnvios] = useState([])
-    const { token, user } = useUser()
+    const { token, user } = useLocalStorage('user')
     const auth = `Bearer ${token}`
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const UltimosEnvios = () => {
                 },
                 withCredentials: true
             })).json()
-            setEnvios(transactionList.data.filter(envio => envio.userId == user.id).slice(0, 4))
+            setEnvios(transactionList.data.filter(envio => envio.userId == user.id && envio.type == 'payment' && envio.to_account_id != user.id).slice(0, 4))
 
         }
         getLastTransactions()
