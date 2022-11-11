@@ -17,7 +17,7 @@ const UltimosEnvios = () => {
                 },
                 withCredentials: true
             })).json()
-            setEnvios(transactionList.data.filter(envio => envio.userId == user.id).slice(0, 4))
+            setEnvios(transactionList.data.filter(envio => envio.userId == user.id && envio.type == 'payment' && envio.to_account_id).slice(0, 4))
 
         }
         getLastTransactions()
