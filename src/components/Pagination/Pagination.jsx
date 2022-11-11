@@ -28,7 +28,7 @@ export const Pagination = ({
 				>
 					{range(totalPages, 1).map((page) => (
 						<option key={page} value={page} className="text-ct-neutral-light-800 outline-ct-special1-500">
-							Page {page} of {totalPages}
+							Page {page}
 						</option>
 					))}
 				</Select>

@@ -55,7 +55,7 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 											className="absolute right-0 top-[72px] w-auto flex-col items-center rounded-bl-lg bg-ct-secondary-600 p-4 shadow-xl"
 										>
 											<Text as="p" className="mb-3 text-center font-bold" data-close={true}>
-												{user ? `${user.first_name}  ${user.last_name}` : <Spinner />}
+												{user ? `${user.first_name_decoded}  ${user.last_name}` : <Spinner />}
 											</Text>
 											<ButtonLogout variant="mini" handlerLogin={handlerLogin} close={true} />
 										</div>
@@ -66,7 +66,7 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 								<img src={avatar} alt="menu" className="w-10" />
 
 								<Heading as="h3" size="headline4" className="text-ct-secondary-200 ">
-									{user ? `${user.first_name}  ${user.last_name}` : <Spinner />}
+									{user ? `${user.first_name_decoded}  ${user.last_name}` : <Spinner />}
 								</Heading>
 							</div>
 							{<MobileMenu showMenu={showMenu} setShowMenu={setShowMenu} handlerLogin={handlerLogin} />}
@@ -79,4 +79,3 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 };
 
 export { Navbar };
-

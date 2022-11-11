@@ -9,7 +9,7 @@ import { Icon } from 'src/components/Icon/Icon';
  */
 export function IconButton({ className = '', icon, ...props }) {
 	return (
-		<Button {...props} className={`leading-[0] ${className}`}>
+		<Button {...props} className={`!p-2 leading-[0] ${className}`}>
 			<Icon as={icon} />
 		</Button>
 	);
