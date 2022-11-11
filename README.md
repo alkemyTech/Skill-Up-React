@@ -1,17 +1,39 @@
-# Aplicacion AlkyBank
+# Alkemy Bank
+## Wallet digital
+Es un sistema donde el usuario pueda interactuar con facilidad en su cuenta o tener la oportunidad de crear un de forma fácil y segura
 
-Testing Remy ! 
+##Comenzar
+Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
 
-## Pasos para intalacion:
+### Pre-requisitos
+Algunas del las dependencias que son necesarias antes de poder instalar el proyecto, van desde: 
+- Git
+- React-Router-v6
+- Node.js
 
-### 1) `git clone https://github.com/AllegriM/Skill-Up-React-G6.git`
+### Instalación
+Los pasos para comenzar a ejecutar el Deploy son:
+1. Clonar el repositorio de GitHub para que pueda correr de forma local
+2. Instalar las dependencias usando npm desde la consola
+3.  Inicializar el proyecto en una página
+``` shell
+npm i
+```
+``` shell
+npm run dev
+```
 
-Clonar el repositorio en su local.
 
-### 2) `npm i`
+## Construido con
+[Reac.js](https://reactjs.org/ "Reac.js") - Librería web usada
 
-Una vez con el repositorio clonado ingresar a la carpeta 'alkemy-alkybank' y utilizar el comando para instalar las dependencias.
+[NPM](https://www.npmjs.com/ "NPM") - Manejador de dependencias
 
-### 3) `npm start`
 
-Al finalizar la instalacion de dependencias lanzar el comando 'npm start' para correr la aplicacion en un servidor local.
+
+## Autores
+- [AllegriM](https://github.com/AllegriM "AllegriM")
+- [Tadeo](https://github.com/TadeMaddonni "Tadeo")
+- [Angel](https://github.com/Angel-Landkoer "Angel")
+- [Lucas De Palma](https://github.com/DePalma2 "Lucas De Palma")
+- [Tomas Sanchez](https://github.com/stomas418 "Tomas Sanchez")

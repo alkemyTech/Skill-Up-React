@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Gastos from './Gastos'
+import UltimosEnvios from '../components/UltimosEnvios'
+import UltimosCargas from '../components/UltimasCargas'
 
 const Balance = () => {
   return (
@@ -23,11 +24,12 @@ const Balance = () => {
                 </div>
             </section>
             <section>
-              <h2 className='text-4xl font-extrabold text-center my-10 lg:text-5xl 2xl:text-5xl mx-auto py-20 text-sky-500'>Ultimos Gastos</h2>
-              <Gastos/>
+              <h2 className='text-4xl font-extrabold text-center my-10 lg:text-5xl 2xl:text-5xl mx-auto py-5 text-sky-500'>Ultimos Gastos</h2>
+              <UltimosEnvios />
             </section>
             <section>
-              <h2 className='text-4xl font-extrabold text-center my-10 lg:text-5xl 2xl:text-5xl mx-auto py-20 text-sky-500'>Ultimos Ingresos</h2>
+              <h2 className='text-4xl font-extrabold text-center my-10 lg:text-5xl 2xl:text-5xl mx-auto py-5 text-sky-500'>Ultimos Ingresos</h2>
+              <UltimosCargas />
             </section>
         </div>
       </section>

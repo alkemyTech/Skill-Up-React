@@ -1,5 +1,4 @@
-import { useMemo, useState } from 'react'
-import usePagination from '../hooks/usePagination'
+import { useState } from 'react'
 import filterTransactions from '../utils/filterTransactions'
 import formatDate from '../utils/formatDate'
 import Filters from '../components/Filters'
@@ -9,32 +8,32 @@ import ErrorMessage from '../components/ErrorMessage'
 import ListSkeleton from '../components/ListSkeleton'
 import useFetchData from '../hooks/useFetchData'
 
-const PAGE_SIZE = 10
 
 function Movimientos() {
   
-  const token = JSON.parse(localStorage.getItem('user')).token
+  const token = JSON.parse(localStorage.getItem('user'))["token"]
   
-  const [currentPage, setCurrentPage] = useState(1)
+  const [fetchUrl, setFetchUrl] = useState("/transactions")
   // Filters
   const [coin, setCoin] = useState("ARS")
-  const [input, setConcept] = useState("")
+  const [concept, setConcept] = useState("")
   const [amount, setAmount] = useState(0)
+
   
+  const {fetchedData, loading, error} = useFetchData({method: "GET", fetchUrl, headers: {Accept: "application/json", Authorization: `Bearer ${token}`}})
 
-  const {fetchedData, loading, error} = useFetchData({method: "GET", url: "/transactions", headers: {Accept: "application/json", Authorization: `Bearer ${token}`}})
-  console.log(fetchedData)
-  const filteredArray = filterTransactions({array: fetchedData, setCurrentPage, input, amount})
+  const filteredArray = filterTransactions({array: fetchedData, input: concept, amount})
+  console.log(filteredArray)
+  
+  // const arrayLength = filteredArray.length
 
-  const arrayLength = filteredArray.length
+  // const {paginationRange, TOTAL_PAGES} = usePagination(arrayLength, currentPage)
 
-  const {paginationRange, TOTAL_PAGES} = usePagination(arrayLength, currentPage)
-
-  const paginationDataDisplay = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PAGE_SIZE; 
-    const lastPageIndex = firstPageIndex + PAGE_SIZE;
-    return filteredArray.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, filteredArray, fetchedData])
+  // const paginationDataDisplay = useMemo(() => {
+  //   const firstPageIndex = (currentPage - 1) * PAGE_SIZE; 
+  //   const lastPageIndex = firstPageIndex + PAGE_SIZE;
+  //   return filteredArray.slice(firstPageIndex, lastPageIndex);
+  // }, [currentPage, filteredArray, fetchedData])
   
   return (
     <div className='max-w-lg mx-auto my-5'>
@@ -50,10 +49,10 @@ function Movimientos() {
         <ErrorMessage />
         : loading ? 
         <ListSkeleton rows={10} />
-        : paginationDataDisplay ?
+        : 
         <div className='min-h-[710px] flex flex-col'>
             {
-              paginationDataDisplay.map((movimiento, index) => {
+              fetchedData.data.map((movimiento, index) => {
                 formatDate(movimiento.date).tipo1
                 return (
                   <div key={index} className="flex justify-between items-center gap-[20px] mb-4">
@@ -66,15 +65,12 @@ function Movimientos() {
                   </div>
                 )
               })
-            }  
+            }
             <Paginate 
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage} 
-              numberOfPages={paginationRange} 
-              maxPages={TOTAL_PAGES}
+              pageData={fetchedData}
+              setFetchUrl={setFetchUrl}
             />
           </div> 
-          : null
       }
     </div>
   )

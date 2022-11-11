@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useLocalStorage from "../hooks/useLocalStorage";
 import useFetchData from "../hooks/useFetchData";
 
 export const AuthContext = createContext();
@@ -12,14 +11,12 @@ function AuthContextProvider({ children }) {
 
 	//*******************  States **************************** //
 
-
-
 	const [isAuthenticated, setIsAuthenticated] = useState(
-		() => useLocalStorage() || false
+		() => JSON.parse(localStorage.getItem("user")) || false
 	);
 
-	const [accountData, setAccountData] = useState()
-	const [registerData, setRegisterData] = useState()
+  const [accountData, setAccountData] = useState()
+  const [registerData, setRegisterData] = useState()
 	const [resultLogin, setResultLogin] = useState(null);
 	const [token, setToken] = useState(null);
 	const [dataLogin, setDataLogin] = useState({
@@ -50,7 +47,7 @@ function AuthContextProvider({ children }) {
 				}
 			);
 			const data = await response.json();
-			setRegisterData(data)
+      setRegisterData(data)
 			console.log("SIGN-UP-RESPONSE: ", data);
 			setDataSignUp({
 				...dataSignUp,
@@ -151,8 +148,13 @@ function AuthContextProvider({ children }) {
 		return token;
 	};
 
-	const getAccountID = () => {
+	const getUser = () => {
+		const user = JSON.parse(localStorage.getItem("user"));
+		const userInfo = user.user;
+		return userInfo;
+	};
 
+  const getAccountID = () => {
 		const user = JSON.parse(localStorage.getItem("account"))["id"];
 		return user;
 	};
@@ -178,7 +180,8 @@ function AuthContextProvider({ children }) {
 				login,
 				signUp,
 				getToken,
-        getAccountID,
+				getAccountID,
+				getUser,
 				resultLogin,
 				token,
 				isAuthenticated,
@@ -192,3 +195,4 @@ function AuthContextProvider({ children }) {
 }
 
 export default AuthContextProvider
+

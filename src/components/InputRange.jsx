@@ -1,18 +1,19 @@
-import React from 'react'
-import useDebounce from '../hooks/useDebounce'
-import Minus from './Icons/Minus'
-import Plus from './Icons/Plus'
+import React from "react";
+import useDebounce from "../hooks/useDebounce";
+import Minus from "./Icons/Minus";
+import Plus from "./Icons/Plus";
 
-function InputRange({setAmount, amount}) {
-
-
+function InputRange({ setAmount, amount }) {
   const changeAmountFilter = (e) => {
-    setAmount(e.target.value)
-  }
+    setAmount(e.target.value);
+  };
 
   return (
-    <div className='mb-6'>
-      <label htmlFor="price" className="block text-left text-sm font-medium text-gray-700">
+    <div className="mb-6">
+      <label
+        htmlFor="price"
+        className="block text-left text-sm font-medium text-gray-700"
+      >
         Price
       </label>
       <div className="relative rounded-md mt-1 shadow-sm overflow-hidden">
@@ -44,7 +45,7 @@ function InputRange({setAmount, amount}) {
         </div> */}
       </div>
     </div>
-  )
+  );
 }
 
-export default InputRange
+export default InputRange;

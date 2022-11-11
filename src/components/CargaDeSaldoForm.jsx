@@ -6,69 +6,69 @@ import { AuthContext } from "../context/loginContext";
 const CargaDeSaldoForm = ({ setLastTransactions }) => {
 	const { getAccountID } = useContext(AuthContext);
 
-	const { getToken } = useContext(AuthContext);
-	const [valorDolar, setValorDolar] = useState(0);
-	const [data, setData] = useState({
-		monto: "",
-		moneda: "",
-		concepto: "",
-	});
+  const { getToken } = useContext(AuthContext);
+  const [valorDolar, setValorDolar] = useState(0);
+  const [data, setData] = useState({
+    monto: "",
+    moneda: "",
+    concepto: "",
+  });
 
-	useEffect(() => {
-		fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
-			.then((res) => res.json())
-			.then((res) => setValorDolar(parseInt(res[0].casa.compra)));
-	}, []);
+  useEffect(() => {
+    fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
+      .then((res) => res.json())
+      .then((res) => setValorDolar(parseInt(res[0].casa.compra)));
+  }, []);
 
-	const handleOnChange = (e) => {
-		const { value, name } = e.target;
-		setData((prevData) => {
-			return {
-				...prevData,
-				[name]: value,
-			};
-		});
-	};
+  const handleOnChange = (e) => {
+    const { value, name } = e.target;
+    setData((prevData) => {
+      return {
+        ...prevData,
+        [name]: value,
+      };
+    });
+  };
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log("Enviado");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Enviado");
 
-		let conceptoValido = false;
-		let monedaValida = false;
-		let montoValido = false;
+    let conceptoValido = false;
+    let monedaValida = false;
+    let montoValido = false;
 
-		if (data.monto > 0 && !isNaN(data.monto)) {
-			console.log("Monto valido");
-			montoValido = true;
-		} else {
-			console.log("Monto no valido");
-		}
+    if (data.monto > 0 && !isNaN(data.monto)) {
+      console.log("Monto valido");
+      montoValido = true;
+    } else {
+      console.log("Monto no valido");
+    }
 
-		if (data.moneda === "ARS" || data.moneda === "USD") {
-			if (data.moneda === "USD") {
-				data.monto = data.monto * valorDolar;
-				data.concepto = data.concepto + " (Eran USD)";
-				monedaValida = true;
-			} else {
-				console.log("moneda valido");
-				monedaValida = true;
-			}
-		} else {
-			console.log("moneda no valido");
-		}
+    if (data.moneda === "ARS" || data.moneda === "USD") {
+      if (data.moneda === "USD") {
+        data.monto = data.monto * valorDolar;
+        data.concepto = data.concepto + " (Eran USD)";
+        monedaValida = true;
+      } else {
+        console.log("moneda valido");
+        monedaValida = true;
+      }
+    } else {
+      console.log("moneda no valido");
+    }
 
-		if (data.concepto.length > 0) {
-			console.log("Concepto valido");
-			conceptoValido = true;
-		} else {
-			console.log("Concepto no valido");
-		}
-		console.log("Moneda" + " : " + monedaValida);
-		if (monedaValida && conceptoValido && montoValido) {
-			cargaDeSaldo();
-		}
-	};
+    if (data.concepto.length > 0) {
+      console.log("Concepto valido");
+      conceptoValido = true;
+    } else {
+      console.log("Concepto no valido");
+    }
+    console.log("Moneda" + " : " + monedaValida);
+    if (monedaValida && conceptoValido && montoValido) {
+      cargaDeSaldo();
+    }
+  };
 
 	const cargaDeSaldo = () => {
 		fetch(
