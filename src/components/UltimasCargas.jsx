@@ -29,7 +29,7 @@ const UltimasCargas = () => {
 		const date = formatDate(carga.date).tipo2;
 		return (
 			<div
-				className="p-6 rounded bg-cyan-600 text-white  w-fit"
+				className="p-6 rounded bg-cyan-500 text-white  w-[300px]"
 				key={carga.id}
 			>
 				<div className="flex gap-2">
@@ -48,9 +48,9 @@ const UltimasCargas = () => {
 		);
 	});
 	return (
-		<div className="pt-8 pb-8flex items-center justify-center pb-12 ">
+		<div className="pt-8 items-center justify-center pb-12 flex  ">
 			{cargas != [] ? (
-				<div className="flex gap-6 justify-center flex-wrap">
+				<div className=" gap-6 justify-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
 					{cargasElements}
 				</div>
 			) : (

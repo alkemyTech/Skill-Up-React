@@ -38,6 +38,7 @@ body {
 
 select {
 	text-indent: 10px;
+	background-color: white;
 }
 
 select:focus {
@@ -53,4 +54,31 @@ select option {
 	font-size: 80px;
 	padding: 10px;
 	color: var(--primary-color);
+}
+
+.header {
+	transition: all 1s ease;
+}
+
+.hamburguerLine {
+	transform-origin: left;
+	transition: all 1s ease;
+}
+
+.topbar {
+	transition: all 1s ease;
+	height: 100vh;
+}
+.hamburger .active span:first-child {
+	background-color: white;
+	transform: rotate(45deg);
+}
+
+.hamburger .active span:nth-child(2) {
+	opacity: 0;
+}
+
+.hamburger .active span:last-child {
+	background-color: white;
+	transform: rotate(-45deg);
 }
