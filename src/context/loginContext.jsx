@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useFetchData from "../hooks/useFetchData";
 
 export const AuthContext = createContext();
 
@@ -149,7 +148,7 @@ function AuthContextProvider({ children }) {
 	};
 
 	const getUser = () => {
-		const user = JSON.parse(localStorage.getItem("user"));
+		const user = JSON.parse(localStorage.getItem("user")) || false;
 		const userInfo = user.user;
 		return userInfo;
 	};

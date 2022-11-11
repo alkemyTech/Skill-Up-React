@@ -8,7 +8,7 @@ function Filters({setAmount, amount, setCoin, coin, setConcept}) {
     <div className='flex gap-4'>
         <InputRange setAmount={setAmount} amount={amount} />
         <Input setConcept={setConcept} />
-        <InputSelect setCoin={setCoin} coin={coin} />
+        {/* <InputSelect setCoin={setCoin} coin={coin} /> */}
     </div>
   )
 }

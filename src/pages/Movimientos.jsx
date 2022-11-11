@@ -15,7 +15,7 @@ function Movimientos() {
   
   const [fetchUrl, setFetchUrl] = useState("/transactions")
   // Filters
-  const [coin, setCoin] = useState("ARS")
+  // const [coin, setCoin] = useState("ARS")
   const [concept, setConcept] = useState("")
   const [amount, setAmount] = useState(0)
 
@@ -23,7 +23,7 @@ function Movimientos() {
   const {fetchedData, loading, error} = useFetchData({method: "GET", fetchUrl, headers: {Accept: "application/json", Authorization: `Bearer ${token}`}})
 
   const filteredArray = filterTransactions({array: fetchedData, input: concept, amount})
-  console.log(filteredArray)
+
   
   // const arrayLength = filteredArray.length
 
@@ -38,8 +38,8 @@ function Movimientos() {
   return (
     <div className='max-w-lg mx-auto my-5'>
       <Filters
-        coin={coin}
-        setCoin={setCoin} 
+        // coin={coin}
+        // setCoin={setCoin} 
         setConcept={setConcept}
         amount={amount}
         setAmount={setAmount}
@@ -52,7 +52,7 @@ function Movimientos() {
         : 
         <div className='min-h-[710px] flex flex-col'>
             {
-              fetchedData.data.map((movimiento, index) => {
+              filteredArray.map((movimiento, index) => {
                 formatDate(movimiento.date).tipo1
                 return (
                   <div key={index} className="flex justify-between items-center gap-[20px] mb-4">
