@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { AuthContext } from "../context/loginContext";
 import formatDate from "../utils/formatDate";
 
-const UltimasCargas = () => {
+const UltimasCargas = ({ lastTransactions }) => {
 	const [cargas, setCargas] = useState([]);
 	const { getToken } = useContext(AuthContext);
 	const getCargas = (userToken) => {
@@ -17,13 +17,13 @@ const UltimasCargas = () => {
 			}
 		)
 			.then((res) => res.json())
-			.then((res) => setCargas(res.data));
+			.then((res) => setCargas(res.data.slice(0,6)));
 	};
 
 	useEffect(() => {
 		const token = getToken();
 		getCargas(token);
-	}, []);
+	}, [lastTransactions]);
 
 	const cargasElements = cargas.map((carga) => {
 		const date = formatDate(carga.date).tipo2;
