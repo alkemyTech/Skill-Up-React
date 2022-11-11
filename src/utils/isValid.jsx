@@ -7,26 +7,22 @@ userId
 */
 
 const validations = {
-    'amount': (amount) => {
-        console.log(amount)
-        if (amount.value <= 0) {
+  amount: (amount) => {
+    console.log(amount);
+    if (amount.value <= 0) {
+      amount.classList.add("bg-red-100");
+    }
 
-            amount.classList.add("bg-red-100")
-        }
-
-        return true;
-
-    },
-
-}
+    return true;
+  },
+};
 const isValid = (formInputs) => {
-    let err = false
-    // Object.keys(formInputs).forEach((key) => {
-    err = validations['amount'](formInputs.amount)
-    if (err == true) return false
-    // })
-    return !err
+  let err = false;
+  // Object.keys(formInputs).forEach((key) => {
+  err = validations["amount"](formInputs.amount);
+  if (err == true) return false;
+  // })
+  return !err;
+};
 
-}
-
-export default isValid
+export default isValid;
