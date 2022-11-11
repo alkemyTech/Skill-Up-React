@@ -1,25 +1,17 @@
 import ChevronLeft from './Icons/ChevronLeft'
 import ChevronRight from './Icons/ChevronRight'
 
-function Paginate({setCurrentPage, currentPage, numberOfPages, maxPages}) {
-
+function Paginate({pageData, setFetchUrl, currentPage, maxPages}) {
     const handleNextPage = () => {
-      if (currentPage === maxPages) {
-          return
+      if (pageData.nextPage){
+        setFetchUrl(pageData.nextPage)
       }
-      setCurrentPage(prevPage => prevPage + 1)
-    }
-
-    const handleSelectPage = (page) => {
-      if (page === "...") return 
-      setCurrentPage(page)
     }
 
     const handlePrevPage = () => {
-      if (currentPage === 1) {
-          return
+      if (pageData.previousPage) {
+        setFetchUrl(pageData.previousPage)
       }
-      setCurrentPage(prevPage => prevPage -  1)
     }
 
     return (
@@ -39,23 +31,22 @@ function Paginate({setCurrentPage, currentPage, numberOfPages, maxPages}) {
           </a>
         </div>
         <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between items-center gap-6">
-          <div>
-            <p className="text-sm text-gray-700 mt-2">
-              Showing page <span className="font-medium w-[8px]">{currentPage}</span> of <span className="font-medium w-[8px]">{maxPages}</span> pages{' '}
-            </p>
-          </div>
-          <div>
-            <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+            <nav className="isolate w-full flex justify-between -space-x-px rounded-md" aria-label="Pagination">
               <a
-                disabled={currentPage === 1}
+                disabled={!pageData.previousPage}
   
-                className={`${currentPage === 1 ? "cursor-not-allowed text-gray-400" : "cursor-pointer"} relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 ${currentPage === 1 && "cursor-not-allowed text-gray-400"}`}
+                className={`${!pageData.previousPage ? "cursor-not-allowed text-gray-400" : "cursor-pointer"} min-w-[84px] relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 ${currentPage === 1 && "cursor-not-allowed text-gray-400"}`}
                 onClick={() => handlePrevPage()}
                 >
                 <span className="sr-only">Previous</span>
                 <ChevronLeft className={`h-5 w-5 `} aria-hidden="true" />
               </a>
-                {
+              <div>
+                <p className="text-sm text-gray-700 mt-2">
+                  Showing page <span className="font-medium w-[8px]">{currentPage}</span> of <span className="font-medium w-[8px]">{maxPages}</span> pages{' '}
+                </p>
+              </div>
+                {/* {
                   numberOfPages.map((pageNumber, index) => {
                     return(
                       <a
@@ -70,12 +61,12 @@ function Paginate({setCurrentPage, currentPage, numberOfPages, maxPages}) {
                       </a>
                     )
                   })
-                }
+                } */}
               <a
                 onClick={() => handleNextPage()}
-                disabled={currentPage === maxPages}
-                className={`${currentPage === maxPages ? "cursor-not-allowed text-gray-400" : "cursor-pointer"} 
-                  relative inline-flex items-center rounded-r-md border border-gray-300 bg-white 
+                disabled={!pageData.nextPage}
+                className={`${!pageData.nextPage ? "cursor-not-allowed text-gray-400" : "cursor-pointer"} 
+                  min-w-[84px] justify-center relative inline-flex items-center rounded-r-md border border-gray-300 bg-white 
                   px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20`
                 }
               >
@@ -83,7 +74,6 @@ function Paginate({setCurrentPage, currentPage, numberOfPages, maxPages}) {
                 <ChevronRight  className={`h-5 w-5`} aria-hidden="true" />
               </a>
             </nav>
-          </div>
         </div>
       </div>
     )

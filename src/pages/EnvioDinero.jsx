@@ -5,6 +5,7 @@ import UltimosEnvios from '../components/UltimosEnvios'
 
 
 const EnvioDinero = () => {
+  const [sendTransaction, setSendTransaction] = useState()
   const [state, setState] = useState(0)
   return (
 		<div className="pt-16">
@@ -17,6 +18,7 @@ const EnvioDinero = () => {
 					<EnvioDineroForm state={state} setState={setState} />
 				) : (
 					<ConfirmacionEnvioDinero
+            setSendTransaction={setSendTransaction}
 						state={state}
 						setState={setState}
 					/>
@@ -25,7 +27,7 @@ const EnvioDinero = () => {
 			<h2 className=" mt-[50px] text-center text-4xl lg:text-left lg:mt-14 lg:pl-5 lg:text-5xl font-bold text-cyan-500">
 				Últimos Envios
 			</h2>
-			<UltimosEnvios />
+			<UltimosEnvios sendTransaction={sendTransaction} />
 		</div>
   );
 }
