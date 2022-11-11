@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 import { useContext } from 'react'
 import { AuthContext } from '../context/loginContext'
-import useUser from '../hooks/useLocalStorage'
 
 const EnvioDineroForm = ({ state, setState }) => {
 

@@ -67,18 +67,18 @@ const Gastos = () => {
     }
     console.log("Moneda: " + monedaValida);
     if (monedaValida && conceptoValido && montoValido) {
-      cargaDeSaldo();
+      cargarGasto();
     }
   };
 
-  const cargaDeSaldo = () => {
+  const cargarGasto = () => {
     const { type, concepto, monto } = data;
 
     fetch(
-      `http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/${getAccountID()}`,
+      `http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/1`,
       {
         body: JSON.stringify({
-          type: type,
+          type: "payment",
           amount: +monto,
           concept: concepto,
         }),

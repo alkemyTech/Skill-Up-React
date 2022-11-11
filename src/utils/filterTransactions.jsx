@@ -3,7 +3,7 @@ import useDebounce from "../hooks/useDebounce"
 
 function filterTransactions({array, input, amount}) {
     const transactions = array.data || []
-    console.log(transactions)
+
     let debounceInput = useDebounce(input, 1500)
     let debouncedAmount = useDebounce(amount, 1500)
 
@@ -24,14 +24,12 @@ function filterTransactions({array, input, amount}) {
         }
         return newTransactions.filter(item => Number(item.amount) <= debouncedAmount)
     }
-    return newTransactions.filter(
-      (item) => Number(item.amount) <= debouncedAmount
-    );
-  };
 
-  const filterByConcept = (result) => {
-    if (!input) {
-      return result;
+    const filterByConcept = (result) => {
+        if (!input){
+            return result
+        }
+        return result.filter(item => item.concept.toLowerCase().search(debounceInput.toLowerCase().trim()) !== -1)
     }
 
     const filteredArray = useMemo (() => {
@@ -49,4 +47,4 @@ function filterTransactions({array, input, amount}) {
     return filteredArray
 }
 
-export default filterTransactions;
+export default filterTransactions

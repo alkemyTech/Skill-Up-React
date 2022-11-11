@@ -24,7 +24,6 @@ function Movimientos() {
 
   const filteredArray = filterTransactions({array: fetchedData, input: concept, amount})
 
-  
   // const arrayLength = filteredArray.length
 
   // const {paginationRange, TOTAL_PAGES} = usePagination(arrayLength, currentPage)

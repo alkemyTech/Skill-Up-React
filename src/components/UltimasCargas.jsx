@@ -25,7 +25,7 @@ const UltimasCargas = ({ lastTransactions }) => {
 		getCargas(token);
 	}, [lastTransactions]);
 
-	const cargasElements = cargas.map((carga) => {
+	const cargasElements = cargas.filter(tx => tx.type !== "payment").map((carga) => {
 		const date = formatDate(carga.date).tipo2;
 		return (
 			<div

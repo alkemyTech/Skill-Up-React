@@ -4,7 +4,7 @@ import { AuthContext } from "../context/loginContext"
 
 
 const ConfirmacionEnvioDinero = ({ state, setState, setSendTransaction }) => {
-    console.log(setSendTransaction)
+    console.log(state)
     const [names, setNames] = useState({
         emisor: "",
         receptor: ""
@@ -31,14 +31,15 @@ const ConfirmacionEnvioDinero = ({ state, setState, setSendTransaction }) => {
         }
         getNames()
     }, [])
+
     const onSubmit = async (e) => {
         e.preventDefault()
-        const response = await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`, {
+        const response = await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/${state.to_account_id}`, {
             method: 'POST',
             headers,
             body: JSON.stringify({
-                ...state,
-                date: new Date(),
+                concept: state.concept,
+                amount: +state.amount,
                 type: 'payment'
             })
         })
@@ -47,6 +48,7 @@ const ConfirmacionEnvioDinero = ({ state, setState, setSendTransaction }) => {
         setState(0)
         return false
     }
+    
     return (
 		<div className="bg-cyan-500 rounded mt-[40px] md:w-[60%] w-[80%] lg:w-2/5 lg:p-10 p-[40px]">
 			<form action="" onSubmit={onSubmit}>

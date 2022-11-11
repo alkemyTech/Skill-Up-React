@@ -15,7 +15,7 @@ function useFetchData({method, fetchUrl, body = null, headers}) {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(true)
     const ENDPOINT = API_URL + fetchUrl
-
+    console.log(ENDPOINT)
     const fetchData = async() => {
         try {
             const response = await fetch(ENDPOINT, {
