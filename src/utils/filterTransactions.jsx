@@ -3,7 +3,7 @@ import useDebounce from "../hooks/useDebounce"
 
 function filterTransactions({array, input, amount}) {
     const transactions = array.data || []
-
+    console.log(transactions)
     let debounceInput = useDebounce(input, 1500)
     let debouncedAmount = useDebounce(amount, 1500)
 
