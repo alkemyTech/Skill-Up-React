@@ -1,21 +1,24 @@
 import React, { useRef } from 'react'
-import useLocalStorage from '../hooks/useLocalStorage'
+import { useContext } from 'react'
+import { AuthContext } from '../context/loginContext'
 import useUser from '../hooks/useLocalStorage'
 
 const EnvioDineroForm = ({ state, setState }) => {
+
+	const {getAccountID, getUser} = useContext(AuthContext)
     const amountRef = useRef()
     const toAccountIdRef = useRef()
     const conceptRef = useRef()
+	console.log(getAccountID())
     const onSubmit = (e) => {
         e.preventDefault()
 
-        const userId = useUser('id')
         const body = {
             amount: amountRef.current.value,
-            accountId: useLocalStorage('account').id,
+            accountId: getAccountID(),
             to_account_id: toAccountIdRef.current.value,
             concept: conceptRef.current.value,
-            userId
+            userId: getUser().id
         }
         setState(body)
         amountRef.current.value = ''

@@ -9,9 +9,10 @@ import {
 	BsCash,
 } from "react-icons/bs";
 
-import useLocalStorage from "../hooks/useLocalStorage";
+import { useContext } from "react";
+import { AuthContext } from "../context/loginContext";
 function Home() {
-	const { user } = useLocalStorage('user')
+	const { getUser } = useContext(AuthContext)
 	return (
 		<div>
 			<section className="w-full min-h-screen bg-white ">
@@ -23,7 +24,7 @@ function Home() {
 									Bienvenido,
 								</span>
 								<span className="text-transparent bg-gradient-to-tr bg-clip-text from-secondary-color via-sky-500 to-primary-color">
-									{user ? `${user.first_name} ${user.last_name}` : ''}
+									{getUser() ? `${getUser().first_name} ${getUser().last_name}` : ''}
 								</span>
 							</h1>
 

@@ -1,15 +1,16 @@
+import { useContext } from "react"
 import { useEffect, useState } from "react"
-import useLocalStorage from "../hooks/useLocalStorage"
+import { AuthContext } from "../context/loginContext"
 
 
-const ConfirmacionEnvioDinero = ({ state, setState }) => {
-
+const ConfirmacionEnvioDinero = ({ state, setState, setSendTransaction }) => {
+    console.log(setSendTransaction)
     const [names, setNames] = useState({
         emisor: "",
         receptor: ""
     })
-    const { token, user } = useLocalStorage('user')
-    const auth = `Bearer ${token}`
+    const { getToken, getUser } = useContext(AuthContext)
+    const auth = `Bearer ${getToken()}`
     const headers = {
         Authorization: auth,
         'accept': 'application/json',
@@ -24,7 +25,7 @@ const ConfirmacionEnvioDinero = ({ state, setState }) => {
                 headers
             })).json()
             setNames({
-                emisor: `${user.first_name} ${user.last_name}`,
+                emisor: `${getUser().first_name} ${getUser().last_name}`,
                 receptor: `${toUser.first_name} ${toUser.last_name}`
             })
         }
@@ -32,7 +33,7 @@ const ConfirmacionEnvioDinero = ({ state, setState }) => {
     }, [])
     const onSubmit = async (e) => {
         e.preventDefault()
-        await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`, {
+        const response = await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`, {
             method: 'POST',
             headers,
             body: JSON.stringify({
@@ -41,7 +42,9 @@ const ConfirmacionEnvioDinero = ({ state, setState }) => {
                 type: 'payment'
             })
         })
-        location.reload()
+        const data = response.json()
+        setSendTransaction(data)
+        setState(0)
         return false
     }
     return (
