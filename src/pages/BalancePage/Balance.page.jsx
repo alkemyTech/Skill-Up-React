@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import balanceImg from 'src/assets/balance/balance.svg';
 import cargasImg from 'src/assets/balance/cargas.svg';
@@ -6,32 +5,7 @@ import paymentsImg from 'src/assets/balance/payments.svg';
 import { CardBalance } from 'src/components/Cards';
 import { Heading } from 'src/components/Heading';
 import { Select } from 'src/components/Select';
-import { Input } from 'src/components/SignInForm/Input';
-import { currencyCodeDefault } from 'src/models/currencyCodeDefault';
-import { MovementType } from 'src/models/movementType.model';
-
-function useCalculateBalance(movementList = []) {
-	const [currencyCode, setCurrencyCode] = React.useState(currencyCodeDefault);
-	const movementListBasedOnCurrency = movementList.filter((movement) => movement.currencyCode === currencyCode);
-	const paymentsList = movementListBasedOnCurrency.filter((movement) => movement.type === MovementType.payment);
-	const topupList = movementListBasedOnCurrency.filter((movement) => movement.type === MovementType.topup);
-	const paymentSum = paymentsList.reduce((prev, curr) => prev + curr.amount, 0);
-	const topupSum = topupList.reduce((prev, curr) => prev + curr.amount, 0);
-
-	const onChangeCurrency = (e) => {
-		const { value } = e.target;
-		setCurrencyCode(value);
-	};
-
-	return {
-		balance: topupSum - paymentSum,
-		paymentSum,
-		topupSum,
-		currencyCode,
-		onChangeCurrency,
-		movementListBasedOnCurrency,
-	};
-}
+import { useCalculateBalance } from '../../hooks/useCalculateBalance';
 
 export default function BalancePage() {
 	const movementList = useSelector((state) => state.movements.movementList);
@@ -58,15 +32,17 @@ export default function BalancePage() {
 		},
 	];
 
+	if (!isInfoLoaded) {
+		return <>Skeleton</>;
+	}
+
 	return (
 		<main className="mx-auto w-full max-w-screen-xl px-4 py-10 xl:px-0">
-			{/* <div className={`container mx-auto   my-12  flex flex-col gap-5 sm:px-12`}>
-				<div className="rounded border border-ct-secondary-100 bg-ct-secondary-100/10 px-6 py-6"> */}
-			<header className="mb-5 flex w-full flex-col gap-10 md:flex-row">
-				<Heading className="text-ct-neutral-dark-700">Tu Balance</Heading>
+			<header className="mb-5 flex w-full flex-col gap-10 lg:flex-row">
+				<Heading className="whitespace-nowrap text-ct-neutral-dark-700">Tu Balance</Heading>
 
-				<div className="mt-auto w-full md:ml-auto md:max-w-xs">
-					<Select label="Currency" onChange={onChangeCurrency} colorScheme="secondary">
+				<div className="mt-auto w-full sm:max-w-xs lg:ml-auto">
+					<Select label="Currency" onChange={onChangeCurrency} value={currencyCode} colorScheme="secondary">
 						{currencyList.map((currency) => (
 							<option key={currency} value={currency}>
 								{currency}
@@ -83,8 +59,6 @@ export default function BalancePage() {
 					))}
 				</div>
 			</section>
-			{/* </div>
-			</div> */}
 		</main>
 	);
 }
