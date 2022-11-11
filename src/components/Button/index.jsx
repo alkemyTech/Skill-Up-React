@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export const Button = ({ variant, type = "button", children, disabled, style, ...props }) => {
 	return (
 		<>
@@ -43,3 +44,6 @@ export const Button = ({ variant, type = "button", children, disabled, style, ..
 		</>
 	);
 };
+=======
+export { Button } from './Button';
+>>>>>>> main

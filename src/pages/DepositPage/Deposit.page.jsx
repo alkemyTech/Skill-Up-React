@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 import { Button } from "src/components/Button";
+import { MovementFormToCreate } from "src/adapters/MovementFormToCreate.adapter"; 
 
 export default function DepositPage() {
 	const [currency, setCurrency] = useState("")
@@ -14,6 +15,18 @@ export default function DepositPage() {
 	const accessToken = localStorage.getItem("ACCESS_TOKEN")
 	const notify = (text, type) => toast(text, { autoClose: 3000, type: type, theme: "light"})
 
+	const movementWithCurrency = {
+		type: "topup",
+		concept: message,
+		currencyCode: currency,
+		isTransference: false,
+		amount: amount
+	}
+
+	const endpointBody = MovementFormToCreate(movementWithCurrency)
+
+	console.log(endpointBody)
+	
 	const handleForm = (event) => {
 		event.preventDefault()
 
