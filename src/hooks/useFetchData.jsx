@@ -3,8 +3,7 @@ import { useState } from "react"
 
 const API_URL = import.meta.env.VITE_API_URL
 
-function useFetchData({method, url, body = null, headers}) {
-
+function useFetchData({method, fetchUrl, body = null, headers}) {
   // const {fetchedData, loading, error} = useFetchData
     // ({method: "post", url: "/auth/login", 
     // headers: {Accept: "application/json", "Content-Type": "application/json"}, 
@@ -15,7 +14,7 @@ function useFetchData({method, url, body = null, headers}) {
     const [fetchedData, setFetchedData] = useState([])
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(true)
-    const ENDPOINT = API_URL + url
+    const ENDPOINT = API_URL + fetchUrl
 
     const fetchData = async() => {
         try {
@@ -25,7 +24,7 @@ function useFetchData({method, url, body = null, headers}) {
                 headers
             })
             const data = await response.json()
-            setFetchedData(data.data)
+            setFetchedData(data)
         } catch (error) {
             console.log(error)
             setError(error);            
@@ -33,10 +32,10 @@ function useFetchData({method, url, body = null, headers}) {
             setLoading(false)
         }
     };
-
+    
     useEffect(() => {
         fetchData();
-    }, [method, url, body])
+    }, [method, fetchUrl, body])
 
 
   return {fetchedData, loading, error}

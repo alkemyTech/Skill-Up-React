@@ -1,12 +1,13 @@
 import { useMemo } from "react"
 import useDebounce from "../hooks/useDebounce"
 
-function filterTransactions({array, setCurrentPage, input, amount}) {
+function filterTransactions({array, input, amount}) {
+    const transactions = array.data || []
 
     let debounceInput = useDebounce(input, 1500)
     let debouncedAmount = useDebounce(amount, 1500)
 
-    const newTransactions = array.sort((a,b) => new Date(b.date) - new Date(a.date)).map(item => {
+    const newTransactions = transactions.sort((a,b) => new Date(b.date) - new Date(a.date)).map(item => {
         return ({
             ...item,
             amount: Number(item.amount)
@@ -39,9 +40,8 @@ function filterTransactions({array, setCurrentPage, input, amount}) {
         result = filterByConcept(result)
         result = filterByAmount(result)
 
-        setCurrentPage(1)
         return result
-    }, [debounceInput, debouncedAmount, newTransactions.length])
+    }, [debounceInput, debouncedAmount, array])
 
 
     return filteredArray
