@@ -1,35 +1,24 @@
 import { useEffect, useState } from "react";
-import useUser from "../hooks/useUser";
+import useLocalStorage from "../hooks/useLocalStorage";
 import formatDate from "../utils/formatDate";
 
 const UltimosEnvios = () => {
-	const [envios, setEnvios] = useState([]);
-	const { token, user } = useUser();
-	const auth = `Bearer ${token}`;
 
-	useEffect(() => {
-		const getLastTransactions = async () => {
-			const transactionList = await (
-				await fetch(
-					`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`,
-					{
-						method: "GET",
-						headers: {
-							Authorization: auth,
-							accept: "application/json",
-						},
-						withCredentials: true,
-					}
-				)
-			).json();
-			setEnvios(
-				transactionList.data
-					.filter((envio) => envio.userId == user.id)
-					.slice(0, 4)
-			);
-		};
-		getLastTransactions();
-	}, []);
+    const [envios, setEnvios] = useState([])
+    const { token, user } = useLocalStorage('user')
+    const auth = `Bearer ${token}`
+
+    useEffect(() => {
+        const getLastTransactions = async () => {
+            const transactionList = await (await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': auth,
+                    'accept': 'application/json'
+                },
+                withCredentials: true
+            })).json()
+            setEnvios(transactionList.data.filter(envio => envio.userId == user.id && envio.type == 'payment' && envio.to_account_id != user.id).slice(0, 4))
 
 	const enviosElements = envios.map((envio) => {
 		const date = formatDate(envio.date).tipo2;
@@ -75,3 +64,4 @@ const UltimosEnvios = () => {
 };
 
 export default UltimosEnvios;
+
