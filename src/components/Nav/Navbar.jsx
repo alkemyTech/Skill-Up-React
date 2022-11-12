@@ -32,7 +32,7 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 							<ul className="hidden lg:flex ">
 								{[
 									{ name: 'Carga de saldo', route: webRoutes.deposit },
-									{ name: 'Gastos', route: webRoutes.bills },
+									{ name: 'Gastos', route: webRoutes.payments },
 									{ name: 'Balance', route: webRoutes.balance },
 									{ name: 'Movimientos', route: webRoutes.transactions },
 									{ name: 'Envio de dinero', route: webRoutes.transfer },

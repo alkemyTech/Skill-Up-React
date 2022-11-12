@@ -44,8 +44,12 @@ export const AccounstRepository = (signal) => {
 
 			const response = await fetch(`${baseUrl}/${_accountId}`, {
 				method: HTTPVerbs.POST,
-				headers: { 'Content-Type': 'application/json', accept: 'application/json' },
-				Authorization: formatAccessToken(accessToken),
+				headers: {
+					'Content-Type': 'application/json',
+					accept: 'application/json',
+					Authorization: formatAccessToken(accessToken),
+				},
+
 				signal,
 				body: JSON.stringify(body),
 			});

@@ -11,7 +11,7 @@ import reduxStore from './app/store';
 
 const root = ReactDOM.createRoot(/** @type {HTMLElement} */ (document.getElementById('root')));
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 root.render(
 	<React.StrictMode>

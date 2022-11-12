@@ -8,15 +8,15 @@ import { PublicRoute } from 'src/Router/PublicRoute';
 import { webRoutes } from 'src/utils/web.routes';
 
 // PUBLIC ROUTES
-const HomePage = React.lazy(() => import('src/pages/HomePage/Home.page'));
 const LoginPage = React.lazy(() => import('src/pages/LoginPage/Login.page'));
 const NotFoundPage = React.lazy(() => import('src/pages/NotFoundPage/NotFound.page'));
 const SignInPage = React.lazy(() => import('src/pages/SignInPage/SignIn.page'));
 
 // PRIVATE ROUTES
+const HomePage = React.lazy(() => import('src/pages/HomePage/Home.page'));
 const BalancePage = React.lazy(() => import('src/pages/BalancePage/Balance.page'));
-const BillsPage = React.lazy(() => import('src/pages/BillsPage/Bills.page'));
-const DepositPage = React.lazy(() => import('src/pages/DepositPage/Deposit.page'));
+const PaymentsPage = React.lazy(() => import('src/pages/PaymentsPage/Payments.page'));
+const DepositPage = React.lazy(() => import('src/pages/DepositPage/DepositV2.page'));
 const TransactionsPage = React.lazy(() => import('src/pages/TransactionsPage/Transactions.page'));
 const TransferPage = React.lazy(() => import('src/pages/TransferPage/Transfer.page'));
 
@@ -67,11 +67,11 @@ export const Router = () => {
 						}
 					/>
 					<Route
-						path={webRoutes.bills}
+						path={webRoutes.payments}
 						element={
 							<Suspense fallback={<Spinner />}>
 								<PrivateRoute>
-									<BillsPage />
+									<PaymentsPage />
 								</PrivateRoute>
 							</Suspense>
 						}
