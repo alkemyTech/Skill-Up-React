@@ -1,7 +1,4 @@
 import React from "react";
-import useDebounce from "../hooks/useDebounce";
-import Minus from "./Icons/Minus";
-import Plus from "./Icons/Plus";
 
 function InputRange({ setAmount, amount }) {
   const changeAmountFilter = (e) => {
@@ -30,19 +27,6 @@ function InputRange({ setAmount, amount }) {
           className="block w-full pt-[6px] pb-[4px] pl-6 border-[1px] z-[10] rounded-md border-indigo-300 focus:outline-indigo-500 focus:ring-indigo-500 focus:outline-[2px] sm:text-sm"
           placeholder="0.00"
         />
-        {/* <div className="absolute inset-y-0 right-[2px] top-1 flex items-center ">
-          <label htmlFor="currency" className="sr-only">
-            Amount
-          </label>
-          <div className='flex flex-col'>
-            <a className='h-4 flex items-center justify-center cursor-pointer hover:bg-gray-100 z-[1]'>
-                <Plus />
-            </a>
-            <a className='h-4 text-md flex items-center justify-center cursor-pointer hover:bg-gray-100 z-[1]'>
-                <Minus />
-            </a>
-          </div>
-        </div> */}
       </div>
     </div>
   );

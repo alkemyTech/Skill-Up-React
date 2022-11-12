@@ -2,7 +2,6 @@ import { useState } from 'react'
 import filterTransactions from '../utils/filterTransactions'
 import formatDate from '../utils/formatDate'
 import Filters from '../components/Filters'
-import House from '../components/Icons/House'
 import Paginate from '../components/Paginate'
 import ErrorMessage from '../components/ErrorMessage'
 import ListSkeleton from '../components/ListSkeleton'
@@ -14,8 +13,9 @@ function Movimientos() {
   const token = JSON.parse(localStorage.getItem('user'))["token"]
   
   const [fetchUrl, setFetchUrl] = useState("/transactions")
+  
   // Filters
-  // const [coin, setCoin] = useState("ARS")
+
   const [concept, setConcept] = useState("")
   const [amount, setAmount] = useState(0)
 
@@ -24,15 +24,6 @@ function Movimientos() {
 
   const filteredArray = filterTransactions({array: fetchedData, input: concept, amount})
 
-  // const arrayLength = filteredArray.length
-
-  // const {paginationRange, TOTAL_PAGES} = usePagination(arrayLength, currentPage)
-
-  // const paginationDataDisplay = useMemo(() => {
-  //   const firstPageIndex = (currentPage - 1) * PAGE_SIZE; 
-  //   const lastPageIndex = firstPageIndex + PAGE_SIZE;
-  //   return filteredArray.slice(firstPageIndex, lastPageIndex);
-  // }, [currentPage, filteredArray, fetchedData])
   
   return (
     <div className='max-w-lg mx-auto my-5'>
@@ -63,6 +54,12 @@ function Movimientos() {
                   </div>
                 )
               })
+            }
+            {
+              filteredArray.length === 0 &&
+              <div className='flex flex-col items-center justify-center h-full'>
+                <p className='text-lg text-gray-500 mt-5'>No hay movimientos</p>
+              </div>
             }
             <Paginate 
               pageData={fetchedData}

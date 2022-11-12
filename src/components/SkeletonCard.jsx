@@ -5,7 +5,7 @@ function SkeletonCard({numberOfCards}) {
     for (let i = 0; i < numberOfCards; i++) {
         cards.push(i)
     }
-    console.log(cards)
+
     return (
         <div className='flex flex-wrap justify-center gap-6'>
             {

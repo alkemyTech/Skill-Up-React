@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/loginContext";
-// import { useAccessControl } from "../hooks/useAccessControl";
+import { ToastContainer } from 'react-toastify';
 
 export function SignUp() {
   const { signUp, dataSignUp, setDataSignUp } = useContext(AuthContext);
@@ -14,6 +14,7 @@ export function SignUp() {
     <>
       <main>
         <section className="main flex flex-col justify-center items-center w-full h-auto py-20 bg-whit">
+          <ToastContainer />
           <section className="py-12">
             <h2 className="mb-4 text-4xl font-bold text-primary-color">
               Bienvenido a Alkemy Bank
