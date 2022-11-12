@@ -6,7 +6,7 @@ import { MovementFormToCreate } from 'src/adapters/MovementFormToCreate.adapter'
 import { Button } from 'src/components/Button';
 import { Heading } from 'src/components/Heading';
 import { Select } from 'src/components/Select';
-import { Input } from 'src/components/SignInForm/Input';
+import { Input } from 'src/components/Input/Input';
 import { currencyCodeDefault } from 'src/models/currencyCodeDefault';
 import { currencyList } from 'src/models/currencyList';
 import { MovementType } from 'src/models/movementType.model';

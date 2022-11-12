@@ -6,7 +6,7 @@ import { Heading } from 'src/components/Heading';
 import { MovementCard } from 'src/components/MovementCard';
 import { Pagination } from 'src/components/Pagination';
 import { Select } from 'src/components/Select';
-import { Input } from 'src/components/SignInForm/Input';
+import { Input } from 'src/components/Input/Input';
 import { Skeleton } from 'src/components/Skeleton';
 import { Text } from 'src/components/Text';
 import { MovementType } from 'src/models/movementType.model';

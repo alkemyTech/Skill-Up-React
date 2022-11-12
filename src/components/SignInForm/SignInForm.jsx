@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from 'src/components/Button';
 import { Heading } from 'src/components/Heading';
-import { Input } from 'src/components/SignInForm/Input';
+import { Input } from 'src/components/Input/Input';
 import { webRoutes } from 'src/utils/web.routes';
 import { ErrorMessage } from './ErrorMessage';
 
