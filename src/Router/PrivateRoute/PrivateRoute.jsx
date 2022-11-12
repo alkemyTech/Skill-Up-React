@@ -17,6 +17,7 @@ export const PrivateRoute = ({ children }) => {
 	const {
 		data: movementPageList,
 		hasNextPage,
+		isRefetching,
 		fetchNextPage,
 		isSuccess,
 	} = useInfiniteQuery(
@@ -45,7 +46,7 @@ export const PrivateRoute = ({ children }) => {
 			return;
 		}
 
-		if (!isSuccess || hasNextPage) return;
+		if (isRefetching || !isSuccess || hasNextPage) return;
 
 		const transactionListMerged = movementPageList?.pages
 			.map((page) => page.data.map((movement) => ({ ...movement })))
@@ -55,7 +56,7 @@ export const PrivateRoute = ({ children }) => {
 		dispatch(movementsActions.loadMovements(transactionListMerged));
 		dispatch(movementsActions.loadCurrencies(currencyCodesMerged));
 		dispatch(movementsActions.setInfoIsLoaded());
-	}, [hasNextPage, hasOtherPageParam, isSuccess]);
+	}, [hasNextPage, hasOtherPageParam, isSuccess, isRefetching]);
 
 	if (!isAuthenticated || isAuthenticating) {
 		return <div />;
@@ -63,4 +64,3 @@ export const PrivateRoute = ({ children }) => {
 
 	return <>{children}</>;
 };
-
