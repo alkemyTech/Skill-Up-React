@@ -54,7 +54,6 @@ export default function DepositPage() {
 		async (event) => {
 			event.preventDefault();
 			const newTopUp = MovementFormToCreate({ ...formValues, amount: parseInt(formValues.amount) });
-
 			const result = await AccounstRepository().movementCreate({ accountId: user.accountId, movementCreate: newTopUp });
 			return result;
 		},

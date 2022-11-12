@@ -67,7 +67,7 @@ export const MovementCard = (props) => {
 						</Text>
 					) : (
 						<Text as="p" className="text-ct-neutral-light-300">
-							Tranference
+							Transference
 						</Text>
 					)}
 
