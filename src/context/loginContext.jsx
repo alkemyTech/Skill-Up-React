@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { errorNotification } from "../utils/notifications";
+import { errorNotification, successNotification } from "../utils/notifications";
 
 export const AuthContext = createContext();
 
@@ -35,6 +35,11 @@ function AuthContextProvider({ children }) {
 	async function signUp(e) {
 		e.preventDefault();
 		try {
+			// If name or lastname contains numbers, throw error
+			if (dataSignUp.first_name.match(/\d+/g) || dataSignUp.last_name.match(/\d+/g)) {
+				errorNotification("El nombre o apellido no pueden contener números");
+				return
+			}
 			const response = await fetch(
 				"http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/users",
 				{
@@ -47,9 +52,13 @@ function AuthContextProvider({ children }) {
 				}
 			);
 			const data = await response.json();
-      setRegisterData(data)
-
-	  setDataSignUp({
+			console.log(data)
+			if (data.error) {
+				errorNotification(data.error);
+			}
+			setRegisterData(data)
+			successNotification("Usuario creado con éxito");
+	  		setDataSignUp({
 				...dataSignUp,
 				first_name: "",
 				last_name: "",
@@ -119,7 +128,7 @@ function AuthContextProvider({ children }) {
       setIsAuthenticated(true);
       await getLogin(data.accessToken);
       setDataLogin({ ...dataLogin, email: "", password: "" });
-      navigate('/')
+	  navigate('/');
     } catch (error) {
       console.log("Error: ", error);
       setDataLogin({ ...dataLogin, email: "", password: "" });
