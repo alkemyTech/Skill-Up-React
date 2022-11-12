@@ -70,6 +70,24 @@ const AccountTransfer = () => {
 			});
 			let apiRes = await res.json();
 
+			if (apiRes.status == 403) {
+				return (
+					Swal.close(),
+					Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: 'Only users with admin role can perform transactions',
+						confirmButtonText: 'Understood',
+						showCloseButton: true,
+						allowOutsideClick: false,
+					}),
+					setDoOwnAccountSearch(false),
+					setOwnAccountQueryNumber(1),
+					setTransactionAccount(''),
+					setTransactionMoney('')
+				);
+			}
+
 			let result = apiRes.data.find((user) => user.userId == ownUserData.id);
 			if (result == undefined && apiRes.data.length != 0) {
 				setOwnAccountQueryNumber(ownAccountQueryNumber + 1);
@@ -85,7 +103,9 @@ const AccountTransfer = () => {
 							allowOutsideClick: false,
 					  }),
 					  setDoOwnAccountSearch(false),
-					  setOwnAccountQueryNumber(1))
+					  setOwnAccountQueryNumber(1),
+					  setTransactionAccount(''),
+					  setTransactionMoney(''))
 					: (setOwnAccount(result),
 					  setDoOwnAccountSearch(false),
 					  setDoAccountDataGrab(true),
@@ -116,6 +136,9 @@ const AccountTransfer = () => {
 						showCloseButton: true,
 						allowOutsideClick: false,
 					});
+				setTransactionAccount('');
+				setTransactionMoney('');
+				setDoAccountDataGrab(false);
 			} else {
 				setEnteredIdAccount(apiRes);
 				setDoAccountDataGrab(false);
@@ -185,7 +208,7 @@ const AccountTransfer = () => {
 			Swal.fire({
 				icon: 'success',
 				title: 'Success',
-				html: `Transaction completed.<br><br> You have send $${transactionMoney} to the account #${enteredIdAccount.id}`,
+				html: `Transaction completed<br><br> You have sent $${transactionMoney} to the account #${enteredIdAccount.id} from the user #${enteredIdAccount.userId}`,
 				confirmButtonText: 'Continue',
 				showCloseButton: true,
 				allowOutsideClick: false,
