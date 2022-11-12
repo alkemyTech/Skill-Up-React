@@ -201,6 +201,26 @@ const EmailTransfer = () => {
 					'Content-Type': 'application/json',
 				},
 			});
+
+			let urlTransaction = `http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`;
+			await fetch(urlTransaction, {
+				method: 'POST',
+				body: JSON.stringify({
+					amount: transactionMoney,
+					concept: 'Transfer',
+					date: currentDate,
+					type: 'payment',
+					accountId: ownAccount.id,
+					userId: ownAccount.userId,
+					to_account_id: enteredIdAccount.userId,
+				}),
+				headers: {
+					Accept: 'application/json',
+					Authorization: accessToken,
+					'Content-Type': 'application/json',
+				},
+			});
+
 			Swal.close();
 			Swal.fire({
 				icon: 'success',
