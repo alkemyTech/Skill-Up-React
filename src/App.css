@@ -1,18 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+:root {
+	--primary-color: #87ceeb;
+	--secondary-color: #5e9aa4;
+	--light-primary-color: #e4fbff;
+	--light-sky-blue: #c9f7ff;
+	--background-color: #ffffff;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Josefin Sans", sans-serif !important;
+}
 .App {
-  text-align: center;
+	text-align: center;
+	display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 .App-logo {
-  width: 300px;
+	width: 300px;
 }
 
 .App-header {
-  background-color: #ffffff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: rgb(0, 0, 0);
+	background-color: #ffffff;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: rgb(0, 0, 0);
+}
+
+select {
+	text-indent: 10px;
+	background-color: white;
+}
+
+select:focus {
+	outline: none;
+}
+
+select option {
+	padding-block: 5px;
+}
+
+.icons {
+	margin: 0 auto;
+	font-size: 80px;
+	padding: 10px;
+	color: var(--primary-color);
+}
+
+.header {
+	transition: all 1s ease;
+}
+
+.hamburguerLine {
+	transform-origin: left;
+	transition: all 1s ease;
+}
+
+.topbar {
+	transition: all 1s ease;
+	height: 100vh;
+}
+.hamburger .active span:first-child {
+	background-color: white;
+	transform: rotate(45deg);
+}
+
+.hamburger .active span:nth-child(2) {
+	opacity: 0;
+}
+
+.hamburger .active span:last-child {
+	background-color: white;
+	transform: rotate(-45deg);
 }

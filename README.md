@@ -1,15 +1,41 @@
-# Aplicacion AlkyBank
+# Alkemy Bank
+## Wallet digital
+Es un sistema donde el usuario pueda interactuar con facilidad en su cuenta o tener la oportunidad de crear un de forma fácil y segura
 
-## Pasos para intalacion:
+##Comenzar
+Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
 
-### 1) `git clone https://github.com/cortiz2894/alkemy-alkybank.git`
+### Pre-requisitos
+Algunas del las dependencias que son necesarias antes de poder instalar el proyecto, van desde: 
+- Git
+- React-Router-v6
+- Node.js
+- Archivo .env con la siguiente variable de entorno: VITE_API_URL = "http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com"
+### Instalación
+Los pasos para comenzar a ejecutar el Deploy son:
+1. Clonar el repositorio de GitHub para que pueda correr de forma local
+2. Instalar las dependencias usando npm desde la consola
+3.  Inicializar el proyecto en una página
+``` shell
+npm i
+```
+``` shell
+npm run dev
 
-Clonar el repositorio en su local.
 
-### 2) `npm i`
+```
 
-Una vez con el repositorio clonado ingresar a la carpeta 'alkemy-alkybank' y utilizar el comando para instalar las dependencias.
 
-### 3) `npm start`
+## Construido con
+[Reac.js](https://reactjs.org/ "Reac.js") - Librería web usada
 
-Al finalizar la instalacion de dependencias lanzar el comando 'npm start' para correr la aplicacion en un servidor local.
+[NPM](https://www.npmjs.com/ "NPM") - Manejador de dependencias
+
+
+
+## Autores
+- [AllegriM](https://github.com/AllegriM "AllegriM")
+- [Tadeo](https://github.com/TadeMaddonni "Tadeo")
+- [Angel](https://github.com/Angel-Landkoer "Angel")
+- [Lucas De Palma](https://github.com/DePalma2 "Lucas De Palma")
+- [Tomas Sanchez](https://github.com/stomas418 "Tomas Sanchez")
