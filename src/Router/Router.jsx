@@ -16,7 +16,7 @@ const SignInPage = React.lazy(() => import('src/pages/SignInPage/SignIn.page'));
 const HomePage = React.lazy(() => import('src/pages/HomePage/Home.page'));
 const BalancePage = React.lazy(() => import('src/pages/BalancePage/Balance.page'));
 const PaymentsPage = React.lazy(() => import('src/pages/PaymentsPage/Payments.page'));
-const DepositPage = React.lazy(() => import('src/pages/DepositPage/DepositV2.page'));
+const DepositPage = React.lazy(() => import('src/pages/DepositPage/Deposit.page'));
 const TransactionsPage = React.lazy(() => import('src/pages/TransactionsPage/Transactions.page'));
 const TransferPage = React.lazy(() => import('src/pages/TransferPage/Transfer.page'));
 

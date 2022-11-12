@@ -1,223 +1,200 @@
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { Button } from 'src/components/Button';
+import { queryClient } from 'src';
 import { MovementFormToCreate } from 'src/adapters/MovementFormToCreate.adapter';
-import { LSKeys } from 'src/utils/localStorageKeys';
+import { Alert } from 'src/components/Alert';
+import { Button } from 'src/components/Button';
+import { Heading } from 'src/components/Heading';
+import { Select } from 'src/components/Select';
+import { Input } from 'src/components/Input/Input';
+import { Skeleton } from 'src/components/Skeleton';
+import { Text } from 'src/components/Text';
+import { currencyCodeDefault } from 'src/models/currencyCodeDefault';
+import { currencyList } from 'src/models/currencyList';
+import { MovementType } from 'src/models/movementType.model';
+import { transactionsQueryKeys } from 'src/models/transactions.queryKeys';
+import { AccounstRepository } from 'src/repositories/accounts.repository';
+
+function DepositPageSkeleton() {
+	return (
+		<div className="mx-auto w-full max-w-screen-xl py-11 px-4 md:py-14 xl:px-0">
+			<Skeleton className="mb-10 h-[37px] rounded md:mb-12 md:h-[49px]" />
+
+			<div className="grid gap-5 md:grid-cols-[1fr_auto_1fr]">
+				<div className="grid grid-rows-[auto_1fr]">
+					<Skeleton className="h-[263px] rounded sm:h-[153px] md:h-[230px] md:max-w-lg lg:h-[168px]" />
+
+					<Skeleton className="mt-8 hidden h-[300px] w-full max-w-xs place-self-start md:block md:h-[360px] xl:max-w-md" />
+				</div>
+
+				<div />
+
+				<Skeleton className="mx-auto h-[439px] w-full max-w-sm rounded p-6 md:h-[471px]" />
+			</div>
+		</div>
+	);
+}
+
+const initialState = {
+	type: MovementType.topup,
+	concept: '',
+	currencyCode: currencyCodeDefault,
+	isTransference: false,
+	amount: 0,
+};
+const fieldNames = Object.fromEntries(Object.entries(initialState).map(([key]) => [key, key]));
 
 export default function DepositPage() {
-	const [currency, setCurrency] = useState('');
-	const [amount, setAmount] = useState(null);
-	const [otherAmount, setOtherAmount] = useState(null);
-	const [otherAmountInvalid, setOtherAmountInvalid] = useState('');
-	const [message, setMessage] = useState('');
-	const [showOtherForm, setShowOtherForm] = useState(false);
+	const isLoadedMovementsInfo = useSelector((state) => state.movements.isInfoLoaded);
+	const user = useSelector((state) => state.auth.user);
+	const [formValues, setFormValues] = React.useState(initialState);
+	const { mutate: onSubmit } = useMutation(
+		async (event) => {
+			event.preventDefault();
+			const newTopUp = MovementFormToCreate({ ...formValues, amount: parseInt(formValues.amount) });
 
-	// const accessToken = localStorage.getItem(LSKeys.accessToken);
-	const notify = (text, type) => toast(text, { autoClose: 3000, type: type, theme: 'light' });
-
-	const movementWithCurrency = {
-		type: 'topup',
-		concept: message,
-		currencyCode: currency,
-		isTransference: false,
-		amount: amount,
-	};
-
-	// const endpointBody = MovementFormToCreate(movementWithCurrency);
-	// console.log(endpointBody);
-
-	const handleForm = (event) => {
-		event.preventDefault();
-
-		if (currency && amount && message) {
-			const movementWithCurrency = {
-				type: 'topup',
-				concept: message,
-				currencyCode: currency,
-				isTransference: false,
+			const result = await AccounstRepository().movementCreate({ accountId: user.accountId, movementCreate: newTopUp });
+			return result;
+		},
+		{
+			onSuccess: () => {
+				toast.success('Charged successfully');
+				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
+			},
+			onError: () => {
+				toast.error('Something went wrong, try again later');
+			},
+		},
+	);
+	const { mutate: onQuickCharge } = useMutation(
+		async (amount) => {
+			const newTopUp = MovementFormToCreate({
+				...formValues,
 				amount: amount,
-			};
-
-			const endPointBody = MovementFormToCreate(movementWithCurrency);
-
-			createDeposit(319, endPointBody);
-		} else {
-			notify('Please fill all fields out', 'error');
-		}
-	};
-
-	const handleOtherForm = () => {
-		setShowOtherForm((previous) => !previous);
-	};
-
-	const handleMessage = (event) => {
-		setMessage(event.target.value);
-	};
-
-	const handleQuantity = (quantity) => {
-		setAmount(quantity);
-	};
-
-	const handleOtherQuantity = (event) => {
-		setOtherAmount(event.target.value);
-	};
-
-	const closeOtherForm = () => setShowOtherForm(false);
-
-	const handleOtherQuantityForm = (event) => {
-		event.preventDefault();
-
-		if (otherAmount <= 0) {
-			setOtherAmountInvalid(true);
-		} else {
-			setAmount(otherAmount);
-			setOtherAmountInvalid(false);
-			closeOtherForm();
-		}
-	};
-
-	const createDeposit = async (id, concept, amount) => {
-		try {
-			const response = await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/${id}`, {
-				method: 'POST',
-				headers: {
-					// Authorization: `Bearer ${accessToken}`,
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					type: 'topup',
-					concept: concept,
-					amount: amount,
-				}),
+				concept: 'Quick charge',
+				currencyCode: currencyCodeDefault,
 			});
 
-			const data = await response.json();
+			const result = await AccounstRepository().movementCreate({ accountId: user.accountId, movementCreate: newTopUp });
+			return result;
+		},
+		{
+			onSuccess: () => {
+				toast.success('Charged successfully');
+				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
+			},
+			onError: () => {
+				toast.error('Something went wrong, try again later');
+			},
+		},
+	);
 
-			if (data.status === 200) {
-				setCurrency('');
-				setAmount(null);
-				setOtherAmount(null);
-				setMessage('');
-
-				notify('Deposit made successfully', 'success');
-			} else {
-				notify('Something went wrong', 'error');
-			}
-		} catch {
-			console.log();
-		}
+	const onChange = (e) => {
+		const { name, value } = e.target;
+		setFormValues((state) => ({ ...state, [name]: value }));
 	};
+
+	if (!isLoadedMovementsInfo) {
+		return <DepositPageSkeleton />;
+	}
+
 	return (
-		<>
-			<div className="flex min-h-screen w-screen items-center justify-center">
-				<form onSubmit={handleForm} className="flex min-w-[350px] flex-col gap-8">
-					<div className="flex justify-between">
-						<h1 className="text-4xl">Deposit</h1>
-						<h1 className="text-sm">{new Date().toLocaleDateString()}</h1>
+		<main className="mx-auto w-full max-w-screen-xl px-4 py-10 xl:px-0">
+			<Heading className="mb-10 text-ct-neutral-dark-700">Deposits</Heading>
+
+			<div className="grid gap-5 md:grid-cols-[1fr_auto_1fr]">
+				<div className="grid grid-rows-[auto_1fr]">
+					<fieldset className="grid grid-cols-[repeat(auto-fill,minmax(6rem,1fr))] gap-4 rounded border border-ct-secondary-400 p-4 shadow-md md:max-w-lg">
+						<Text as="legend" className=" px-4">
+							Quick charge
+						</Text>
+						{[100, 200, 300, 400, 500, 1000, 1500, 2000].map((amount) => (
+							<Alert
+								key={amount}
+								trigger={
+									<Button colorScheme="tertiary" className="whitespace-nowrap">
+										{amount} {currencyCodeDefault}
+									</Button>
+								}
+								title={
+									<Heading size="headline2" className="text-ct-special1-900">
+										Are you sure?
+									</Heading>
+								}
+								description={
+									<Text>
+										You want to charge {currencyCodeDefault} {amount}
+									</Text>
+								}
+								cancelButton={
+									<Button colorScheme="danger" variant="ghost">
+										Cancel
+									</Button>
+								}
+								confirmButton={
+									<Button colorScheme="success" variant="ghost" onClick={() => onQuickCharge(amount)}>
+										Accept
+									</Button>
+								}
+							/>
+						))}
+					</fieldset>
+
+					<img
+						src="./topup.webp"
+						alt="saving money"
+						className="mt-8 hidden max-w-xs place-self-start md:block xl:max-w-md"
+					/>
+				</div>
+
+				<hr className="h-full justify-center border-l border-ct-special1-700/30 md:w-[1px]" />
+
+				<form
+					onSubmit={onSubmit}
+					className="mx-auto flex w-full max-w-sm flex-col gap-4 rounded border border-ct-secondary-500/50 p-6 md:h-min"
+				>
+					<Heading as="h2" size="headline3" className="mb-6 text-center text-ct-neutral-dark-700">
+						Custom charge
+					</Heading>
+
+					<Select
+						colorScheme="secondary"
+						label="Select a currency"
+						onChange={onChange}
+						name={fieldNames.currencyCode}
+						value={formValues.currencyCode}
+					>
+						{currencyList.map((c) => (
+							<option key={c} value={c}>
+								{c}
+							</option>
+						))}
+					</Select>
+
+					<Input
+						colorScheme="secondary"
+						label="Amount"
+						type="number"
+						max="5000"
+						onChange={onChange}
+						name={fieldNames.amount}
+						value={formValues.amount}
+					/>
+
+					<div className="grid">
+						<Text as="label" htmlFor="concept" className="font-medium text-ct-neutral-medium-700">
+							Concept
+						</Text>
+						<textarea onChange={onChange} className="border" name="concept" id="concept" cols="30" rows="4"></textarea>
 					</div>
-					<div className="flex flex-col gap-4">
-						<span>Select a currency</span>
-						<div className="flex gap-4">
-							<Button colorScheme={currency === 'ARS' ? 'primary' : 'tertiary'} onClick={() => setCurrency('ARS')}>
-								ARS
-							</Button>
-							<Button colorScheme={currency === 'USD' ? 'primary' : 'tertiary'} onClick={() => setCurrency('USD')}>
-								USD
-							</Button>
-						</div>
-					</div>
-					<div className="flex flex-col gap-4">
-						<span>How much will you deposit?</span>
-						<div className="grid grid-cols-4 gap-4">
-							<Button
-								colorScheme={amount && amount === 100 ? 'primary' : 'tertiary'}
-								onClick={() => handleQuantity(100)}
-							>
-								100
-							</Button>
-							<Button
-								colorScheme={amount && amount === 200 ? 'primary' : 'tertiary'}
-								onClick={() => handleQuantity(200)}
-							>
-								200
-							</Button>
-							<Button
-								colorScheme={amount && amount === 300 ? 'primary' : 'tertiary'}
-								onClick={() => handleQuantity(300)}
-							>
-								300
-							</Button>
-							<Button
-								colorScheme={amount && amount === 400 ? 'primary' : 'tertiary'}
-								onClick={() => handleQuantity(400)}
-							>
-								400
-							</Button>
-							<Button
-								colorScheme={amount && amount === 500 ? 'primary' : 'tertiary'}
-								onClick={() => handleQuantity(500)}
-							>
-								500
-							</Button>
-							<Button
-								colorScheme={amount && amount === 1000 ? 'primary' : 'tertiary'}
-								onClick={() => handleQuantity(1000)}
-							>
-								1000
-							</Button>
-							<Button
-								colorScheme={amount && amount === 1500 ? 'primary' : 'tertiary'}
-								onClick={() => handleQuantity(1500)}
-							>
-								1500
-							</Button>
-							<Button colorScheme={amount && amount === otherAmount ? 'primary' : 'tertiary'} onClick={handleOtherForm}>
-								Other
-							</Button>
-						</div>
-					</div>
-					<div className="flex flex-col gap-4">
-						<span>Message</span>
-						<input
-							type="text"
-							onChange={handleMessage}
-							value={message}
-							className="rounded-md border border-black py-1 px-2"
-						/>
-					</div>
-					<Button type="submit" colorScheme="primary">
-						Deposit
+
+					<Button className="" type="submit">
+						Charge money
 					</Button>
 				</form>
 			</div>
-
-			{showOtherForm && (
-				<>
-					<div className="fixed top-0 left-0 flex min-h-screen w-full items-center justify-center bg-black bg-opacity-50">
-						<form
-							onSubmit={handleOtherQuantityForm}
-							className="flex min-w-[350px] flex-col gap-4 rounded-lg bg-white p-4"
-						>
-							<div className="flex items-center justify-between">
-								<h1>Specify an amount</h1>
-								<button type="button" onClick={closeOtherForm}>
-									X
-								</button>
-							</div>
-							<input
-								type="number"
-								onChange={handleOtherQuantity}
-								className="rounded-md border border-black py-1 px-2"
-							/>
-							{otherAmountInvalid && <span>Please specify an amount to continue.</span>}
-							<Button type="submit" colorScheme="primary">
-								Done
-							</Button>
-						</form>
-					</div>
-				</>
-			)}
-		</>
+		</main>
 	);
 }

@@ -24,11 +24,6 @@ export const Desing = () => {
 					</div>
 
 					<div>
-						<span>¿?</span>
-						<div className="h-10 w-10 rounded-full bg-ct-yelis1-400" />
-					</div>
-
-					<div>
 						<span>Neutral ligth</span>
 						<div className="h-10 w-10 rounded-full bg-ct-neutral-light-400" />
 					</div>
