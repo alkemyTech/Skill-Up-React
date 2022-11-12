@@ -34,7 +34,7 @@ export function useMovementsFilters(transactionList = [], itemsPerPage = 10) {
 	const transactionListFiltered = transactionList
 		?.filter((t) => t.currencyCode === filterFields.currency)
 		.filter((t) => (filterFields.movementType ? t.type === filterFields.movementType : t))
-		.filter((t) => (filterFields.conceptFilter ? t.conceptDecoded.includes(filterFields.conceptFilter) : t));
+		.filter((t) => (filterFields.conceptFilter ? t.conceptDecoded.toLowerCase().includes(filterFields.conceptFilter.toLowerCase()) : t));
 
 	const totalPages = Math.ceil(transactionListFiltered.length / _itemsPerPage);
 	const sliceStartIndex = currentPage * _itemsPerPage - _itemsPerPage;
