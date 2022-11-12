@@ -3,8 +3,8 @@ import { Heading } from 'src/components/Heading';
 
 const Footer = () => {
 	return (
-		<div className="bg-ct-primary-700">
-			<footer className="mx-auto flex max-w-screen-xl items-center justify-between p-4 xl:px-0">
+		<div className="w-full bg-ct-primary-700">
+			<footer className="mx-auto flex w-full max-w-screen-xl items-center justify-around py-4 xl:px-0">
 				<section className="hidden md:block">
 					<Heading as="h5" size="headline6" className="py-1 text-ct-secondary-100">
 						Contacto:

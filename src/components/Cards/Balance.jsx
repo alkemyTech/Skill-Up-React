@@ -1,5 +1,5 @@
 export const CardBalance = (props) => {
-	const { image, title, amount, link } = props;
+	const { image, title, amount } = props;
 
 	return (
 		<div className="flex w-full flex-col items-center justify-center rounded-lg bg-white px-6 pt-6 shadow-md">
@@ -18,3 +18,4 @@ export const CardBalance = (props) => {
 		</div>
 	);
 };
+
