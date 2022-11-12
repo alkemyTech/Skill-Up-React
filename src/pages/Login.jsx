@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/loginContext";
+import { ToastContainer } from 'react-toastify';
 
 function Login() {
   const { setDataLogin, dataLogin, login } = useContext(AuthContext);
@@ -12,6 +13,7 @@ function Login() {
   return (
     <>
       <main className="min-h-screen">
+        <ToastContainer />
         <section className="main flex flex-col justify-center items-center w-full h-auto py-20 bg-white ">
           <section className="py-12">
             <h2 className="mb-4 text-4xl font-bold text-primary-color">
@@ -25,6 +27,7 @@ function Login() {
           >
             <label className="flex flex-col items-center">
               <input
+                required={true}
                 className="w-96 p-2 mb-5 border-2 border-solid rounded-lg border-sky-600 placeholder:pl-3 placeholder:text-sky-600"
                 type="email"
                 onChange={(e) => handleChangeValueLogin(e)}
@@ -33,6 +36,7 @@ function Login() {
                 name="email"
               />
               <input
+                required={true}
                 className="w-96 p-2 mt-3 border-2 border-solid rounded-lg border-sky-600 placeholder:pl-3 placeholder:text-sky-600"
                 type="password"
                 onChange={(e) => handleChangeValueLogin(e)}

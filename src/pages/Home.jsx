@@ -11,8 +11,12 @@ import {
 
 import { useContext } from "react";
 import { AuthContext } from "../context/loginContext";
+
 function Home() {
-	const { getUser } = useContext(AuthContext)
+	const { getUser, resultLogin } = useContext(AuthContext)
+	const user = resultLogin || getUser()
+	const lastname = resultLogin || getUser()
+
 	return (
 		<div>
 			<section className="w-full min-h-screen bg-white ">
@@ -24,7 +28,7 @@ function Home() {
 									Bienvenido,
 								</span>
 								<span className="text-transparent bg-gradient-to-tr bg-clip-text from-secondary-color via-sky-500 to-primary-color">
-									{getUser() ? `${getUser().first_name} ${getUser().last_name}` : ''}
+									{user ? `${user.first_name} ${lastname.last_name}` : ''}
 								</span>
 							</h1>
 

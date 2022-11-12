@@ -54,8 +54,7 @@ function Movimientos() {
               filteredArray.map((movimiento, index) => {
                 formatDate(movimiento.date).tipo1
                 return (
-                  <div key={index} className="flex justify-between items-center gap-[20px] mb-4">
-                    <House />
+                  <div key={index} className="flex justify-between items-center gap-[20px] mb-4 px-10">
                     <div className=''>
                       <p className='text-sm mb-2'>{movimiento.concept}</p>
                       <p className='text-sm'>{formatDate(movimiento.date).tipo1}</p>

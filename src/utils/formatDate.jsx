@@ -26,7 +26,7 @@ function formatDate(date) {
   //return
   return {
     tipo1: `${month} ${day}, ${year}`,
-    tipo2: `${day} ${month.slice(0, 3)}, ${year} a las ${hour}:${minutes}`,
+    tipo2: `${day} ${month.slice(0, 3)}, ${year} a las ${hour}hrs`,
   };
 }
 

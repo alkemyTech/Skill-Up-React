@@ -8,12 +8,12 @@ const EnvioDinero = () => {
   const [sendTransaction, setSendTransaction] = useState()
   const [state, setState] = useState(0)
   return (
-		<div className="pt-16">
+		<div>
 			<h1 className="text-center text-4xl mt-6 lg:text-left lg:mt-14 lg:pl-5 lg:text-5xl font-bold text-cyan-500">
 				Envia Dinero
 			</h1>
 
-			<div className="flex justify-center items-center mt-[50px]">
+			<div className="flex justify-center items-center">
 				{state == 0 ? (
 					<EnvioDineroForm state={state} setState={setState} />
 				) : (

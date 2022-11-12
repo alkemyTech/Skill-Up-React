@@ -10,7 +10,7 @@ const Balance = () => {
   const {getAccountID, getToken} = useContext(AuthContext)
 
   const {fetchedData, error, loading} = useFetchData({method: "GET", fetchUrl: `/accounts/${getAccountID()}`, headers: {Accept: "application/json", Authorization: `Bearer ${getToken()}`}})
-  console.log(fetchedData)
+
   return (
     <div>
       <section className="w-full min-h-screen bg-white">

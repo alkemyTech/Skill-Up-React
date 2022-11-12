@@ -8,8 +8,8 @@ const EnvioDineroForm = ({ state, setState }) => {
     const amountRef = useRef()
     const toAccountIdRef = useRef()
     const conceptRef = useRef()
-	console.log(getAccountID())
-    const onSubmit = (e) => {
+
+	const onSubmit = (e) => {
         e.preventDefault()
 
         const body = {
@@ -53,6 +53,7 @@ const EnvioDineroForm = ({ state, setState }) => {
 					<span className="text-white text-left">Suma:</span>
 					<input
 						type="number"
+						min={0}
 						name="amount"
 						ref={amountRef}
 						className="outline outline-2 pt-1 pb-1 pr-3 bg-cyan-50 text indent-1.5 text-stone-500 outline-stone-200 rounded"

@@ -1,6 +1,8 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/loginContext";
+import { errorNotification, successNotification } from "../utils/notifications";
+import { ToastContainer } from 'react-toastify';
 
 const Gastos = () => {
   const { getAccountID, getToken } = useContext(AuthContext);
@@ -32,40 +34,33 @@ const Gastos = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Enviado");
-    console.log("data: ", data);
 
     let conceptoValido = false;
     let monedaValida = false;
     let montoValido = false;
 
     if (data.monto > 0 && !isNaN(data.monto)) {
-      console.log("Monto valido");
       montoValido = true;
     } else {
-      console.log("Monto no valido");
+		  errorNotification("Monto no valido");
     }
 
     if (data.moneda === "ARS" || data.moneda === "USD") {
       if (data.moneda === "USD") {
         data.monto = data.monto * valorDolar;
-        data.concepto = data.concepto;
         monedaValida = true;
       } else {
-        console.log("moneda valido");
         monedaValida = true;
       }
     } else {
-      console.log("moneda no valido");
+		  errorNotification("Moneda no valida");
     }
 
-    if (data.concepto.length > 0) {
-      console.log("Concepto valido");
+    if (data.concepto !== "") {
       conceptoValido = true;
     } else {
-      console.log("Concepto no valido");
+		  errorNotification("Concepto no valido");
     }
-    console.log("Moneda: " + monedaValida);
     if (monedaValida && conceptoValido && montoValido) {
       cargarGasto();
     }
@@ -91,24 +86,39 @@ const Gastos = () => {
       }
     )
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if(data.error){
+          errorNotification(data.error);
+        }
+        setData({
+          monto: "",
+          moneda: "",
+          concepto: "",
+        });
+        successNotification("Gasto cargado con exito");
+      })
   };
 
   return (
-    <>
-      <section className="gastos w-full h-screen my-10">
+    <div>
+      <section className="gastos w-full my-10">
+        <ToastContainer />
+        <h1 className="text-center text-4xl mt-6 lg:text-left lg:mt-14 lg:pl-5 lg:text-5xl font-bold text-cyan-500">
+          Cargá tus gastos
+        </h1>
         <form
           onSubmit={(e) => {
             handleSubmit(e);
           }}
         >
-          <section className="flex flex-col items-center justify-center w-3/6 h-auto mt-16 mb-10 mx-auto px-8 py-12 rounded-lg bg-sky-500">
+          <section className="bg-cyan-500 mx-auto rounded mt-[50px] md:w-[60%] w-[80%] lg:w-2/5 lg:p-10 p-[40px]">
             <label>
               <section className="sectionLabel flex flex-col items-center justify-center p-3 my-4">
                 <span className="text-stone-200 text-left mb-3">
                   Monto a cargar:
                 </span>
                 <input
+                  value={data.monto}
                   min={0}
                   type="number"
                   name="monto"
@@ -126,6 +136,7 @@ const Gastos = () => {
                   Moneda a utilizar:
                 </span>
                 <select
+                  value={data.moneda}
                   className="w-60 pt-2 pb-2 rounded"
                   name="moneda"
                   onChange={handleOnChange}
@@ -143,9 +154,10 @@ const Gastos = () => {
                   Concepto de la carga:
                 </span>
                 <input
+                  value={data.concepto}
                   name="concepto"
                   type="text"
-                  className="w-72 pt-1 pb-1 pr-3 bg-white text indent-1.5 text-black outline-stone-200 rounded placeholder:text-black"
+                  className="w-60 pt-1.5 pb-1 pr-3  bg-white text indent-1.5 text-black outline-stone-200 rounded placeholder:text-black"
                   onChange={handleOnChange}
                   placeholder="Ingrese el concepto de la carga"
                   required
@@ -155,14 +167,14 @@ const Gastos = () => {
 
             <button
               type="submit"
-              className="bg-white font-bold text-cyan-600 pt-1 pb-1 pl-3 pr-3 flex rounded  items-center justify-center text-center "
+              className="bg-white font-bold text-cyan-600 py-2 px-5 flex rounded text-lg  items-center justify-center mx-auto mt-6"
             >
               Cargar
             </button>
           </section>
         </form>
       </section>
-    </>
+    </div>
   );
 };
 
