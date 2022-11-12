@@ -9,6 +9,8 @@ import { Text } from 'src/components/Text';
 import { webRoutes } from 'src/utils/web.routes';
 import { useSelector } from 'react-redux';
 import { Spinner } from '../Spinner';
+import styles from './navbar.module.css';
+import { capitalize } from 'src/utils/capitalize';
 
 const Navbar = ({ isVisible, setIsVisible }) => {
 	const [isLogged, setIsLogged] = useState(true);
@@ -21,7 +23,7 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 	};
 
 	return (
-		<div className="bg-ct-primary-700">
+		<div className="w-full bg-ct-primary-700 px-8 ">
 			<header className="mx-auto flex w-full max-w-screen-xl items-center justify-between p-4 xl:px-0">
 				<Link to="/">
 					<img src={logo} alt="logo" tabIndex="0" />
@@ -31,11 +33,11 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 						<>
 							<ul className="hidden lg:flex ">
 								{[
-									{ name: 'Carga de saldo', route: webRoutes.deposit },
-									{ name: 'Gastos', route: webRoutes.payments },
+									{ name: 'Charges', route: webRoutes.deposit },
+									{ name: 'Bills', route: webRoutes.payments },
 									{ name: 'Balance', route: webRoutes.balance },
-									{ name: 'Movimientos', route: webRoutes.transactions },
-									{ name: 'Envio de dinero', route: webRoutes.transfer },
+									{ name: 'Transactions', route: webRoutes.transactions },
+									{ name: 'Send Money', route: webRoutes.transfer },
 								].map((link) => (
 									<li key={link.name} className="flex items-center justify-center">
 										<Link
@@ -47,15 +49,15 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 									</li>
 								))}
 
-								<li className="ml-8 flex justify-center">
+								<li className="ml-8  flex justify-center">
 									<img src={avatar} alt="avatar" className="w-10 cursor-pointer" onClick={() => setIsVisible(true)} />
 									{isVisible && (
 										<div
 											data-close={true}
-											className="absolute right-0 top-[72px] w-auto flex-col items-center rounded-bl-lg bg-ct-secondary-600 p-4 shadow-xl"
+											className={`${styles.triangle} absolute right-5 top-[85px] mr-4 w-auto flex-col items-center rounded-bl-lg rounded-br-lg rounded-tl-lg bg-ct-secondary-600 p-4`}
 										>
 											<Text as="p" className="mb-3 text-center font-bold" data-close={true}>
-												{user ? `${user.first_name_decoded}  ${user.last_name}` : <Spinner />}
+												{user ? `${capitalize(user.first_name_decoded)}  ${capitalize(user.last_name)}` : <Spinner />}
 											</Text>
 											<ButtonLogout variant="mini" handlerLogin={handlerLogin} close={true} />
 										</div>
@@ -66,7 +68,7 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 								<img src={avatar} alt="menu" className="w-10" />
 
 								<Heading as="h3" size="headline4" className="text-ct-secondary-200 ">
-									{user ? `${user.first_name_decoded}  ${user.last_name}` : <Spinner />}
+									{user ? `${capitalize(user.first_name_decoded)}  ${capitalize(user.last_name)}` : <Spinner />}
 								</Heading>
 							</div>
 							{<MobileMenu showMenu={showMenu} setShowMenu={setShowMenu} handlerLogin={handlerLogin} />}
@@ -79,3 +81,4 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 };
 
 export { Navbar };
+

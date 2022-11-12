@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	isInfoLoaded: false,
-	movementList: [],
-	currencyList: [],
+	movementList: [{}],
+	currencyList: ['ARS', 'USD'],
 };
 
 export const movementsSlice = createSlice({
