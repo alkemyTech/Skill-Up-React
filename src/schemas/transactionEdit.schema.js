@@ -3,7 +3,7 @@ import { IdSchema } from 'src/schemas/id.schema';
 import z from 'zod';
 
 export const TransactionEditSchema = z.object({
-	amount: z.string(),
+	amount: z.string().or(z.number()),
 	concept: z.string(),
 	date: z.string(),
 	type: z.nativeEnum(MovementType),

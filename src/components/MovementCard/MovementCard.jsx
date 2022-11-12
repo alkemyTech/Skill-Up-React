@@ -1,9 +1,11 @@
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Heading } from 'src/components/Heading';
 import { Text } from 'src/components/Text';
 import { MovementType } from 'src/models/movementType.model';
+import { webRoutes } from 'src/utils/web.routes';
 
 TimeAgo.setDefaultLocale(en.locale);
 TimeAgo.addLocale(en);
@@ -24,6 +26,12 @@ export const MovementCard = (props) => {
 		amount,
 	} = props;
 
+	const linkToEdit =
+		MovementType.topup === type
+			? `${webRoutes.deposit}?movementId=${id}`
+			: MovementType.payment && !isTransference
+			? `${webRoutes.payments}?movementId=${id}`
+			: null;
 	const [toggle, setToggle] = React.useState(true);
 
 	React.useEffect(() => {
@@ -31,8 +39,8 @@ export const MovementCard = (props) => {
 	}, [showConcept]);
 
 	return (
-		<button
-			onClick={() => setToggle((s) => !s)}
+		<article
+			// onClick={() => setToggle((s) => !s)}
 			className={`${
 				type === MovementType.topup
 					? 'border-ct-success-500 bg-ct-success-50/30'
@@ -54,6 +62,10 @@ export const MovementCard = (props) => {
 					{timeAgo.format(new Date(date))}
 				</Text>
 			</header>
+
+			<Link to={linkToEdit} className={`${linkToEdit ? 'visible' : 'invisible'} text-lg font-bold`}>
+				click para Editar
+			</Link>
 
 			<div className="grid grid-cols-[1fr_auto] text-left text-ct-neutral-light-800">
 				<div>
@@ -88,12 +100,12 @@ export const MovementCard = (props) => {
 				</Text>
 			</div>
 
-			<div className={`${toggle ? 'visible h-auto' : 'h-0 scale-y-0 opacity-0'} transition-all duration-200`}>
+			<div className={`${!toggle ? 'visible h-auto' : 'h-0 scale-y-0 opacity-0'} transition-all duration-200`}>
 				<hr className="my-2" />
 				<Text as="p" className="min-h-[5rem] text-left">
 					{conceptDecoded.slice(0, 150)}
 				</Text>
 			</div>
-		</button>
+		</article>
 	);
 };
