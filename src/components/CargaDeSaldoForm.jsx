@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { AuthContext } from "../context/loginContext";
+import { errorNotification, successNotification } from "../utils/notifications";
+import { ToastContainer } from 'react-toastify';
 
 const CargaDeSaldoForm = ({ setLastTransactions }) => {
 	const { getAccountID } = useContext(AuthContext);
@@ -32,39 +34,33 @@ const CargaDeSaldoForm = ({ setLastTransactions }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Enviado");
 
     let conceptoValido = false;
     let monedaValida = false;
     let montoValido = false;
 
     if (data.monto > 0 && !isNaN(data.monto)) {
-      console.log("Monto valido");
       montoValido = true;
     } else {
-      console.log("Monto no valido");
+		errorNotification("Monto no valido");
     }
 
     if (data.moneda === "ARS" || data.moneda === "USD") {
       if (data.moneda === "USD") {
         data.monto = data.monto * valorDolar;
-        data.concepto = data.concepto + " (Eran USD)";
         monedaValida = true;
       } else {
-        console.log("moneda valido");
         monedaValida = true;
       }
     } else {
-      console.log("moneda no valido");
+		errorNotification("Moneda no valida");
     }
 
-    if (data.concepto.length > 0) {
-      console.log("Concepto valido");
+    if (data.concepto !== "") {
       conceptoValido = true;
     } else {
-      console.log("Concepto no valido");
+		errorNotification("Concepto no valido");
     }
-    console.log("Moneda" + " : " + monedaValida);
     if (monedaValida && conceptoValido && montoValido) {
       cargaDeSaldo();
     }
@@ -89,11 +85,18 @@ const CargaDeSaldoForm = ({ setLastTransactions }) => {
 			}
 		)
 			.then((res) => res.json())
-			.then((data) => setLastTransactions(data));
+			.then((data) => setLastTransactions(data))
+			.then(setData({
+				monto: "",
+				moneda: "",
+				concepto: "",
+			}))
+			.then(successNotification('Carga de saldo realizada exitosamente!'))
 	};
 
 	return (
 		<div className="bg-cyan-500 rounded mt-[40px] md:w-[60%] w-[80%] lg:w-2/5 lg:p-10 p-[40px]">
+			<ToastContainer />
 			<form
 				action=""
 				onSubmit={(e) => {
@@ -106,7 +109,9 @@ const CargaDeSaldoForm = ({ setLastTransactions }) => {
 							Monto a cargar:
 						</span>
 						<input
-							type="text"
+							value={data.monto}
+							type="number"
+							min={0}
 							name="monto"
 							className="pt-1.5 pb-1 pr-3  bg-white text indent-1.5 text-black  outline-cyan-500 rounded placeholder:text-black"
 							onChange={handleOnChange}
@@ -135,6 +140,7 @@ const CargaDeSaldoForm = ({ setLastTransactions }) => {
 						Concepto de la carga:
 					</span>
 					<input
+						value={data.concepto}
 						name="concepto"
 						type="text"
 						className=" pt-1 pb-1 pr-3 bg-white text indent-1.5 text-black outline-stone-200 rounded placeholder:text-black"

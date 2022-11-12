@@ -41,11 +41,6 @@ function Paginate({pageData, setFetchUrl, currentPage, maxPages}) {
                 <span className="sr-only">Previous</span>
                 <ChevronLeft className={`h-5 w-5 `} aria-hidden="true" />
               </a>
-              <div>
-                <p className="text-sm text-gray-700 mt-2">
-                  Showing page <span className="font-medium w-[8px]">{currentPage}</span> of <span className="font-medium w-[8px]">{maxPages}</span> pages{' '}
-                </p>
-              </div>
                 {/* {
                   numberOfPages.map((pageNumber, index) => {
                     return(

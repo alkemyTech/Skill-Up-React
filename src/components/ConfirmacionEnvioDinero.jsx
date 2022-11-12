@@ -1,10 +1,13 @@
 import { useContext } from "react"
 import { useEffect, useState } from "react"
 import { AuthContext } from "../context/loginContext"
-
+import { ToastContainer } from 'react-toastify';
+import { errorNotification, successNotification } from "../utils/notifications";
 
 const ConfirmacionEnvioDinero = ({ state, setState, setSendTransaction }) => {
-    console.log(setSendTransaction)
+
+    const [error, setError] = useState(false)
+    // Cuenta de destino no existente!
     const [names, setNames] = useState({
         emisor: "",
         receptor: ""
@@ -21,6 +24,11 @@ const ConfirmacionEnvioDinero = ({ state, setState, setSendTransaction }) => {
             const toAccount = await (await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/${state.to_account_id}`, {
                 headers
             })).json()
+
+            if (toAccount.status === 500 || toAccount.status === 404){
+                errorNotification('Cuenta de destino no existente!')
+                setError(true)
+            }
             const toUser = await (await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/users/${toAccount.userId}`, {
                 headers
             })).json()
@@ -31,25 +39,36 @@ const ConfirmacionEnvioDinero = ({ state, setState, setSendTransaction }) => {
         }
         getNames()
     }, [])
+
+    const handleSubmit = () => {
+        if(error) setState(0)
+    }
+
     const onSubmit = async (e) => {
         e.preventDefault()
-        const response = await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`, {
+        const response = await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts/${state.to_account_id}`, {
             method: 'POST',
             headers,
             body: JSON.stringify({
-                ...state,
-                date: new Date(),
+                concept: state.concept,
+                amount: +state.amount,
                 type: 'payment'
             })
         })
         const data = response.json()
         setSendTransaction(data)
-        setState(0)
+        // If the transaction was successful, show a success notification and then move to setState(0)
+        successNotification('Envio realizado exitosamente!')
+        setTimeout(() => {
+            setState(0)
+        }, 4000)
         return false
     }
+    
     return (
 		<div className="bg-cyan-500 rounded mt-[40px] md:w-[60%] w-[80%] lg:w-2/5 lg:p-10 p-[40px]">
 			<form action="" onSubmit={onSubmit}>
+                <ToastContainer />
 				<div className="mt-3 flex flex-col gap-4">
 					<span className="text-white font-bold text-left">
 						Emisor: {names.emisor}
@@ -78,10 +97,11 @@ const ConfirmacionEnvioDinero = ({ state, setState, setSendTransaction }) => {
 				</div>
 				<div className="mt-5">
 					<button
+                        onClick={handleSubmit}
 						type="submit"
 						className="bg-white font-bold text-cyan-500 pt-1 pb-1 pl-3 pr-3 flex rounded  items-center justify-center text-center "
 					>
-						Confirmar
+						{error ? "Reintentar" : "Continuar"}
 					</button>
 				</div>
 			</form>

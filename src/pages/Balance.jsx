@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import UltimosEnvios from '../components/UltimosEnvios'
 import UltimosCargas from '../components/UltimasCargas'
+import { AuthContext } from '../context/loginContext'
+import useFetchData from '../hooks/useFetchData'
 
 const Balance = () => {
+
+  const {getAccountID, getToken} = useContext(AuthContext)
+
+  const {fetchedData, error, loading} = useFetchData({method: "GET", fetchUrl: `/accounts/${getAccountID()}`, headers: {Accept: "application/json", Authorization: `Bearer ${getToken()}`}})
+
   return (
     <div>
       <section className="w-full min-h-screen bg-white">
@@ -12,10 +19,7 @@ const Balance = () => {
                 <div className="flex flex-col w-full ">
                     <h1 className="text-4xl font-extrabold text-center lg:text-7xl 2xl:text-7xl">
                         <span className="text-sky-500">
-                            Tu balance es de
-                        </span>
-                        <span className="text-sky-600">
-                            "{"Balance"}"
+                            Tu balance es de ${fetchedData.money}
                         </span>
                     </h1>
                     <p className="lg:text-2xl 1x2:text-3xl mx-auto mt-6 text-lg text-center text-gray-400">

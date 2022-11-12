@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { errorNotification } from "../utils/notifications";
 
 export const AuthContext = createContext();
 
@@ -47,8 +48,8 @@ function AuthContextProvider({ children }) {
 			);
 			const data = await response.json();
       setRegisterData(data)
-			console.log("SIGN-UP-RESPONSE: ", data);
-			setDataSignUp({
+
+	  setDataSignUp({
 				...dataSignUp,
 				first_name: "",
 				last_name: "",
@@ -107,6 +108,10 @@ function AuthContextProvider({ children }) {
         method: "POST"
       })
       const data = await response.json()
+	  if(data.status === 401) {
+		errorNotification("Invalid credentials")
+		return
+	  }
       const account = JSON.parse(localStorage.getItem("account")) || false
       if (account === false) {
         createAccount(registerData.id , data.accessToken)

@@ -2,9 +2,11 @@ import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "../context/loginContext";
 import formatDate from "../utils/formatDate";
+import SkeletonCard from "./SkeletonCard";
 
 const UltimasCargas = ({ lastTransactions }) => {
 	const [cargas, setCargas] = useState([]);
+	const [loading, setLoading] = useState(true)
 	const { getToken } = useContext(AuthContext);
 	const getCargas = (userToken) => {
 		fetch(
@@ -17,7 +19,9 @@ const UltimasCargas = ({ lastTransactions }) => {
 			}
 		)
 			.then((res) => res.json())
-			.then((res) => setCargas(res.data.slice(0,6)));
+			.then((res) => setCargas(res.data.slice(0,6)))
+			.catch((err) => console.log(err))
+			.finally(() => setLoading(false))
 	};
 
 	useEffect(() => {
@@ -25,7 +29,7 @@ const UltimasCargas = ({ lastTransactions }) => {
 		getCargas(token);
 	}, [lastTransactions]);
 
-	const cargasElements = cargas.map((carga) => {
+	const cargasElements = cargas.filter(tx => tx.type !== "payment").map((carga) => {
 		const date = formatDate(carga.date).tipo2;
 		return (
 			<div
@@ -49,15 +53,17 @@ const UltimasCargas = ({ lastTransactions }) => {
 	});
 	return (
 		<div className="pt-8 items-center justify-center pb-12 flex  ">
-			{cargas != [] ? (
-				<div className=" gap-6 justify-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+            {loading ? 
+				<SkeletonCard numberOfCards={4} />
+				: cargas.length === 0 ?
+				<h3 className="text-3xl font-semibold text-indigo-900 text-center">
+				No tienes cargas recientes
+				</h3>
+				:
+				<div className="flex gap-6 justify-center flex-wrap">
 					{cargasElements}
 				</div>
-			) : (
-				<h3 className="text-3xl font-semibold text-cyan-600 text-center">
-					No tienes cargas recientes
-				</h3>
-			)}
+			}
 		</div>
 	);
 };

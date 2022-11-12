@@ -2,25 +2,33 @@ import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { AuthContext } from "../context/loginContext";
 import formatDate from "../utils/formatDate";
+import SkeletonCard from "./SkeletonCard";
 
 const UltimosEnvios = ( {sendTransaction} ) => {
     const [envios, setEnvios] = useState([])
+    const [loading, setLoading] = useState(true)
     const { getToken, getUser } = useContext(AuthContext)
     const auth = `Bearer ${getToken()}`
-    
+
     useEffect(() => {
         const getLastTransactions = async () => {
-            const transactionList = await (await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': auth,
-                    'accept': 'application/json'
-                },
-                withCredentials: true
-            })).json()
-            console.log(transactionList.data)
-            setEnvios(transactionList.data.filter(envio => envio.userId == getUser().id && envio.type == 'payment' && envio.to_account_id != getUser().id).slice(0, 4))
+            try {
+                const transactionList = await (await fetch(`http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': auth,
+                        'accept': 'application/json'
+                    },
+                    withCredentials: true
+                })).json()
 
+                setEnvios(transactionList.data.filter(envio => envio.userId == getUser().id && envio.type == 'payment' && envio.to_account_id != getUser().id).slice(0, 4))
+            } catch (error) {   
+                console.log(error)
+            }
+            finally{
+                setLoading(false)
+            }
         }
         getLastTransactions()
     }, [sendTransaction])
@@ -56,14 +64,17 @@ const UltimosEnvios = ( {sendTransaction} ) => {
     return (
 
         <div className="pt-8 mb-5 pb-8flex items-center justify-center">
-            {envios.length > 0 ? <div className="flex gap-6 justify-center flex-wrap">
+            {loading ? 
+
+            <SkeletonCard numberOfCards={4} />
+            : envios.length === 0 ?
+            <h3 className="text-3xl font-semibold text-indigo-900 text-center">
+            No tienes envios recientes
+            </h3>
+            :
+            <div className="flex gap-6 justify-center flex-wrap">
                 {enviosElements}
             </div>
-                :
-
-                <h3 className="text-3xl font-semibold text-indigo-900 text-center">
-                    No tienes envios recientes
-                </h3>
             }
         </div>
     );
