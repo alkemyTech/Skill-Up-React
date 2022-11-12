@@ -41,21 +41,21 @@ const UltimosEnvios = ( {sendTransaction} ) => {
                 key={envio.id}
             >
                 <div className="flex gap-2">
-                    <span>Monto:</span>
+                    <span className="font-bold">Monto:</span>
                     <span className="bold">${envio.amount}</span>
                 </div>
 
                 <div className="flex gap-2">
-                    <span>Cuenta destino:</span>
+                    <span className="font-bold">Cuenta destino:</span>
                     <span className="bold">{envio.to_account_id}</span>
                 </div>
 
                 <div className="flex gap-2">
-                    <span>Concepto:</span>
+                    <span className="font-bold">Concepto:</span>
                     <span className="italic">{envio.concept}</span>
                 </div>
                 <div className="flex gap-2">
-                    <span>Fecha: </span>
+                    <span className="font-bold">Fecha: </span>
                     <span>{date}</span>
                 </div>
             </div>

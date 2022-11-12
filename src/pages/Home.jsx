@@ -49,14 +49,6 @@ function Home() {
 									</p>
 								</div>
 							</Link>
-							<Link to="/retirar-dinero">
-								<div className="px-10 py-20 text-center transition duration-500 transform bg-gray-100 rounded shadow-2xl hover:scale-105 md:shadow-xl hover:shadow-2xl">
-									<BsArrowDownSquare className="icons" />
-									<p className="font-semibold text-gray-500 text-2xl">
-										Retirar dinero
-									</p>
-								</div>
-							</Link>
 							<Link to="/carga-saldo">
 								<div className="px-10 py-20 text-center transition duration-500 transform bg-gray-100 rounded shadow-2xl hover:scale-105 md:shadow-xl hover:shadow-2xl">
 									<BsCoin className="icons" />

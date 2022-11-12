@@ -115,7 +115,7 @@ const Gastos = () => {
             <label>
               <section className="sectionLabel flex flex-col items-center justify-center p-3 my-4">
                 <span className="text-stone-200 text-left mb-3">
-                  Monto a cargar:
+                  Monto del gasto:
                 </span>
                 <input
                   value={data.monto}

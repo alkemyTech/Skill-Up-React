@@ -10,7 +10,7 @@ Algunas del las dependencias que son necesarias antes de poder instalar el proye
 - Git
 - React-Router-v6
 - Node.js
-
+- Archivo .env con la siguiente variable de entorno: VITE_API_URL = "http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com"
 ### Instalación
 Los pasos para comenzar a ejecutar el Deploy son:
 1. Clonar el repositorio de GitHub para que pueda correr de forma local
@@ -21,6 +21,8 @@ npm i
 ```
 ``` shell
 npm run dev
+
+
 ```
 
 

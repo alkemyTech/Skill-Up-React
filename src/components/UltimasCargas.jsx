@@ -37,15 +37,15 @@ const UltimasCargas = ({ lastTransactions }) => {
 				key={carga.id}
 			>
 				<div className="flex gap-2">
-					<span>Monto:</span>
+					<span className="font-bold">Monto:</span>
 					<span className="bold">${carga.amount}</span>
 				</div>
 				<div className="flex gap-2">
-					<span>Concepto</span>
+					<span className="font-bold">Concepto</span>
 					<span className="italic">{carga.concept}</span>
 				</div>
 				<div className="flex gap-2">
-					<span>Fecha: </span>
+					<span className="font-bold">Fecha: </span>
 					<span>{date}</span>
 				</div>
 			</div>
