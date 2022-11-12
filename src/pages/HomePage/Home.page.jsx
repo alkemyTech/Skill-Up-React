@@ -1,23 +1,44 @@
 import { Heading } from 'src/components/Heading';
-import { useEffect } from 'react';
-import { TransactionsRepository } from 'src/repositories/transactions.repository';
+import people from '../../assets/home/people-home.jpg';
+import { useSelector } from 'react-redux';
+import { useCalculateBalance } from 'src/hooks/useCalculateBalance';
+import styles from './home.module.css';
+import { useState } from 'react';
 
 export default function HomePage() {
-	useEffect(() => {
-		const { findAllPaginated } = TransactionsRepository();
-		findAllPaginated({ page: 1 })
-			.then((response) => console.log(response))
-			.catch((error) => console.log(error));
-	}, []);
+	const { movementList } = useSelector((state) => state.movements);
+	const { balance, paymentSum, topupSum, currencyCode, onChangeCurrency, movementListBasedOnCurrency } =
+		useCalculateBalance(movementList);
+
+	console.log(movementListBasedOnCurrency);
+
+	const [isRotate, setIsRotate] = useState(false);
+	const revealBalance = () => {
+		setIsRotate(!isRotate);
+	};
 
 	return (
-		<div className="flex  w-full  place-content-center px-4 py-40">
-			<header>
-				<img src={'./alkemy_logo.svg'} className="mx-auto max-w-md" alt="logo" />
-				<Heading as="h3" className="text-center">
-					Bienvenido a AlkyBank
+		<div className="flex h-screen w-screen flex-col items-center justify-center overflow-x-hidden bg-white lg:flex-row">
+			<img src={people} className="mx-auto w-[100%] max-w-xl pt-[10rem] lg:m-0 lg:p-0" alt="people" />
+			<section className="flex w-screen snap-start flex-col items-center justify-center pb-[4rem] pt-10 lg:w-[50%] lg:p-0">
+				<img src={'./alkemy_logo.svg'} className="mx-auto w-auto" alt="logo" />
+				<Heading as="h3" className="mt-1 border-t border-neutral-900 px-4 text-center leading-none md:text-5xl">
+					Welcome to <span className="text-ct-neutral-dark-500 ">Alkybank</span>
 				</Heading>
-			</header>
+				<div className="flex items-center justify-center gap-2">
+					<div className={`${styles.mainContainer} mt-3 `}>
+						<div className={`${styles.card} ${isRotate && `${styles.rotation}`}`}>
+							<div className={`${styles.front}`}>Current balance</div>
+							<div className={`${styles.back}`}>
+								{currencyCode}. {balance}
+							</div>
+						</div>
+					</div>
+					<button onClick={revealBalance} className="mt-3  rounded-lg px-2 text-sm underline">
+						{isRotate ? 'Hide' : 'Show'}
+					</button>
+				</div>
+			</section>
 		</div>
 	);
 }
