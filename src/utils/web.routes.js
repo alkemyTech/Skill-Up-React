@@ -3,7 +3,7 @@ export const webRoutes = /** @type {const} */ ({
 	signin: '/signin',
 	login: '/login',
 	balance: '/balance',
-	bills: '/bills',
+	payments: '/payments',
 	transactions: '/transactions',
 	transfer: '/transfer',
 	deposit: '/deposit',
