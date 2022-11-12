@@ -22,14 +22,16 @@ export const Input = React.forwardRef(
 			pattern,
 			labelPosition,
 			id,
+			type,
 			...props
 		},
 		ref,
 	) {
 		const reactId = React.useId();
 		const _id = id || reactId;
-
+		
 		const [touched, setTouched] = React.useState(false);
+		const [showPassword, setShowPassword] = React.useState(false)
 
 		const _onChange = (e) => {
 			const { value = '', name = '' } = e.target;
@@ -44,6 +46,10 @@ export const Input = React.forwardRef(
 			if (pattern) onError?.(name, !isValid);
 		};
 
+		const handleShowPassword = () => {
+			setShowPassword(previous => !previous)
+		}
+
 		return (
 			<div className={`${labelPosition === 'left' ? 'grid grid-cols-[auto_1fr] gap-2' : 'grid'}`}>
 				{label && (
@@ -51,24 +57,29 @@ export const Input = React.forwardRef(
 						{label}
 					</Text>
 				)}
-
-				<input
-					{...props}
-					ref={ref}
-					onChange={_onChange}
-					id={_id}
-					className={`${className} ${
-						error
-							? 'border-ct-danger-500'
-							: colorScheme === themeColorScheme.primary
-							? 'border-ct-primary-500'
-							: colorScheme === themeColorScheme.secondary
-							? 'border-ct-secondary-500'
-							: colorScheme === themeColorScheme.tertiary
-							? 'border-ct-tertiary-500'
-							: ''
-					} rounded border px-2 py-1 outline-ct-special1-500`}
-				/>
+				<div className="relataive flex gap-4 justify-between items-center">
+					<input
+						{...props}
+						type={showPassword ? "text" : type}
+						ref={ref}
+						onChange={_onChange}
+						id={_id}
+						className={`${className} ${
+							error
+								? 'border-ct-danger-500'
+								: colorScheme === themeColorScheme.primary
+								? 'border-ct-primary-500'
+								: colorScheme === themeColorScheme.secondary
+								? 'border-ct-secondary-500'
+								: colorScheme === themeColorScheme.tertiary
+								? 'border-ct-tertiary-500'
+								: ''
+						} rounded border px-2 py-1 outline-ct-special1-500 flex-1 pr-16`}
+					/>
+					{
+						type === "password" && <button type="button" onClick={handleShowPassword} className="absolute right-0 pr-4">Show</button>
+					}
+				</div>
 			</div>
 		);
 	},
