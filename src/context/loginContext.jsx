@@ -82,7 +82,7 @@ function AuthContextProvider({ children }) {
 
     const date = new Date().toISOString().replace('T', ' ').replace('Z', '');
 
-    const body = {creationDate: date, money: 25000, isBlocked: false, userId: id}
+    const body = {creationDate: date, money: 0, isBlocked: false, userId: id}
 
     try {
         const response = await fetch('http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/accounts', {
