@@ -12,7 +12,7 @@ export const AuthRepository = (signal) => {
 	const baseUrl = constants.API_URL + '/auth';
 
 	return {
-		login: async (credendials) => {
+		login: async (credendials, saveTokenInLocalStorage = true) => {
 			const body = CredendialsSchema.parse(credendials);
 
 			const response = await fetch(`${baseUrl}/login`, {
@@ -29,7 +29,9 @@ export const AuthRepository = (signal) => {
 			}
 
 			const validatedResult = AuthLoginPOSTEndpointSchema.parse(result);
-			window.localStorage.setItem(LSKeys.accessToken, validatedResult.accessToken);
+			if (saveTokenInLocalStorage) {
+				window.localStorage.setItem(LSKeys.accessToken, validatedResult.accessToken);
+			}
 			return validatedResult;
 		},
 

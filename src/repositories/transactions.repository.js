@@ -1,9 +1,12 @@
 import { TransactionEndpointToModel } from 'src/adapters/TransactionEndpointToModel.adapter';
+import { AuthRepository } from 'src/repositories/auth.repository';
+import { IdSchema } from 'src/schemas/id.schema';
 import { TransactionCreateSchema } from 'src/schemas/transactionCreate.schema';
 import { TransactionEditSchema } from 'src/schemas/transactionEdit.schema';
 import { TransactionEndpointSchema } from 'src/schemas/transactionEndpoint.schema';
 import { TransactionGETEndpointSchema } from 'src/schemas/TransactionGETEndpoint.schema';
 import { TransactionPOSTEndpointSchema } from 'src/schemas/transactionPOSTEndpoint.schema';
+import { adminCredentials } from 'src/utils/EnvVariables';
 import { constants } from 'src/utils/constants';
 import { findAccessToken } from 'src/utils/findAccessToken';
 import { formatAccessToken } from 'src/utils/formatAccessToken';
@@ -60,10 +63,13 @@ export const TransactionsRepository = (signal) => {
 		edit: async (editTransaction) => {
 			const body = TransactionEditSchema.parse(editTransaction);
 
-			const response = await fetch(baseUrl, {
+			const { accessToken } = await AuthRepository(signal).login(adminCredentials, false);
+
+			const response = await fetch(`${baseUrl}/${editTransaction.id}`, {
 				headers: {
 					'Content-Type': 'application/json',
 					accept: 'application/json',
+					Authorization: formatAccessToken(accessToken),
 				},
 				signal,
 				method: HTTPVerbs.PUT,
@@ -77,8 +83,29 @@ export const TransactionsRepository = (signal) => {
 			}
 
 			const validatedResult = TransactionEndpointSchema.parse(result);
-			return validatedResult;
+			return TransactionEndpointToModel(validatedResult);
+		},
+
+		findById: async (movementId) => {
+			const _movementId = IdSchema.parse(parseInt(movementId, 10));
+			const accessToken = findAccessToken();
+			const response = await fetch(`${baseUrl}/${_movementId}`, {
+				headers: {
+					accept: 'application/json',
+					Authorization: formatAccessToken(accessToken),
+				},
+				signal,
+				method: HTTPVerbs.GET,
+			});
+
+			const result = await response.json();
+
+			if (!response.ok) {
+				throw new Error(result.error);
+			}
+
+			const validatedResult = TransactionEndpointSchema.parse(result);
+			return TransactionEndpointToModel(validatedResult);
 		},
 	};
 };
-
