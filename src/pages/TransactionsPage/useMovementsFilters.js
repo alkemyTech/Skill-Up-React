@@ -1,40 +1,63 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { currencyCodeDefault } from 'src/models/currencyCodeDefault';
 
 const initialPage = 1;
-const initialState = {
+
+const filtersInitialState = {
 	currency: currencyCodeDefault,
 	movementType: '',
 	conceptFilter: '',
 };
 
 export function useMovementsFilters(transactionList = [], itemsPerPage = 10) {
-	const [filterFields, setFilterFields] = React.useState(initialState);
-	const [_itemsPerPage, setItemsPerPage] = React.useState(itemsPerPage);
-	const [currentPage, setCurrentPage] = React.useState(initialPage);
-
-	const filterFieldsNames = Object.fromEntries(Object.entries(initialState).map(([key]) => [key, key]));
+	const [getParam, setParam] = useSearchParams();
+	const perPageParam = parseInt(getParam.get('perPage'));
+	const pageParam = parseInt(getParam.get('page'));
+	const filtersParam = JSON.parse(getParam.get('filters'));
+	const [filterFields, setFilterFields] = React.useState(filtersParam || filtersInitialState);
+	const [_itemsPerPage, setItemsPerPage] = React.useState(perPageParam || itemsPerPage);
+	const [currentPage, setCurrentPage] = React.useState(pageParam || initialPage);
+	const filterFieldsNames = Object.fromEntries(Object.entries(filtersInitialState).map(([key]) => [key, key]));
 
 	const onFilterFieldChange = (e) => {
 		const { name = '', value = '' } = e.target;
 		setFilterFields((s) => ({ ...s, [name]: value }));
 		setCurrentPage(initialPage);
+		setParam((s) => ({ ...s, page: initialPage, filters: JSON.stringify({ ...filterFields, [name]: value }) }));
 	};
 
 	const onItemsPerPageChange = (e) => {
 		const { value = '' } = e.target;
-		setItemsPerPage(parseInt(value, 10));
+		const perPage = parseInt(value, 10);
+		setItemsPerPage(perPage);
 		setCurrentPage(initialPage);
+		setParam((s) => ({
+			...s,
+			perPage,
+			page: initialPage,
+			filters: JSON.stringify({ ...filterFields }),
+		}));
+	};
+
+	const onChangePage = (page) => {
+		setCurrentPage(page);
+		setParam((s) => ({ ...s, perPage: _itemsPerPage, page: page, filters: JSON.stringify({ ...filterFields }) }));
 	};
 
 	const clearFilters = () => {
-		setFilterFields(initialState);
+		setFilterFields(filtersInitialState);
+		setParam({});
 	};
 
 	const transactionListFiltered = transactionList
 		?.filter((t) => t.currencyCode === filterFields.currency)
 		.filter((t) => (filterFields.movementType ? t.type === filterFields.movementType : t))
-		.filter((t) => (filterFields.conceptFilter ? t.conceptDecoded.toLowerCase().includes(filterFields.conceptFilter.toLowerCase()) : t));
+		.filter((t) =>
+			filterFields.conceptFilter
+				? t.conceptDecoded.toLowerCase().includes(filterFields.conceptFilter.toLowerCase())
+				: t,
+		);
 
 	const totalPages = Math.ceil(transactionListFiltered.length / _itemsPerPage);
 	const sliceStartIndex = currentPage * _itemsPerPage - _itemsPerPage;
@@ -51,7 +74,7 @@ export function useMovementsFilters(transactionList = [], itemsPerPage = 10) {
 		itemsPerPage: _itemsPerPage,
 		onFilterFieldChange,
 		clearFilters,
-		changePage: setCurrentPage,
+		changePage: onChangePage,
 		onItemsPerPageChange,
 	};
 }
