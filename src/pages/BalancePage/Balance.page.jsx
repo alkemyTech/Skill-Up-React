@@ -6,6 +6,7 @@ import { Skeleton } from 'src/components/Skeleton';
 import { useCalculateBalance } from 'src/hooks/useCalculateBalance';
 import { range } from 'src/utils/range';
 import { webRoutes } from 'src/utils/web.routes';
+import { currencyList } from 'src/models/currencyList';
 
 function BalancePageSkeleton() {
 	return (
@@ -33,25 +34,26 @@ function BalancePageSkeleton() {
 export default function BalancePage() {
 	const movementList = useSelector((state) => state.movements.movementList);
 	const isInfoLoaded = useSelector((state) => state.movements.isInfoLoaded);
-	const currencyList = useSelector((state) => state.movements.currencyList);
+	const currencyListStored = useSelector((state) => state.movements.currencyList);
+	const _currencyList = currencyListStored.length > 0 ? currencyListStored : currencyList;
 
 	const { balance, paymentSum, topupSum, currencyCode, onChangeCurrency } = useCalculateBalance(movementList);
 
 	const data = [
 		{
 			title: 'Balance',
-			image: "/balance-page.svg",
+			image: '/balance-page.svg',
 			amount: balance,
 		},
 		{
 			title: 'Topup',
-			image: "/deposit-page.svg",
+			image: '/deposit-page.svg',
 			amount: topupSum,
 			link: webRoutes.transactions,
 		},
 		{
 			title: 'Payment',
-			image: "payments-page.svg",
+			image: 'payments-page.svg',
 			amount: paymentSum,
 			link: webRoutes.transactions,
 		},
@@ -68,7 +70,7 @@ export default function BalancePage() {
 
 				<div className="mt-auto w-full sm:max-w-xs lg:ml-auto">
 					<Select label="Currency" onChange={onChangeCurrency} value={currencyCode} colorScheme="secondary">
-						{currencyList.map((currency) => (
+						{_currencyList.map((currency) => (
 							<option key={currency} value={currency}>
 								{currency}
 							</option>
@@ -89,4 +91,3 @@ export default function BalancePage() {
 		</main>
 	);
 }
-
