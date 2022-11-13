@@ -28,7 +28,7 @@ npm run dev
 
 ## Construido con
 [Reac.js](https://reactjs.org/ "Reac.js") - Librería web usada
-
+[Tailwind](https://tailwindcss.com/ "Tailwind CSS") - Librería de estilos
 [NPM](https://www.npmjs.com/ "NPM") - Manejador de dependencias
 
 
