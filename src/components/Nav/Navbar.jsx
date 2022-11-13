@@ -29,7 +29,7 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 	}, []);
 
 	return (
-		<div className=" w-full bg-ct-primary-700 px-2" data-aos="fade-right">
+		<div className=" w-full bg-ct-primary-700 px-8" data-aos="fade-right">
 			<header className="mx-auto flex w-full max-w-screen-xl items-center justify-between p-4 xl:px-0">
 				<Link to="/">
 					<img src={logo} alt="logo" tabIndex="0" />
