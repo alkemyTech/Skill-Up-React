@@ -30,7 +30,7 @@ const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 				</li>
 				<li>
 					<Link to="/payments" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
-						Bills
+						Payments
 					</Link>
 				</li>
 				<li>
@@ -40,12 +40,12 @@ const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 				</li>
 				<li>
 					<Link to="/transactions" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
-						Transactions
+						Movements
 					</Link>
 				</li>
 				<li>
 					<Link to="/transfer" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
-						Send Money
+						Transfer
 					</Link>
 				</li>
 				<li className="mx-4 px-2">

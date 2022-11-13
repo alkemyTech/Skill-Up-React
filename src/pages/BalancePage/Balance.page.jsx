@@ -40,18 +40,18 @@ export default function BalancePage() {
 	const data = [
 		{
 			title: 'Balance',
-			image: "/balance-page.svg",
+			image: '/balance-page.svg',
 			amount: balance,
 		},
 		{
 			title: 'Topup',
-			image: "/deposit-page.svg",
+			image: '/deposit-page.svg',
 			amount: topupSum,
 			link: webRoutes.transactions,
 		},
 		{
 			title: 'Payment',
-			image: "payments-page.svg",
+			image: 'payments-page.svg',
 			amount: paymentSum,
 			link: webRoutes.transactions,
 		},
@@ -64,7 +64,9 @@ export default function BalancePage() {
 	return (
 		<main className="mx-auto w-full max-w-screen-xl px-4 py-10 xl:px-0">
 			<header className="mb-12 flex w-full flex-col gap-10 lg:flex-row">
-				<Heading className="whitespace-nowrap text-ct-neutral-dark-700">Your balance</Heading>
+				<Heading data-aos="fade-right" className="whitespace-nowrap text-ct-neutral-dark-700">
+					Balance
+				</Heading>
 
 				<div className="mt-auto w-full sm:max-w-xs lg:ml-auto">
 					<Select label="Currency" onChange={onChangeCurrency} value={currencyCode} colorScheme="secondary">

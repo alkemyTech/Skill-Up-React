@@ -91,7 +91,9 @@ export default function DepositPage() {
 
 	return (
 		<main className="mx-auto w-full max-w-screen-xl px-4 py-10 xl:px-0">
-			<Heading className="mb-10 text-ct-neutral-dark-700">Charges</Heading>
+			<Heading data-aos="fade-right" className="mb-10 text-ct-neutral-dark-700">
+				Charges
+			</Heading>
 
 			<div className="grid gap-5 px-4 md:grid-cols-[1fr_auto_1fr]">
 				<div className="grid grid-rows-[auto_1fr]">
