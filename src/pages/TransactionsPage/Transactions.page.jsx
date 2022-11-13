@@ -13,6 +13,7 @@ import { currencyList } from 'src/models/currencyList';
 import { MovementType } from 'src/models/movementType.model';
 import { range } from 'src/utils/range';
 import { useMovementsFilters } from './useMovementsFilters';
+import aos from 'aos';
 
 const TransactionsSkeleton = () => {
 	return (
@@ -44,6 +45,10 @@ export default function TransactionsPage() {
 	const isLoadedMovementsInfo = useSelector((state) => state.movements.isInfoLoaded);
 	const _currencyList = currencyListStored.length > 0 ? currencyListStored : currencyList;
 
+	React.useEffect(() => {
+		aos.init();
+	}, []);
+
 	const {
 		result: transactionListPaginated,
 		filterFields,
@@ -70,7 +75,10 @@ export default function TransactionsPage() {
 			<Heading className="mb-10 text-ct-neutral-dark-700">Movements</Heading>
 
 			<div className="grid gap-6 md:grid-cols-[auto_1fr]">
-				<fieldset className="grid h-min gap-6 rounded border border-ct-neutral-dark-100 px-4 pt-4 pb-4 shadow-md md:sticky md:top-12">
+				<fieldset
+					data-aos="fade-right"
+					className="grid h-min gap-6 rounded border border-ct-neutral-dark-100 px-4 pt-4 pb-4 shadow-md md:sticky md:top-12"
+				>
 					<Text as="legend" className="px-2 font-bold tracking-wider">
 						Filters
 					</Text>
@@ -137,10 +145,10 @@ export default function TransactionsPage() {
 				<div>
 					<Text
 						className={`${
-							isSearching && !isSomeResult ? 'visible' : 'invisible hidden'
-						} mt-10 text-center text-xl font-medium`}
+							!isSomeResult ? 'visible' : 'invisible hidden'
+						} mx-auto mt-10 rounded border border-ct-secondary-400 bg-ct-tertiary-200/20 p-4 text-center text-xl font-medium`}
 					>
-						There are not results for your search
+						{isSearching ? 'There are not results for your search' : 'There are no movements yet'}
 					</Text>
 
 					<div className={`${isSomeResult ? 'visible' : 'invisible'} mt-8 transition-all duration-150 md:mt-0`}>
@@ -153,7 +161,10 @@ export default function TransactionsPage() {
 							itemsPerPag={itemsPerPage}
 						/>
 
-						<ol className="my-10 grid grid-cols-[repeat(auto-fill,minmax(min(100%,20rem),1fr))] gap-4">
+						<ol
+							data-aos="fade-left"
+							className="my-10 grid grid-cols-[repeat(auto-fill,minmax(min(100%,20rem),1fr))] gap-4"
+						>
 							{transactionListPaginated?.map((movement) => (
 								<motion.li
 									key={movement.id}

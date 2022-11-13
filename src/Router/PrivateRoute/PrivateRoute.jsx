@@ -46,7 +46,7 @@ export const PrivateRoute = ({ children }) => {
 			return;
 		}
 
-		if (isSuccess && hasNextPage) {
+		if (isSuccess && !hasNextPage) {
 			dispatch(movementsActions.setInfoIsLoaded());
 		}
 
