@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from 'src/assets/alkemy_logo.svg';
 import avatar from 'src/assets/avatar.svg';
@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import { Spinner } from '../Spinner';
 import styles from './navbar.module.css';
 import { capitalize } from 'src/utils/capitalize';
+import aos from 'aos';
+import 'aos/dist/aos.css';
 
 const Navbar = ({ isVisible, setIsVisible }) => {
 	const [isLogged, setIsLogged] = useState(true);
@@ -22,8 +24,12 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 		setIsLogged(!isLogged);
 	};
 
+	useEffect(() => {
+		aos.init();
+	}, []);
+
 	return (
-		<div className="w-full bg-ct-primary-700 px-8 ">
+		<div className=" w-full bg-ct-primary-700 px-2" data-aos="fade-right">
 			<header className="mx-auto flex w-full max-w-screen-xl items-center justify-between p-4 xl:px-0">
 				<Link to="/">
 					<img src={logo} alt="logo" tabIndex="0" />
@@ -67,7 +73,7 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 							<div className="flex items-center gap-4 lg:hidden" onClick={handlerShowMenu}>
 								<img src={avatar} alt="menu" className="w-10" />
 
-								<Heading as="h3" size="headline4" className="text-ct-secondary-200 ">
+								<Heading as="h3" size="headline4" className="text-[16px] text-ct-secondary-200 md:text-[20px]">
 									{user ? `${capitalize(user.first_name_decoded)}  ${capitalize(user.last_name)}` : <Spinner />}
 								</Heading>
 							</div>
