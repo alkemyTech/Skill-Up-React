@@ -74,6 +74,24 @@ const EmailTransfer = () => {
 			});
 			let apiRes = await res.json();
 
+			if (apiRes.status == 403) {
+				return (
+					Swal.close(),
+					Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: 'Only users with admin role can perform transactions',
+						confirmButtonText: 'Understood',
+						showCloseButton: true,
+						allowOutsideClick: false,
+					}),
+					setDoOwnAccountSearch(false),
+					setOwnAccountQueryNumber(1),
+					setTransactionEmail(''),
+					setTransactionMoney('')
+				);
+			}
+
 			let result = apiRes.data.find((user) => user.userId == ownUserData.id);
 			if (result == undefined && apiRes.data.length != 0) {
 				setOwnAccountQueryNumber(ownAccountQueryNumber + 1);
@@ -89,7 +107,9 @@ const EmailTransfer = () => {
 							allowOutsideClick: false,
 					  }),
 					  setDoOwnAccountSearch(false),
-					  setOwnAccountQueryNumber(1))
+					  setOwnAccountQueryNumber(1),
+					  setTransactionEmail(''),
+					  setTransactionMoney(''))
 					: (setOwnAccount(result), setDoOwnAccountSearch(false), setDoEmailSearch(true), setOwnAccountQueryNumber(1));
 			}
 		}
@@ -122,7 +142,9 @@ const EmailTransfer = () => {
 							allowOutsideClick: false,
 					  }),
 					  setDoEmailSearch(false),
-					  setUserEmailQueryNumber(1))
+					  setUserEmailQueryNumber(1),
+					  setTransactionEmail(''),
+					  setTransactionMoney(''))
 					: (setEnteredEmailUserData(result),
 					  setDoAccountSearch(true),
 					  setDoEmailSearch(false),
@@ -201,11 +223,31 @@ const EmailTransfer = () => {
 					'Content-Type': 'application/json',
 				},
 			});
+
+			let urlTransaction = `http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/transactions`;
+			await fetch(urlTransaction, {
+				method: 'POST',
+				body: JSON.stringify({
+					amount: transactionMoney,
+					concept: 'Transfer',
+					date: currentDate,
+					type: 'payment',
+					accountId: ownAccount.id,
+					userId: ownAccount.userId,
+					to_account_id: enteredIdAccount.userId,
+				}),
+				headers: {
+					Accept: 'application/json',
+					Authorization: accessToken,
+					'Content-Type': 'application/json',
+				},
+			});
+
 			Swal.close();
 			Swal.fire({
 				icon: 'success',
 				title: 'Success',
-				html: `Transaction completed.<br><br> You have send $${transactionMoney} to the account #${enteredIdAccount.id}`,
+				html: `Transaction completed<br><br> You have sent $${transactionMoney} to the account #${enteredIdAccount.id} from the user #${enteredIdAccount.userId}`,
 				confirmButtonText: 'Continue',
 				showCloseButton: true,
 				allowOutsideClick: false,
