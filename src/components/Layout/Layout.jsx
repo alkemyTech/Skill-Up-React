@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
 	const { ref, isVisible, setIsVisible } = useComponentVisible(false);
 	return (
 		<div
-			className={`${styles.page_container} relative  grid min-h-screen grid-rows-[auto_1fr_auto] overflow-x-hidden bg-white/90`}
+			className={`${styles.page_container} relative grid min-h-screen grid-rows-[auto_1fr_auto] bg-white/90`}
 			ref={ref}
 		>
 			<Navbar isVisible={isVisible} setIsVisible={setIsVisible} />
@@ -20,4 +20,3 @@ const Layout = ({ children }) => {
 };
 
 export { Layout };
-

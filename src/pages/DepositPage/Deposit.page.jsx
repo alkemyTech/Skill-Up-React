@@ -1,24 +1,19 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import React from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { queryClient } from 'src';
 import { MovementFormToCreate } from 'src/adapters/MovementFormToCreate.adapter';
 import { Alert } from 'src/components/Alert';
 import { Button } from 'src/components/Button';
 import { Heading } from 'src/components/Heading';
-import { Select } from 'src/components/Select';
-import { Input } from 'src/components/Input/Input';
+import { MovementTopupFormCreateOrEdit } from 'src/components/MovementTopupFormCreateOrEdit/MovementTopupFormCreateOrEdit';
 import { Skeleton } from 'src/components/Skeleton';
 import { Text } from 'src/components/Text';
 import { currencyCodeDefault } from 'src/models/currencyCodeDefault';
-import { currencyList } from 'src/models/currencyList';
 import { MovementType } from 'src/models/movementType.model';
 import { transactionsQueryKeys } from 'src/models/transactions.queryKeys';
 import { AccounstRepository } from 'src/repositories/accounts.repository';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { TransactionsRepository } from 'src/repositories/transactions.repository';
-import { webRoutes } from 'src/utils/web.routes';
 
 function DepositPageSkeleton() {
 	return (
@@ -40,60 +35,19 @@ function DepositPageSkeleton() {
 	);
 }
 
-const formValuesInitialState = {
-	type: MovementType.topup,
-	concept: '',
-	currencyCode: currencyCodeDefault,
-	isTransference: false,
-	amount: 0,
-};
-const fieldNames = Object.fromEntries(Object.entries(formValuesInitialState).map(([key]) => [key, key]));
-
 export default function DepositPage() {
 	const isLoadedMovementsInfo = useSelector((state) => state.movements.isInfoLoaded);
 	const user = useSelector((state) => state.auth.user);
 
-	const [formValues, setFormValues] = React.useState(formValuesInitialState);
 	const [searchParams] = useSearchParams();
 
-	const navigate = useNavigate();
 	const movementId = searchParams.get('movementId');
-	const isEditing = !!movementId;
 
-	const { data: movementResponse } = useQuery(
-		transactionsQueryKeys.transactionsFindById(movementId),
-		async ({ signal }) => {
-			const movement = await TransactionsRepository(signal).findById(movementId);
-			return movement;
-		},
-		{ enabled: isEditing },
-	);
-
-	const isEditingTopup = isEditing && movementResponse?.type === MovementType.topup;
-
-	const isReadyToSubmitEdit = isEditing && movementResponse;
-
-	const { mutate: onSubmit } = useMutation(
-		async (event) => {
-			event.preventDefault();
-			const newTopUp = MovementFormToCreate({ ...formValues, amount: parseInt(formValues.amount) });
-			const result = await AccounstRepository().movementCreate({ accountId: user.accountId, movementCreate: newTopUp });
-			return result;
-		},
-		{
-			onSuccess: () => {
-				toast.success('Charged successfully');
-				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
-			},
-			onError: () => {
-				toast.error('Something went wrong, try again later');
-			},
-		},
-	);
 	const { mutate: onQuickCharge } = useMutation(
 		async (amount) => {
 			const newTopUp = MovementFormToCreate({
-				...formValues,
+				isTransference: false,
+				type: MovementType.topup,
 				amount: amount,
 				concept: 'Quick charge',
 				currencyCode: currencyCodeDefault,
@@ -112,50 +66,20 @@ export default function DepositPage() {
 			},
 		},
 	);
-	const { mutate: onSubmitEdited } = useMutation(
-		async (event) => {
-			event.preventDefault();
-			const formValuesParsed = MovementFormToCreate({ ...formValues, amount: parseInt(formValues.amount) });
 
-			const chargeEdited = { ...movementResponse, ...formValuesParsed };
+	// React.useEffect(() => {
+	// 	if (!movementResponse) return;
 
-			const result = await TransactionsRepository().edit(chargeEdited);
-			return result;
-		},
-		{
-			enabled: isReadyToSubmitEdit,
-			onSuccess: () => {
-				toast.success('Changes saved');
-				navigate(webRoutes.deposit, { replace: true });
-				setFormValues(formValuesInitialState);
-				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
-			},
-			onError: () => {
-				toast.error('Something went wrong, try again');
-			},
-		},
-	);
+	// 	setFormValues({ ...movementResponse, concept: movementResponse?.conceptDecoded });
+	// }, [movementResponse]);
 
-	const _onSubmit = isEditing ? onSubmitEdited : onSubmit;
+	// React.useEffect(() => {
+	// 	if (isEditing && movementResponse) return;
 
-	const onChange = (e) => {
-		const { name, value } = e.target;
-		setFormValues((state) => ({ ...state, [name]: value }));
-	};
+	// 	setFormValues({ ...formValuesInitialState });
+	// }, [movementResponse, isEditing]);
 
-	React.useEffect(() => {
-		if (!movementResponse) return;
-
-		setFormValues({ ...movementResponse, concept: movementResponse?.conceptDecoded });
-	}, [movementResponse]);
-
-	React.useEffect(() => {
-		if (isEditing && movementResponse) return;
-
-		setFormValues({ ...formValuesInitialState });
-	}, [movementResponse, isEditing]);
-
-	if (!isLoadedMovementsInfo || (movementId && !movementResponse)) {
+	if (!isLoadedMovementsInfo) {
 		return <DepositPageSkeleton />;
 	}
 
@@ -210,64 +134,7 @@ export default function DepositPage() {
 
 				<hr className="h-full justify-center border-l border-ct-special1-700/30 md:w-[1px]" />
 
-				{!isEditing || isEditingTopup ? (
-					<form
-						onSubmit={_onSubmit}
-						className="mx-auto flex w-full max-w-sm flex-col gap-4 rounded border border-ct-secondary-500/50 p-6 md:h-min"
-					>
-						<Heading as="h2" size="headline3" className="mb-6 text-center text-ct-neutral-dark-700">
-							{isEditing ? 'Edit charge' : 'Custom charge'}
-						</Heading>
-
-						<Select
-							colorScheme="secondary"
-							disabled={isEditing}
-							label="Currency"
-							onChange={onChange}
-							name={fieldNames.currencyCode}
-							value={formValues.currencyCode}
-						>
-							{currencyList.map((c) => (
-								<option key={c} value={c}>
-									{c}
-								</option>
-							))}
-						</Select>
-
-						<Input
-							colorScheme="secondary"
-							disabled={isEditing}
-							label="Amount"
-							type="number"
-							max="5000"
-							onChange={onChange}
-							name={fieldNames.amount}
-							value={formValues.amount}
-						/>
-
-						<div className="grid">
-							<Text as="label" htmlFor="concept" className="font-medium text-ct-neutral-medium-700">
-								Concept
-							</Text>
-							<Text
-								as="textarea"
-								onChange={onChange}
-								name={fieldNames.concept}
-								value={formValues.concept}
-								className="border p-2"
-								id="concept"
-								cols="30"
-								rows="4"
-							></Text>
-						</div>
-
-						<Button className="" type="submit" disabled={isEditing && !isReadyToSubmitEdit}>
-							{isEditing ? 'Save changes' : 'Charge money'}
-						</Button>
-					</form>
-				) : (
-					<Text>You are trying to edit a payment</Text>
-				)}
+				<MovementTopupFormCreateOrEdit movementId={movementId} />
 			</div>
 		</main>
 	);
