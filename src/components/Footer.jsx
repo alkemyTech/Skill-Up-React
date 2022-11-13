@@ -4,7 +4,7 @@ const Footer = () => {
 	const integrantes = [
 		{ integrante: "Marco Allegri", linkedIn: "https://www.linkedin.com/in/marco-allegri/"}, 
 		{ integrante: "Tadeo Maddonni", linkedIn: "https://www.linkedin.com/in/tadeo-maddonni-899836236/"},
-		{ integrante: "Angel Landloker", linkedIn: "#"},
+		{ integrante: "Angel Landloker", linkedIn: "https://www.linkedin.com/in/angel-luis-landkoer-b41698236/"},
 		{ integrante: "Tomás Sanchez", linkedIn: "#"},
 		{ integrante: "Lucas De Palma", linkedIn: "https://www.linkedin.com/in/lucasdepalma/"},
 	]
