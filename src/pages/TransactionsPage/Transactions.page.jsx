@@ -3,12 +3,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'src/components/Button';
 import { Heading } from 'src/components/Heading';
+import { Input } from 'src/components/Input/Input';
 import { MovementCard } from 'src/components/MovementCard';
 import { Pagination } from 'src/components/Pagination';
 import { Select } from 'src/components/Select';
-import { Input } from 'src/components/Input/Input';
 import { Skeleton } from 'src/components/Skeleton';
 import { Text } from 'src/components/Text';
+import { currencyList } from 'src/models/currencyList';
 import { MovementType } from 'src/models/movementType.model';
 import { range } from 'src/utils/range';
 import { useMovementsFilters } from './useMovementsFilters';
@@ -40,8 +41,9 @@ const TransactionsSkeleton = () => {
 
 export default function TransactionsPage() {
 	const movementList = useSelector((state) => state.movements.movementList);
-	const currencyList = useSelector((state) => state.movements.currencyList);
+	const currencyListStored = useSelector((state) => state.movements.currencyList);
 	const isLoadedMovementsInfo = useSelector((state) => state.movements.isInfoLoaded);
+	const _currencyList = currencyListStored.length > 0 ? currencyListStored : currencyList;
 
 	React.useEffect(() => {
 		aos.init();
@@ -51,6 +53,7 @@ export default function TransactionsPage() {
 		result: transactionListPaginated,
 		filterFields,
 		filterFieldsNames,
+		isSearching,
 		totalPages,
 		currentPage,
 		itemsPerPage,
@@ -89,7 +92,7 @@ export default function TransactionsPage() {
 						className=""
 						onChange={onFilterFieldChange}
 					>
-						{currencyList.map((c) => (
+						{_currencyList.map((c) => (
 							<option key={c} value={c}>
 								{c}
 							</option>
@@ -140,8 +143,12 @@ export default function TransactionsPage() {
 				</fieldset>
 
 				<div>
-					<Text className={`${!isSomeResult ? 'visible' : 'invisible hidden'} mt-10 text-center text-xl font-medium`}>
-						There is not results for your search
+					<Text
+						className={`${
+							!isSomeResult ? 'visible' : 'invisible hidden'
+						} mx-auto mt-10 rounded border border-ct-secondary-400 bg-ct-tertiary-200/20 p-4 text-center text-xl font-medium`}
+					>
+						{isSearching ? 'There are not results for your search' : 'There are no movements yet'}
 					</Text>
 
 					<div className={`${isSomeResult ? 'visible' : 'invisible'} mt-8 transition-all duration-150 md:mt-0`}>
@@ -185,4 +192,3 @@ export default function TransactionsPage() {
 		</main>
 	);
 }
-
