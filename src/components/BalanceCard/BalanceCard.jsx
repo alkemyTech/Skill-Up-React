@@ -24,7 +24,7 @@ export const BalanceCard = (props) => {
 
 				<p className={`${link ? 'visible' : 'invisible'} pt-4 text-right`}>
 					<Link to={link} className="font-medium  text-ct-primary-600  hover:text-blue-600">
-						Ver Detalle
+						Details
 					</Link>
 				</p>
 			</div>

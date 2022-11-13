@@ -137,7 +137,7 @@ export const SignInForm = ({ accounstRepository, authRepository, usersRepository
 				/>
 
 				<ErrorMessage className={`inset-0-0 absolute h-full w-full`} error={isPasswordErrorMessageVisible}>
-					Tip: 8 characters beetwen uppercase, lowercase and numbers.
+					8 characters beetwen uppercase, lowercase and numbers.
 				</ErrorMessage>
 			</div>
 
@@ -155,7 +155,7 @@ export const SignInForm = ({ accounstRepository, authRepository, usersRepository
 				/>
 
 				<ErrorMessage className="inset-0-0 absolute h-full w-full" error={isConfirmPasswordErrorMessageVisible}>
-					Tip: Password should match.
+					Password should match.
 				</ErrorMessage>
 			</div>
 

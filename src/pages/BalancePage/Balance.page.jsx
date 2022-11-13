@@ -7,6 +7,7 @@ import { useCalculateBalance } from 'src/hooks/useCalculateBalance';
 import { range } from 'src/utils/range';
 import { webRoutes } from 'src/utils/web.routes';
 import { currencyList } from 'src/models/currencyList';
+import { MovementType } from 'src/models/movementType.model';
 
 function BalancePageSkeleton() {
 	return (
@@ -38,6 +39,10 @@ export default function BalancePage() {
 	const _currencyList = currencyListStored.length > 0 ? currencyListStored : currencyList;
 
 	const { balance, paymentSum, topupSum, currencyCode, onChangeCurrency } = useCalculateBalance(movementList);
+	const topupSearch = encodeURIComponent(JSON.stringify({ currency: currencyCode, movementType: MovementType.topup }));
+	const paymentSearch = encodeURIComponent(
+		JSON.stringify({ currency: currencyCode, movementType: MovementType.payment }),
+	);
 
 	const data = [
 		{
@@ -49,13 +54,13 @@ export default function BalancePage() {
 			title: 'Topup',
 			image: '/deposit-page.svg',
 			amount: topupSum,
-			link: webRoutes.transactions,
+			link: `${webRoutes.transactions}?filters=${topupSearch}`,
 		},
 		{
 			title: 'Payment',
 			image: 'payments-page.svg',
 			amount: paymentSum,
-			link: webRoutes.transactions,
+			link: `${webRoutes.transactions}?filters=${paymentSearch}`,
 		},
 	];
 
