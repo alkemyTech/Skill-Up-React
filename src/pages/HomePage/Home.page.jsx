@@ -3,7 +3,7 @@ import people from '../../assets/home/people-home.svg';
 import { useSelector } from 'react-redux';
 import { useCalculateBalance } from 'src/hooks/useCalculateBalance';
 import styles from './home.module.css';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import aos from 'aos';
 import 'aos/dist/aos.css';
 import { capitalize } from '../../utils/capitalize';
@@ -12,10 +12,7 @@ import moment from 'moment';
 export default function HomePage() {
 	const { movementList } = useSelector((state) => state.movements);
 	const [showTXN, setShowTXN] = useState(false);
-	const { balance, paymentSum, topupSum, currencyCode, onChangeCurrency, movementListBasedOnCurrency } =
-		useCalculateBalance(movementList);
-
-	const ref = useRef(null);
+	const { balance, currencyCode, movementListBasedOnCurrency } = useCalculateBalance(movementList);
 
 	useEffect(() => {
 		aos.init({
@@ -24,8 +21,7 @@ export default function HomePage() {
 		});
 	}, []);
 
-	const hanlderShowTXN = (ref) => {
-		ref.currentTarget.scrollIntoView({ behavior: 'smooth', inline: 'end' });
+	const hanlderShowTXN = () => {
 		setShowTXN(!showTXN);
 	};
 
