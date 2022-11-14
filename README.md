@@ -1,8 +1,10 @@
 # Aplicacion AlkyBank
 
+Testing Remy ! 
+
 ## Pasos para intalacion:
 
-### 1) `git clone https://github.com/cortiz2894/alkemy-alkybank.git`
+### 1) `git clone https://github.com/AllegriM/Skill-Up-React-G6.git`
 
 Clonar el repositorio en su local.
 
