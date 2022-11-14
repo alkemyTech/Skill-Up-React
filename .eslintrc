@@ -1,0 +1,29 @@
+{
+	"extends": ["eslint:recommended", "plugin:react/recommended", "plugin:import/recommended", "eslint-config-prettier"],
+	"settings": {
+		"react": {
+			"version": "detect"
+		},
+		"import/resolver": {
+			"node": {
+				"paths": ["."],
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		}
+	},
+	"ignorePatterns": ["*.test.js"],
+	"rules": {
+		// Add your own rules here to override ones from the extended configs.
+		"react/prop-types": "off",
+		"react/react-in-jsx-scope": "off",
+		"no-unused-vars": "warn"
+	},
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 2020
+	}
+}
+
