@@ -2,7 +2,7 @@
 ## Wallet digital
 Es un sistema donde el usuario pueda interactuar con facilidad en su cuenta o tener la oportunidad de crear un de forma fácil y segura
 
-##Comenzar
+## Comenzar
 Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
 
 ### Pre-requisitos
