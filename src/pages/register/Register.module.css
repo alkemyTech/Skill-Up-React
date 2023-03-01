@@ -1,0 +1,13 @@
+.PasswordLabel {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.FormContent {
+  padding: 4rem;
+}
+@media screen and (max-width: 450px) {
+  .FormContent {
+    padding: 2rem;
+  }
+}

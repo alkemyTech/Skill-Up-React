@@ -1,15 +1,15 @@
 import './App.css';
+import Rutas from './routes/Rutas';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={'./alkemy_logo.svg'} className="App-logo" alt="logo" />
-        <p>
-          Bienvenido a AlkyBank
-        </p>
-      </header>
-    </div>
+    <>
+    <Provider store={ store }>
+      <Rutas/>
+    </Provider>
+    </>
   );
 }
 
